@@ -7,7 +7,7 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
-# The site theme to use
+# The site theme to use.
 theme = "juice"
 
 [markdown]
@@ -17,12 +17,13 @@ highlight_code = false
 
 [extra]
 # Put all your custom variables here
-juice_logo_name = "Juice"
-juice_logo_path = "juice.svg"
+juice_logo_name = "Robius"
+juice_logo_path = "robius-logo-only.png"
 juice_extra_menu = [
-    { title = "Github", link = "https://github.com/huhu/juice"}
+    { title = "Github", link = "https://github.com/project-robius"}
 ]
 juice_exclude_menu = [
-    "exclude_from_nav"
+    "exclude_from_nav",
+    "About",
 ]
-repository_url = "https://github.com/huhu/juice"
+repository_url = "https://github.com/project-robius"
