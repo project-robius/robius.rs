@@ -4,6 +4,8 @@ name: Build and deploy GH Pages
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     if: github.ref == 'refs/heads/main'
     steps:
       - name: checkout
