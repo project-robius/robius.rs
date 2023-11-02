@@ -8,6 +8,7 @@ weight = 3
 
 **Robius** is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.
 
+
 # Logo
 
-![](/robius-logo.png)
+![](/robius-logo-text.png)
