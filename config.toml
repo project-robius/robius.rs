@@ -20,6 +20,7 @@ highlight_code = false
 juice_logo_name = "ROBIUS"
 juice_logo_path = "robius-logo-only.png"
 juice_extra_menu = [
+    { title = "Blog", link = "/blog/"},
     { title = "Github", link = "https://github.com/project-robius"}
 ]
 juice_exclude_menu = [
