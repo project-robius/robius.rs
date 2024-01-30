@@ -1,6 +1,6 @@
 +++
 title = "Performance Benchmarking - Part 2"
-description = "Scrolling Tests with WeChat & TaBao Apps Updated"
+description = "Scrolling Tests with WeChat & TaoBao Apps Updated"
 [extra]
 author = "Edward Tan"
 +++
@@ -21,7 +21,7 @@ As can be seen from the results, they seem similar and consistent with our previ
 
 On the CPU cycle, the sample Makepad WeChat app shows very little cycles used, having less than half of the Android "native" sample apps.
 
-The Native TaoBao apps were similar to the Official TaoBao in that they use a lot more CPU cycles. This also results in higher CPU frequency values. 
+The Native TaoBao apps were similar to the Official TaoBao in that they use a lot more CPU cycles. This also results in higher CPU frequency values.
 
 When special functionality are turned OFF, the Native TaoBao used ~40% less cycles. While the full-effect TaoBao used slightly more than the Official TaoBao app.
 

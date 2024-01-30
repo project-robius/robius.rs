@@ -15,15 +15,6 @@
 {% endblock header %}
 
 {% block content %}
-<div class="trunk-blog-author">
-    {% if page.extra.author %}
-    <p>Author: {{page.extra.author}}</p>
-    {% endif %}
-    {% if page.date %}
-    <p>Date: {{page.date}}</p>
-    {% endif %}
-</div>
-
 <h1>{{ page.title }}</h1>
 
 {% if page.description %}
@@ -31,4 +22,14 @@
 {% endif %}
 
 {{ page.content | safe }}
+
+<div class="trunk-blog-author">
+    {% if page.extra.author %}
+    <p>By: {{page.extra.author}}</p>
+    {% endif %}
+    {% if page.date %}
+    <p>Published: {{page.date}}</p>
+    {% endif %}
+</div>
+
 {% endblock content %}

@@ -1,6 +1,6 @@
 +++
 title = "Performance Benchmarking"
-description = "Scrolling Tests with WeChat & TaBao Apps"
+description = "Scrolling Tests with WeChat & TaoBao Apps"
 [extra]
 author = "Edward Tan"
 +++
@@ -14,6 +14,7 @@ This time we used Makepad to write a sample WeChat application and a sample TaoB
 Scrolling is one of the most important and common operations for mobile applications. For WeChat, a messaging application, and TaoBao, an e-commerce application, a smooth scrolling experience is often one of the key factors in user satisfaction with the application.
 
 We benchmarked similar performance metrics as last time using Google [Perfetto](https://ui.perfetto.dev) tool. These include:
+
 * CPU Cycles
 * CPU Frequency (Average & Max)
 * CPU Memory (Average & Max)
