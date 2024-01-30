@@ -101,7 +101,7 @@ Makepad TaoBao | Makepad WeChat
 
 ## Conclusion
 
-The results of these tests validates the benefits of the SDF generation algorithm that the latest Makepad has incorporated. CPU Cycles were reduced, indicating less processing after the initial ramp up.
+The results of these tests validates the benefits of the SDF generation algorithm that the latest Makepad has incorporated. CPU Cycles were reduced, indicating less processing after the initial ramp up. With SDF, Makepad can also cache the generation of the SDF on local storage to lower the CPU usage.
 
 The GPU memory use reduction is the most significant difference. The usage of the SDF generation algorithm reduced GPU memory usage by a large amount. In addition, it will also provide improved performance for dynamically scaled texts.
 
