@@ -18,7 +18,7 @@ highlight_code = false
 [extra]
 # Put all your custom variables here
 juice_logo_name = "ROBIUS"
-juice_logo_path = "robius-logo-only.png"
+juice_logo_path = "robius-logo-200.png"
 juice_extra_menu = [
     { title = "Blog", link = "/blog/"},
     { title = "Github", link = "https://github.com/project-robius"}

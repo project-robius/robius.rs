@@ -3,6 +3,10 @@ title = "Performance Benchmarking"
 description = "Scrolling Tests with WeChat & TaoBao Apps"
 [extra]
 author = "Edward Tan"
+website = "https://edwardtan.com"
+twitter = "guofoo"
+mastodon = "https://mastodon.social/@guofoo"
+github = "guofoo"
 +++
 
 The last time we did a performance benchmark test, it was a few months ago. At that time we used only one simple application, an image manipulation program. During the GOSIM Workshop in September, I had mentioned that we would be doing more performance benchmarking tests and we have done just that.

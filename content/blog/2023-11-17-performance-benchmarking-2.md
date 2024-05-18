@@ -3,6 +3,10 @@ title = "Performance Benchmarking - Part 2"
 description = "Scrolling Tests with WeChat & TaoBao Apps Updated"
 [extra]
 author = "Edward Tan"
+website = "https://edwardtan.com"
+twitter = "guofoo"
+mastodon = "https://mastodon.social/@guofoo"
+github = "guofoo"
 +++
 
 Several days ago we did a [performance benchmark](/blog/performance-benchmarking) test between sample apps written in Android "native" vs. Makepad. Afterwards, we were given access to another version of the sample TaoBao app with more functionality, including more animation/video content in the scroll list, and the ability to turn toggle some of the special effects.

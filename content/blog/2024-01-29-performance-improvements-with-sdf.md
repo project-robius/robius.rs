@@ -3,6 +3,10 @@ title = "Performance Improvements with SDF"
 description = "Preliminary Results for Latest Makepad with Updated SDF Generation Algorithm"
 [extra]
 author = "Edward Tan"
+website = "https://edwardtan.com"
+twitter = "guofoo"
+mastodon = "https://mastodon.social/@guofoo"
+github = "guofoo"
 +++
 
 Recently, the [Makepad](https://github.com/makepad/makepad) framework updated its font handling with SDF generation algorithms. We decided to test out the WeChat and TaoBao apps built using this latest iteration of the framework to see if there are any changes to performance. The tests are same as before: fast scrolling of the main content screen back and forth within a 10 second window.
