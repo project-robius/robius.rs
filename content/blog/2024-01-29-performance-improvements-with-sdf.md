@@ -51,10 +51,14 @@ Makepad TaoBao | Makepad WeChat
 --- | ---
 <div style="display:flex">
   <div style="flex:1;padding-right:5px;">
-    <img src="/blog/cpu-cycles-3.png" width="100%" alt="CPU Cycles" />
+    <a href="/blog/cpu-cycles-3.png" target="_new">
+      <img src="/blog/cpu-cycles-3.png" width="100%" alt="CPU Cycles" />
+    </a>
   </div>
   <div style="flex:1;padding-left:5px;">
-    <img src="/blog/cpu-cycles-4.png" width="100%" alt="CPU Cycles" />
+    <a href="/blog/cpu-cycles-4.png" target="_new">
+      <img src="/blog/cpu-cycles-4.png" width="100%" alt="CPU Cycles" />
+    </a>
   </div>
 </div>
 
@@ -66,10 +70,14 @@ Makepad TaoBao | Makepad WeChat
 --- | ---
 <div style="display:flex">
   <div style="flex:1;padding-right:5px;">
-    <img src="/blog/cpu-frequency-3.png" width="100%" alt="CPU Frequency" />
+    <a href="/blog/cpu-frequency-3.png" target="_new">
+      <img src="/blog/cpu-frequency-3.png" width="100%" alt="CPU Frequency" />
+    </a>
   </div>
   <div style="flex:1;padding-left:5px;">
-    <img src="/blog/cpu-frequency-4.png" width="100%" alt="CPU Frequency" />
+    <a href="/blog/cpu-frequency-4.png" target="_new">
+      <img src="/blog/cpu-frequency-4.png" width="100%" alt="CPU Frequency" />
+    </a>
   </div>
 </div>
 
@@ -81,10 +89,14 @@ Makepad TaoBao | Makepad WeChat
 --- | ---
 <div style="display:flex">
   <div style="flex:1;padding-right:5px;">
-    <img src="/blog/cpu-memory-3.png" width="100%" alt="CPU Memory" />
+    <a href="/blog/cpu-memory-3.png" target="_new">
+      <img src="/blog/cpu-memory-3.png" width="100%" alt="CPU Memory" />
+    </a>
   </div>
   <div style="flex:1;padding-left:5px;">
-    <img src="/blog/cpu-memory-4.png" width="100%" alt="CPU Memory" />
+    <a href="/blog/cpu-memory-4.png" target="_new">
+      <img src="/blog/cpu-memory-4.png" width="100%" alt="CPU Memory" />
+    </a>
   </div>
 </div>
 
@@ -96,10 +108,14 @@ Makepad TaoBao | Makepad WeChat
 --- | ---
 <div style="display:flex">
   <div style="flex:1;padding-right:5px;">
-    <img src="/blog/gpu-memory-3.png" width="100%" alt="GPU Memory" />
+    <a href="/blog/gpu-memory-3.png" target="_new">
+      <img src="/blog/gpu-memory-3.png" width="100%" alt="GPU Memory" />
+    </a>
   </div>
   <div style="flex:1;padding-left:5px;">
-    <img src="/blog/gpu-memory-4.png" width="100%" alt="GPU Memory" />
+    <a href="/blog/gpu-memory-4.png" target="_new">
+      <img src="/blog/gpu-memory-4.png" width="100%" alt="GPU Memory" />
+    </a>
   </div>
 </div>
 
@@ -118,6 +134,9 @@ Makepad WeChat sample app:
 
 Makepad TaoBao sample app:
 [`https://github.com/project-robius/makepad_taobao`](https://github.com/project-robius/makepad_taobao)
+
+Android Benchmarking scripts:
+[`https://github.com/project-robius/benchmarking-android`](https://github.com/project-robius/benchmarking-android)
 
 Makepad Framework:
 [`https://github.com/makepad/makepad`](https://github.com/makepad/makepad)

@@ -35,7 +35,7 @@
 {% for post in section.pages %}
 <br class="subtext">{{ post.date }}</br>
 <h1><a href="{{ post.permalink }}">{{ post.title }}</a></h1>
-<p class="subtext">{{ post.description }}</p>
+<div class="subtext">{{ post.description }}</div>
 {% endfor %}
 
 {% endblock content %}
