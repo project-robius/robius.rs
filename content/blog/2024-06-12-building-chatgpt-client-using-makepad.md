@@ -223,7 +223,7 @@ live_design! {
 
 We have replaced all our body block. If you run the application you should see the following:
 
-![Chat interface](https://hackmd.io/_uploads/HkayB5NSA.png)
+![Chat interface](/blog/makepad-chatgpt-first-run.png)
 
 We arranged our layout using one of the Makepad's fundamental building blocks: the `View` widget. One view can have a list of children elements to render in our interface. In our case, we added two nested views and configured the parent to have them vertically organized (indicated by `flow: Down` in line 21).
 
@@ -451,7 +451,7 @@ As a final note, Makepad has a drawing mode which is quite explicit. So, it is o
 
 Since we have changed Rust code we are required to recompile our application and run it again to see the changes. Hopefully, you will notice how fast Makepad applications recompile! This is a luxury to have in the Rust ecosystem thanks to the amount of care the Makepad team puts on it.
 
-![First chat interaction](https://hackmd.io/_uploads/SyKrBqNHC.png)
+![First chat interaction](/blog/makepad-chatgpt-first-interaction.png)
 
 It is working! We need to have a model delivering smarter responses now 🙂
 
@@ -778,7 +778,7 @@ Once we retrieve the chat message from the response, we set the corresponding `L
 
 If everything goes well with the ChatGPT API server, you should see an interaction like the following one:
 
-![ChatGPT response displayed](https://hackmd.io/_uploads/SyZvS54rR.png)
+![ChatGPT response displayed](/blog/makepad-chatgpt-final-result.png)
 _This is what ChatGPT knows about Makepad..._ 🙂
 
 ## Wrapping up
