@@ -1,16 +1,16 @@
 +++
 title = "Building a ChatGTP client using Rust with Makepad"
-description = "Building a ChatGTP client using Rust with Makepad"
+description = "Learn how to implement a cross-platform application from scratch with Rust and the Makepad framework"
 [extra]
 author = "Jorge Bejar"
 twitter = "jmbejar"
 github = "jmbejar"
-mastodon = "https://mastodon.social/@guofoo"
+mastodon = "https://mastodon.social/@jmbejar"
 +++
 
 The Rust ecosystem is making significant strides in developing first-class tools for building production-ready applications compatible with major platforms. While there's still work to be done to match the developer experience offered by other tech stacks, we can already explore our options. You'll be impressed by what Rust can accomplish today.
 
-This is the first post in a series that explores how to create cross-platform applications with Makepad, a notable application framework in the Rust community. Although it's still evolving and some aspects are being fine-tuned for general production readiness, we can now create impressive applications in just a few steps.
+This is the first post in a series that explores how to create cross-platform applications with [Makepad](https://github.com/makepad/makepad), a notable application framework in the Rust community. It is also [one of the key projects under the Robuis initiative](https://project-robius.github.io/book/#key-community-projects). Although it's still evolving and some aspects are being fine-tuned for general production readiness, we can now create impressive applications in just a few steps.
 
 ## Create a new Makepad application
 
