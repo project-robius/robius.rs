@@ -461,7 +461,7 @@ It’s time to bring real conversation content to our app. We’re going to use 
 
 Once you have your API key, let’s implement the request to obtain a model response, by following the [official documentation](https://platform.openai.com/docs/api-reference/chat/create).
 
-```rust,linenos,hide_lines=4-124,hl_lines=2
+```rust,linenos,hide_lines=4-124,hl_lines=2 154
 use makepad_widgets::*;
 use makepad_micro_serde::*;
 
@@ -641,6 +641,8 @@ struct Message {
 }
 
 ```
+
+> Remember to use your own OpenAI access key in the line 154
 
 With the addition of `send_message_to_chat_gpt()` (lines 142-164), we can send a request to the ChatGPT API server. Note that we’re not yet handling the response so we can focus on the request part. The `cx.http_request` (line 163) is the mechanism in Makepad to issue regular HTTP requests in a non-blocking manner. This ensures that our application UI won’t be blocked while the response is still pending.
 
