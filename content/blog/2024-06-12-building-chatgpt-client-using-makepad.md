@@ -1,5 +1,5 @@
 +++
-title = "Building a ChatGTP client using Rust with Makepad"
+title = "Building a ChatGPT client using Rust with Makepad"
 description = "Learn how to implement a cross-platform application from scratch with Rust and the Makepad framework"
 [extra]
 author = "Jorge Bejar"
