@@ -1,4 +1,4 @@
-# Project Robius in 2024: a year of Rust App Dev
+# Project Robius in 2024: one year of Rust App Dev
 
 *Author: [Kevin Boos](https://github.com/kevinaboos). Published December 28th, 2024.*
 
@@ -13,14 +13,42 @@ This past year marked the first year of work on **Project Robius**: an open-sour
 
  
 In this post, we'll take a look back on what we've accomplished so far to make the world of Rust App Dev a little better:
-* The major apps we've built using [Makepad] + Robius together
 * The crate abstractions we've published for accessing platform-provided features from Rust code
+* The major apps we've built using [Makepad] + Robius together
 * The contributions we've made to existing open-source projects in the App Dev space
 * The connections we've fostered throughout the Rust community
 
 
 We'll also take a deeper look at **Robrix**,  a multi-platform [Matrix](https://matrix.org/) chat client written from scratch in Rust using the [Makepad UI toolkit] and Robius components.
-We started building Robrix about one year ago as a "flagship" Robius app to help drive the development (and priority) of various Robius components and demonstrate their utility.
+
+
+## Robius crates for platform feature abstractions
+
+As our primary objective, we have published several crates intended to be used directly by app devs to access a given platform feature or OS service from their app. The main goal here is for each crate to offer a safe, platform-agnostic abstraction, such that the app dev need not worry about writing any platform-specific code or dealing with each platforms' idiosyncracies.
+
+We began working on these crates in late Spring of 2024; development has been a bit intermittent but we are ramping up for the coming year. While we expect to publish many more in the future, here is the current list:
+
+* [`robius-location`]: access the current geolocation of the user's device
+* [`robius-authentication`]: display a native biometric or password authentication prompt
+* [`robius-open`]: open a URI or file in a different app (determined by the system)
+* [`robius-directories`]: access platform-standard directory locations for app data, user data, config, cache, etc
+    * a fork of the [`directories`] crate that adds support for Android
+* [`robius-url-handler`]: register your Rust app as the default handler for a URL scheme or file association
+* [`robius-keychain`]: store and retrieve secure data/passwords from the platform's secure storage facility
+    * This crate was written from scratch, but we discovered [`keyring-rs`] shortly after finishing it. We intend to contribute our additional features, mostly Android support, into `keyring-rs`.
+* [`robius-file-dialog`]: display a native dialog for picking a file, directory, or image
+    * This is a custom implementation for iOS and Android, but uses [`rfd`] under the hood for Desktop platforms.
+
+We've also released some "lower-level" crates that aren't intended for direct use by an app developer, but they'd be useful for other developers that want to create their own platform abstractions.
+The above crates depend on these in various ways.
+* [`android-build`]: enables a Rust crate to automatically build Java code for Android targets, as part of a cargo build process via a `build.rs` build script.
+    * The Java classfile(s) can then be used by your Rust app, typically via one of the above platform feature abstraction crates.
+* [`robius-android-env`]: abstracts access to Android states owned by various UI toolkits.
+    * Many Android platform features require passing in the current activity or accessing the JavaVM or JNI environment state.
+    * This crate enables us to write other Rust crates that access Android platform features, such that they work seamlessly across many different UI toolkits.
+    * Directly supports [`ndk-context`], an existing crate which is compatible with many other UI toolkit components, e.g., [Winit]
+        * This enables all of the above platform feature abstraction crates (plus any crate that depends on `robius-android-env`) to work with Winit-based apps on Android.
+    * Compared to `ndk-context`, the `robius-android-env` crate offers a "batteries-included" experience that automatically "just works" with supported UI toolkits, such that the app dev doesn't have to add any code to make things work.
 
 
 
@@ -101,35 +129,6 @@ Most of Project Robius's work (my work) on Moly was spread across these directio
 3. Creating packaging logic and configuring the build tooling to generate Moly app bundles that work across all 3 major desktop platforms
 
 
-## Robius crates for platform feature abstractions
-
-As our primary objective, we have published several crates intended to be used directly by app devs to access a given platform feature or OS service from their app. The main goal here is for each crate to offer a safe, platform-agnostic abstraction, such that the app dev need not worry about writing any platform-specific code or dealing with each platforms' idiosyncracies.
-
-We began working on these crates in late Spring of 2024; development has been a bit intermittent but we are ramping up for the coming year. While we expect to publish many more in the future, here is the current list:
-
-* [`robius-location`]: access the current geolocation of the user's device
-* [`robius-authentication`]: display a native biometric or password authentication prompt
-* [`robius-open`]: open a URI or file in a different app (determined by the system)
-* [`robius-directories`]: access platform-standard directory locations for app data, user data, config, cache, etc
-    * a fork of the [`directories`] crate that adds support for Android
-* [`robius-url-handler`]: register your Rust app as the default handler for a URL scheme or file association
-* [`robius-keychain`]: store and retrieve secure data/passwords from the platform's secure storage facility
-    * This crate was written from scratch, but we discovered [`keyring-rs`] shortly after finishing it. We intend to contribute our additional features, mostly Android support, into `keyring-rs`.
-* [`robius-file-dialog`]: display a native dialog for picking a file, directory, or image
-    * This is a custom implementation for iOS and Android, but uses [`rfd`] under the hood for Desktop platforms.
-
-We've also released some "lower-level" crates that aren't intended for direct use by an app developer, but they'd be useful for other developers that want to create their own platform abstractions.
-The above crates depend on these in various ways.
-* [`android-build`]: enables a Rust crate to automatically build Java code for Android targets, as part of a cargo build process via a `build.rs` build script.
-    * The Java classfile(s) can then be used by your Rust app, typically via one of the above platform feature abstraction crates.
-* [`robius-android-env`]: abstracts access to Android states owned by various UI toolkits.
-    * Many Android platform features require passing in the current activity or accessing the JavaVM or JNI environment state.
-    * This crate enables us to write other Rust crates that access Android platform features, such that they work seamlessly across many different UI toolkits.
-    * Directly supports [`ndk-context`], an existing crate which is compatible with many other UI toolkit components, e.g., [Winit]
-        * This enables all of the above platform feature abstraction crates (plus any crate that depends on `robius-android-env`) to work with Winit-based apps on Android.
-    * Compared to `ndk-context`, the `robius-android-env` crate offers a "batteries-included" experience that automatically "just works" with supported UI toolkits, such that the app dev doesn't have to add any code to make things work.
-
-
 ## Contributions to other Rust app dev projects
 In addition to creating, maintaining, and publishing our own crates for Rust app dev, we also strive to contribute to and improve existing crates that are already prominently used in the ecosystem.
 
@@ -164,8 +163,7 @@ TODO: list crates that we've contributed to
         * Feedback given to the Rust lang & libs teams. We hope these changes to Rust itself will make future Rust apps easier to write, with simplified and more ergonomic code patterns for async and more (TODO: link auto-clone issue)
     * Please get in touch if you're in this space and would like to join future meetups!
 * Thanks to Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI & App Dev concerns, and to share ideas, solutions, progress updates.
-    * Attendees vary but often include teammembers from Robius, Makepad, the Linebender organization (behind Xilem and more), Dioxus, eGUI, Pax, wgpu, Slint UI, and more
-    * This has led to cross-pollination
+    * Attendees vary, but often include teammembers from Robius, Makepad, the Linebender organization (behind Xilem and more), Dioxus, eGUI, Pax, wgpu, Slint UI, and more
 *
 
 
