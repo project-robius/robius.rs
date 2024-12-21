@@ -3,7 +3,7 @@
 *Author: [Kevin Boos](https://github.com/kevinaboos). Published December 28th, 2024.*
 
 
-This past year marked the first year of work on **Project Robius**: an open-source decentralized endeavor to enable anyone to write immersive, fully-featured apps in pure Rust that work seamlessly across all major platforms.
+This past year marked the first year of work on **Project Robius**: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure Rust that work seamlessly across all major platforms.
 
 > 🛈 Project Robius in a nutshell
 >
@@ -21,11 +21,10 @@ In this post, we'll take a look back on what we've accomplished so far to make t
 
 We'll also take a deeper look at **Robrix**,  a multi-platform [Matrix](https://matrix.org/) chat client written from scratch in Rust using the [Makepad UI toolkit] and Robius components.
 We started building Robrix about one year ago as a "flagship" Robius app to help drive the development (and priority) of various Robius components and demonstrate their utility.
-Since then, our plans for Robrix have expanded beyond just a basic Matrix client into the long-term, [multi-stage vision discussed later](#robrix-roadmap-for-2025-and-beyond).
 
 
 
-## Apps built in 2024 using Makepad + Project Robius
+## Apps built in 2024 using Makepad + Robius
 
 We (with help from many collaborators) have built both small proof-of-concept demo apps and larger "flagship" apps using Makepad + Robius. Two of the most complex flagship apps we've been developing in 2024 are:
 1. [Robrix]: a Matrix chat client for power users
@@ -34,10 +33,62 @@ We (with help from many collaborators) have built both small proof-of-concept de
 Both of these apps are fully open-source and have releases available on GitHub, in case you'd like to download and try them out.
 
 
-### 1. Robrix: an up-and-coming Matrix client for power users
+### 1. Robrix: an up-and-coming Matrix chat client for power users
 
-* TODO: add screenshots of Robrix
-* TODO: link to videos/presentations/slidedecks about Robrix
+We started Robrix about one year ago with the intention of it being a "flagship" Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
+Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage [vision for Robrix later in this article](#robrix-roadmap-for-2025-and-beyond).
+
+Robrix has come a long way over the past year, thanks to 750+ commits from 10 contributors!
+Since starting from scratch, we have created a functional Matrix chat client with most fundamental features already complete and working well, as shown by our feature status tracker below.
+
+![Robrix's feature status tracker](robrix_feature_status_tracker.png)
+
+
+With these features in place, we have began dogfooding Robrix as a daily Matrix client!
+
+While not all main features are complete, Robrix *does* already have some cool features that help both power users and casual users be more productive.
+The biggest unique feature of Robrix is an "IDE-like" desktop UI that can display multiple rooms side-by-side in separate tabs, which can be docked and moved around via drag-n-drop actions.
+No more wasted horizontal space!
+
+![Robrix side-by-side dockable tab UI](robrix_desktop_ui.png)
+
+Another cool feature is that Robrix's UI can automatically transition to different view layouts based on window size. This enables our single codebase to run seamlessly on desktop and mobile platforms, but you can also use any view on any platform if you want.
+For example, we frequently enjoy using the mid-size tablet view (below, left) or the narrow mobile view (below, middle) on a smaller laptop screen too, in addition to on our smartphones (below, right).
+
+<p float="left">
+  <img align="middle" alt="Robrix mid-size UI view" src="robrix_midsize_ui.png" width="43%" />
+  <img align="middle" alt="Robrix narrow mobile UI view of the rooms list" src="robrix_mobile_view_rooms_list.png" width="29.5%" /> 
+  &nbsp;
+  <img align="middle" alt="Robrix narrow mobile UI view on Android of a single room" src="robrix_android_view_single_room.png" width="24.5%" />
+</p>
+
+
+Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform.
+* `robius-open` to open URLs, images, and downloaded files
+* `robius-location` to obtain and share the user's current location in a Matrix room
+* `robius-url-handler` to register Robrix as a default handler for the `matrix:` URL scheme (and others)
+* `robius-directories` to ensure that we store app data and cached content in the platform-canonical directories
+* `robius-keychain` to store a user's login session tokens (this is a WIP)
+* In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by `robius-authentication`
+* `robius-packaging-commands` to help easily build app bundles for desktop platforms using cargo-packager
+
+
+In addition to a sleek UI and robust platform integration, Robrix is highly performant and efficient thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
+Our rough benchmarks show that Robrix can easily achieve over 120 FPS (TODO: measure this) on an older M1 Macbook Pro, even when displaying a dozen rooms side-by-side.
+Robrix achieves this while using only around 100MB of system memory, which is less than 25% of what most Electron-based Matrix desktop clients consume.
+* TODO: CPU Utilization??
+
+Most importantly, thanks to the power of Makepad and Robius, Robrix has zero platform-specific code.
+This makes it easy to maintain and develop features/bugfixes quickly, as you don't have to consider the idiosyncracies of each platform.
+Thus, we invite you to check out our codebase and contribute any cool missing features that you'd love to have!
+
+
+To learn more about Robrix, check out the following:
+* [Robrix on GitHub](https://github.com/project-robius/robrix)
+* [A recent conference talk about Robrix](https://www.youtube.com/watch?v=DO5C7aITVyU) ([PDF slides](https://github.com/project-robius/files/blob/main/GOSIM%20China%202024/Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf))
+* [Robrix's Project Tracker on GitHub](https://github.com/orgs/project-robius/projects/4/)
+* [Chat with us about Robrix on Matrix](https://matrix.to/#/#robius-robrix:matrix.org)
+
 
 
 ### 2. Moly: chat with local LLMs and custom AI agents
@@ -115,6 +166,7 @@ TODO: list crates that we've contributed to
     * Please get in touch if you're in this space and would like to join future meetups!
 * Thanks to Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI & App Dev concerns, and to share ideas, solutions, progress updates.
     * Attendees vary but often include teammembers from Robius, Makepad, the Linebender organization (behind Xilem and more), Dioxus, eGUI, Pax, wgpu, Slint UI, and more
+    * This has led to cross-pollination
 *
 
 
