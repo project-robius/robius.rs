@@ -56,11 +56,12 @@ Another cool feature is that Robrix's UI can automatically transition to differe
 For example, we frequently enjoy using the mid-size tablet view (below, left) or the narrow mobile view (below, middle) on a smaller laptop screen too, in addition to on our smartphones (below, right).
 
 <p float="left">
-  <img align="middle" alt="Robrix mid-size UI view" src="robrix_midsize_ui.png" width="43%" />
-  <img align="middle" alt="Robrix narrow mobile UI view of the rooms list" src="robrix_mobile_view_rooms_list.png" width="29.5%" /> 
+  <img align="middle" alt="Robrix mid-size UI view" src="robrix_midsize_ui.png" width="44.4%" />
+  <img align="middle" alt="Robrix narrow mobile UI view of the rooms list" src="robrix_mobile_view_rooms_list.png" width="28.5%" /> 
   &nbsp;
-  <img align="middle" alt="Robrix narrow mobile UI view on Android of a single room" src="robrix_android_view_single_room.png" width="24.5%" />
+  <img align="middle" alt="Robrix narrow mobile UI view on Android of a single room" src="robrix_android_view_single_room.png" width="23.5%" />
 </p>
+
 
 Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform:
 * `robius-open` to open URLs, images, and downloaded files
