@@ -62,15 +62,14 @@ For example, we frequently enjoy using the mid-size tablet view (below, left) or
   <img align="middle" alt="Robrix narrow mobile UI view on Android of a single room" src="robrix_android_view_single_room.png" width="24.5%" />
 </p>
 
-
-Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform.
+Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform:
 * `robius-open` to open URLs, images, and downloaded files
 * `robius-location` to obtain and share the user's current location in a Matrix room
 * `robius-url-handler` to register Robrix as a default handler for the `matrix:` URL scheme (and others)
 * `robius-directories` to ensure that we store app data and cached content in the platform-canonical directories
 * `robius-keychain` to store a user's login session tokens (this is a WIP)
-* In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by `robius-authentication`
 * `robius-packaging-commands` to help easily build app bundles for desktop platforms using cargo-packager
+* In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by `robius-authentication`
 
 
 In addition to a sleek UI and robust platform integration, Robrix is highly performant and efficient thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
@@ -110,7 +109,7 @@ We began working on these crates in late Spring of 2024; development has been a 
 
 * [`robius-location`]: access the current geolocation of the user's device
 * [`robius-authentication`]: display a native biometric or password authentication prompt
-* [`robius-open`]: open a URI or file in a different app (system-determined)
+* [`robius-open`]: open a URI or file in a different app (determined by the system)
 * [`robius-directories`]: access platform-standard directory locations for app data, user data, config, cache, etc
     * a fork of the [`directories`] crate that adds support for Android
 * [`robius-url-handler`]: register your Rust app as the default handler for a URL scheme or file association
@@ -220,5 +219,5 @@ TODO
 [`ndk-context`]: https://crates.io/crates/ndk-context
 [`Winit`]: https://crates.io/crates/winit
 [`robius-packaging-commands`]: https://github.com/project-robius/robius-packaging-commands
-[`robius-packaging-commands`]: https://github.com/project-robius/robius-file-dialog
+[`robius-file-dialog`]: https://github.com/project-robius/robius-file-dialog
 [`cargo-packager`]: https://crates.io/crates/cargo-packager 
