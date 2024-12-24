@@ -13,16 +13,16 @@ This past year marked the first year of work on **Project Robius**: an open-sour
 
  
 In this post, we'll take a look back on what we've accomplished so far to make the world of Rust App Dev a little better:
-* The crate abstractions we've published for accessing platform-provided features from Rust code
-* The major apps we've built using [Makepad] + Robius together
-* The contributions we've made to existing open-source projects in the App Dev space
-* The connections we've fostered throughout the Rust community
+1. The crate abstractions we've published for accessing platform-provided features from Rust code
+2. The major apps we've built using [Makepad] + Robius together
+3. The contributions we've made to existing open-source projects in the App Dev space
+4. The connections we've fostered throughout the Rust community
 
 
 We'll also take a deeper look at **Robrix**,  a multi-platform [Matrix](https://matrix.org/) chat client written from scratch in Rust using the [Makepad UI toolkit] and Robius components.
 
 
-## Robius crates for platform feature abstractions
+## 1. Robius crates for platform feature abstractions
 
 As our primary objective, we have published several crates intended to be used directly by app devs to access a given platform feature or OS service from their app. The main goal here is for each crate to offer a safe, platform-agnostic abstraction, such that the app dev need not worry about writing any platform-specific code or dealing with each platforms' idiosyncracies.
 
@@ -55,13 +55,13 @@ The above crates depend on these in various ways.
 ## Apps built in 2024 using Makepad + Robius
 
 We (with help from many collaborators) have built both small proof-of-concept demo apps and larger "flagship" apps using Makepad + Robius. Two of the most complex flagship apps we've been developing in 2024 are:
-1. [Robrix]: a Matrix chat client for power users
-2. [Moly]: a local LLM chat runtime and AI agent explorer (previously "Moxin")
+* [Robrix]: a Matrix chat client for power users
+* [Moly]: a local LLM chat runtime and AI agent explorer (previously "Moxin")
 
 Both of these apps are fully open-source and have releases available on GitHub, in case you'd like to download and try them out.
 
 
-### 1. Robrix: an up-and-coming Matrix chat client for power users
+### Robrix: an up-and-coming Matrix chat client for power users
 
 We started Robrix about one year ago with the intention of it being a "flagship" Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
 Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage [vision for Robrix later in this article](#robrix-roadmap-for-2025-and-beyond).
@@ -118,7 +118,7 @@ To learn more about Robrix, check out the following:
 
 
 
-### 2. Moly: chat with local LLMs and custom AI agents
+### Moly: chat with local LLMs and custom AI agents
 
 TODO: describe Moly in a general sense, provide a screenshot. Explain how it has driven development of Makepad features like fundamental widgets (modals, sliding panels, etc).
 
@@ -129,33 +129,46 @@ Most of Project Robius's work (my work) on Moly was spread across these directio
 3. Creating packaging logic and configuring the build tooling to generate Moly app bundles that work across all 3 major desktop platforms
 
 
-## Contributions to other Rust app dev projects
+## 3. Select contributions to other Rust app dev projects
 In addition to creating, maintaining, and publishing our own crates for Rust app dev, we also strive to contribute to and improve existing crates that are already prominently used in the ecosystem.
 
-TODO: list crates that we've contributed to
+* We began using and making contributions to [`cargo-packager`], a packaging solution for Rust apps on Desktop target platforms created and open-sourced by Crab-Nebula, the folks behind the excellent Tauri ecosystem
+    * [Our contributions](https://github.com/crabnebula-dev/cargo-packager/pulls?q=author%3Akevinaboos) were mostly minor bugfixes and improvements to allow the packaging infrastructure to be configured more flexibly
+    * As previously mentioned, we published [`robius-packaging-commands`], a companion to `cargo-packager` that makes it easier to build & configure complex apps
+        * Automatically calculates the set of dependencies for Debian `.deb` packages
+        * Automatically handles Makepad configuration and resource/asset discovery & bundling
+    * We intend to add support for other Desktop package formats, namely Flatpack
+    * We also plan to contribute support for generating mobile app bundles, namely Android
 
-* Project Robius started using and making contributions to [`cargo-packager`], a packaging solution for Rust apps on Desktop target platforms created and open-sourced by Crab-Nebula, the folks behind the excellent Tauri ecosystem
-  * We plan to contribute support for generating mobile app bundles, namely Android, to cargo-packager
-  * We also intend to add support for other Desktop package formats, namely Flatpack
-* [`robius-packaging-commands`]: a companion to `cargo-packager` that makes it easier to build & configure complex apps
-  * Automatically handles Makepad configuration and resource/asset discovery & bundling
 
-* We have made myriad major contributions to the Makepad UI toolkit, as Robrix and Moly are two of the most complex apps built in Makepad
+* We have made [myriad major contributions](https://github.com/makepad/makepad/pulls?q=author%3Akevinaboos) to the Makepad UI toolkit, as Robrix and Moly are two of the most complex apps built in Makepad
     * Improvements to `PortalList`, a virtual viewport list with infinite scrolling
         * Better API with more introspection into the positional & visibility state of items in the list, its scrolling state, and its item caching behavior
         * Efficient implementations of smooth scrolling animations, e.g., jump to bottom or jump to a given item index
-    * Multiple new widgets: Avatar images with text fallback,
-    * Improvements to the underlying Android platform layer
-    * An app lifecycle model with dedicated Events for all lifecycle stages, which is consistent across all platforms
-    * Easier and more ergonomic `Actions` (widget-to-widget message events), plus support for delivering an action to a widget from a background thread or async task context
-    * Rich text formatting, used to display both HTML and Markdown content
-    * TODO: list others things we added to makepad
-   
-   
+        * Redesign how items are stored and indexed, and how visible items are tracked
+    * Rich text formatting for displaying both HTML and Markdown content
+        * Including support for most formatting-relevant tags: (un)ordered lists, strikethrough/underline, coloring, indentation, blockquote, code, etc.
+        * Special handling of interactive components like HTML links, which must preserve external formatting
+    * Multiple new widgets: avatar images with text fallback, abstractions over rich (HTML) text and plaintext, modals, sliding panes, etc
+    * Make writing event handlers more ergonomic by avoiding mutable borrows when querying views/widgets
+    * Redesign of underlying Android platform layer to allow external crates to access Android system states
+    * Enable correct discovery of resource/asset files in macOS/iOS app bundles
+    * Many improvements to `cargo-makepad`, a build tool to generate mobile app packages
+        * Overhaul code to generate Android APKs
+        * Properly install/configure the NDK toolchain on all 3 desktop platforms, plus enable building native code (via `cc-rs`)
+        * Ensure backwards compatibility with standard Android Studio-managed SDKs
+    * An improved app lifecycle model with dedicated events for all lifecycle stages, which is consistent across all platforms
+    * Easier and more ergonomic `Actions` (widget-to-widget message events)
+        * Plus support for delivering an action to a widget from a background thread or async task context
+
+* [Our contributions](https://github.com/kornelski/rust-security-framework/pull/210) to the [`security-framework`] crate, which offers Rust bindings to Apple's security framework (for TLS, keychain, etc)
+    * We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement [`robius-keychain`]
+
+* While not a direct contribution, we implemented a Rust auto-installer and configurer for the [Wasmedge WASM runtime]
+    * This massively simplifies both the developer build process and user installation procedure for Moly, which relies on Wasmedge to run LLMs locally.
 
 
-
-## Cross-collaboration with other UI and App Dev orgs
+## 4. Cross-collaboration with other UI and App Dev orgs
 * Project Robius hosted an App Dev unconference at RustNL 2024 (and also GOSIM Beijing 2024), in which a few dozen Rust developers from across the world met up to discuss the shared problems we all face in developing Rust apps and UI toolkits.
     * A few of the topics & ideas we discussed there have already made it past the discussion phase and have become real projects!
         * `kittest`: a universal UI testing framework built upon the AccessKit accessibility framework, spearheaded by the eGUI team!
@@ -164,6 +177,7 @@ TODO: list crates that we've contributed to
     * Please get in touch if you're in this space and would like to join future meetups!
 * Thanks to Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI & App Dev concerns, and to share ideas, solutions, progress updates.
     * Attendees vary, but often include teammembers from Robius, Makepad, the Linebender organization (behind Xilem and more), Dioxus, eGUI, Pax, wgpu, Slint UI, and more
+
 *
 
 
@@ -219,3 +233,4 @@ TODO
 [`robius-packaging-commands`]: https://github.com/project-robius/robius-packaging-commands
 [`robius-file-dialog`]: https://github.com/project-robius/robius-file-dialog
 [`cargo-packager`]: https://crates.io/crates/cargo-packager 
+[`security-framework`]: https://crates.io/crates/security-framework
