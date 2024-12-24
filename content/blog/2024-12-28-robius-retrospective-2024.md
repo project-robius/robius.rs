@@ -186,9 +186,48 @@ If you're in the Rust App Dev or UI space and would like to join future meetups,
 
 ## Roadmap for 2025
 
-### Project Robius Roadmap
+As a technical organization, Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
+In terms of technical goals, our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible. 
+Our targeted platform features include (in rough priority order):
+* file/image/media picker (in progress)
+* system notifications (in progress)
+* toasts, pop-up messages, status bar
+* long-running background tasks/services
+* system file/media store
+* native context menus
+* camera access & configuration
+* audio input (microphone)
+* system themeing state (e.g., dark mode)
+* connectivity manager/subscriber
+* power/battery status
+* haptics/vibration
 
-TODO
+
+TODO: mention concurrency management library with an interface that can help app devs easily write highly-performant apps that never block or bog down the main UI thread. We envision easy interfaces to offload code to background threads or async tasks, as well as for exchanging data between these background contexts and the performance-sensitive the UI main thread.
+-- built on an abstraction that offers a compile-time token that can statically ensure whether something is executing on the main thread. (In Makepad, this is a non-Send/non-Sync reference to the UI contenxt `&mut Cx`)
+
+
+We also aim to improve the state of build tooling such that the app developer themself can be relieved from the burden of managing and figuring out platform-specific details, such as permissions/entitlements that their app requires in order to build and run properly on mobile platforms like Android and iOS.
+In other words, we'd like to be able to auto-generate a fully-formed Android manifest or Apple `Info.plist` file with all of the necessary permissions that your app requires, without requiring the app dev to possess expert knowledge about the requirements of their app's dependencies and transitive dependencies.
+ (TODO: mention the idea for automatically determining the requirements that deeply nested crates in the dependency graph have, e.g., . For this, we can mention Dioxus's approach towards resource management by leveraging special linker sections, which we can also leverage for enumerating and specifying required permissions in a standardized way. This can also be used across multiple UI toolkits arbitrarily, not just our current focus of Makepad.)
+
+
+TODO: finish writing the overall roadmap
+
+
+
+In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelies) with other Rust UI toolkits, e.g., Dioxus.
+Our first year of development has been centered on Makepad, in the sense that we've built two full-size Makepad apps, contributed significantly to Makepad itself, and have focused on test-driving our crates using Makepad apps (see [`robius-demo-simple`]).
+Now that we have successfully realized several platform feature abstraction crates, we would like to ensure that these can be easily utilized by apps built in other UI toolkits, e.g., Dioxus.
+TODO: mention Dioxus's [`dioxus-std`] and how we would like `robius-*` crates to fill in the gaps therein.
+
+
+
+On the organizational side, we intend to sponsor two more conferences for open-source Rust development and host informal Rust app dev unconferences co-located with those conferences. 
+The first will be [RustWeek 2025](https://rustweek.org/) (formerly "RustNL") in the Netherlands in May, and the second will be [GOSIM China](https://china2024.gosim.org/) in autumn 2025.
+With these (un)conferences, we aim to bring community members together again to collaborate, share ideas, and further advance the state-of-the-art for App Dev and UI in Rust.
+
+
 
 ### Robrix Roadmap for 2025 and beyond
 
@@ -230,3 +269,5 @@ TODO
 [`cargo-packager`]: https://crates.io/crates/cargo-packager 
 [`security-framework`]: https://crates.io/crates/security-framework
 [`kittest`]: https://crates.io/crates/kittest
+[`robius-demo-simple`]: https://github.com/project-robius/robius-demo-simple
+[`dioxus-std`]: https://dioxuslabs.com/learn/0.5/contributing/roadmap/#mobile
