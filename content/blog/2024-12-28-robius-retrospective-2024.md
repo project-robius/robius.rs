@@ -52,7 +52,7 @@ The above crates depend on these in various ways.
 
 
 
-## Apps built in 2024 using Makepad + Robius
+## 2. Apps built in 2024 using Makepad + Robius
 
 We (with help from many collaborators) have built both small proof-of-concept demo apps and larger "flagship" apps using Makepad + Robius. Two of the most complex flagship apps we've been developing in 2024 are:
 * [Robrix]: a Matrix chat client for power users
@@ -169,16 +169,18 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
 
 
 ## 4. Cross-collaboration with other UI and App Dev orgs
-* Project Robius hosted an App Dev unconference at RustNL 2024 (and also GOSIM Beijing 2024), in which a few dozen Rust developers from across the world met up to discuss the shared problems we all face in developing Rust apps and UI toolkits.
-    * A few of the topics & ideas we discussed there have already made it past the discussion phase and have become real projects!
-        * `kittest`: a universal UI testing framework built upon the AccessKit accessibility framework, spearheaded by the eGUI team!
-        * Dioxus's work on hotreloading not just UI DSL code, but even real Rust code that implements app behavior!
-        * Feedback given to the Rust lang & libs teams. We hope these changes to Rust itself will make future Rust apps easier to write, with simplified and more ergonomic code patterns for async and more (TODO: link auto-clone issue)
-    * Please get in touch if you're in this space and would like to join future meetups!
-* Thanks to Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI & App Dev concerns, and to share ideas, solutions, progress updates.
-    * Attendees vary, but often include teammembers from Robius, Makepad, the Linebender organization (behind Xilem and more), Dioxus, eGUI, Pax, wgpu, Slint UI, and more
+Beyond publishing crates and developing apps, we also want to bring together people of all stripes across the Ruist UI and App Dev ecosystem.
+To that end, Project Robius hosted an [App Dev unconference](https://2024.rustnl.org/unconf/) at RustNL 2024 (and also GOSIM Beijing 2024), in which a few dozen Rust developers from across the world met up to discuss the shared problems we all face in developing Rust apps and UI toolkits.
+We discussed everything from build tooling to text layout, accessibility, Winit compatibility, and more.
+A few of the topics & ideas from the unconference(s) have already made it past the discussion phase and have become real projects!
+* [`kittest`]: a universal UI testing framework built upon the AccessKit accessibility framework, spearheaded by the eGUI team!
+* [Dioxus's work on hotreloading](https://www.reddit.com/r/rust/comments/1ezdjqx/media_i_added_instant_hotreloading_of_some_rust/) not just UI DSL code, but even real Rust code that implements app behavior!
+* Feedback given to the Rust project teams, primarily lang, libs, and compiler.
+    * We focused on changes to Rust that will make future Rust apps easier to write, with simplified and more ergonomic code patterns for async and more.
 
-*
+In addition, thanks to our colleague Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI & App Dev concerns, and to share ideas, solutions, progress updates.
+Attendees vary, but often include teammembers from [Robius](https://robius.rs/), [Makepad](https://makepad.nl/), the [Linebender organization](https://linebender.org/) (behind Xilem and more), [Dioxus](https://dioxuslabs.com/), [eGUI](https://github.com/emilk/egui), [Pax](https://www.pax.dev/), [wgpu](https://github.com/gfx-rs/wgpu), [Slint](https://slint.dev/), and more.
+If you're in the Rust App Dev or UI space and would like to join future meetups, consider getting in touch!
 
 
 
@@ -195,21 +197,14 @@ TODO
 
 
 ## Acknowledgments
-* Jorge
-* Julian
-* Facundia
-* Klim
-* TODO:Make sure I didn't forget any contributors
-* Cassaundra
-* Makepad team: Rik Arends, Eddy Bruel, Sebastian
-* Alex Zhang
-    * Contributors funded by him to work on Robrix: Tyrese, Alan, Lu
-* My colleagues who provide invaluable guidance, technical advice, and community connections
-    * Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren
-* Linebender teammembers, for technical recommendations and exchanging ideas
-* Various open-source contributors:
-    * TODO: check Robrix history for other contributors
-
+* The Makepad team: [Rik Arends](https://x.com/rikarends), [Eddy Bruël](https://github.com/ejpbruel2), [Sebastian Michailidis](https://twitter.com/SebMichailidis)
+* [Klim Tsoutsman](https://github.com/tsoutsman)
+* [WyeWorks](https://www.wyeworks.com/) developers: [Jorge Bejar](https://github.com/jmbejar),  [Julián Montes de Oca](https://github.com/joulei), [Facundo Mendizábal](https://github.com/fmzbl)
+* [Alex Zhang (Zhang Han Dong)](https://github.com/ZhangHanDong) and several contributors overseen by him: [@alanpoon](https://github.com/alanpoon), [@aaravlu](https://github.com/alanpoon), [@tyreseluo](https://github.com/tyreseluo), [@Guocork](https://github.com/Guocork)
+* [Cassaundra](https://github.com/cassaundra)
+* My colleagues who provide invaluable guidance, technical advice, and community connections: Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren
+* Linebender teammembers, for technical recommendations and serving as a sounding board for exchanging ideas
+* [@smarizvi110](https://github.com/smarizvi110) and other miscellaneous contributors from the open-source community
 
 
 
@@ -234,3 +229,4 @@ TODO
 [`robius-file-dialog`]: https://github.com/project-robius/robius-file-dialog
 [`cargo-packager`]: https://crates.io/crates/cargo-packager 
 [`security-framework`]: https://crates.io/crates/security-framework
+[`kittest`]: https://crates.io/crates/kittest
