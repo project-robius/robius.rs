@@ -63,7 +63,7 @@ Both of these apps are fully open-source and have releases available on GitHub, 
 
 ### Robrix: an up-and-coming Matrix chat client for power users
 
-We started Robrix about one year ago with the intention of it being a "flagship" Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
+We started [Robrix] about one year ago with the intention of it being a "flagship" Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
 Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage [vision for Robrix later in this article](#robrix-roadmap-for-2025-and-beyond).
 
 Robrix has come a long way over the past year, thanks to 750+ commits from 10 contributors!
@@ -120,13 +120,28 @@ To learn more about Robrix, check out the following:
 
 ### Moly: chat with local LLMs and custom AI agents
 
-TODO: describe Moly in a general sense, provide a screenshot. Explain how it has driven development of Makepad features like fundamental widgets (modals, sliding panels, etc).
+[Moly] (formerly *Moxin*) is a pure Rust GUI client for running local Large Language Models (LLMs) and chatting with various AI agents.
+You can discover, browse, and download major open-source AI models:
+![Moly's discover LLM screen](moly_discover_screen.png)
+and then chat with them *locally* without contacting any hosted LLM service.
+![Moly's LLM chat screen](moly_chat_screen.png)
 
 
-Most of Project Robius's work (my work) on Moly was spread across these directions:
-1. Standardizing app behaviors to be more platform-compliant and canonical
-2. Implementing a Rust-based installer and configurator for the [Wasmedge WASM runtime], which is what Moly uses to run LLMs locally
-3. Creating packaging logic and configuring the build tooling to generate Moly app bundles that work across all 3 major desktop platforms
+Like Robrix, Moly was started about one year ago completely from scratch, and has been a significant driver for the development of fundamental Makepad widgets, components, and Robius infrastructure.
+For example, Project Robius contributions to Moly and to other projects (at the request of Moly) were driven by these needs:
+* Better packaging logic and build configuration, which became [`robius-packaging-commands`].
+  * This cooperates with `cargo-packager` to generate Moly app bundles for all 3 major desktop platforms.
+* Portable Rust installation & setup "scripts" that run before the GUI app starts, which became [`moly-runner`].
+  * This was needed to install and configure the [WasmEdge WASM runtime], which is how Moly runs LLMs locally.
+  * This is also useful for setting up the complex WasmEdge + Moly development environment in just one click.
+* Many new Makepad widgets: modals, pop-up notifications, sliding panels, draggable sliders, etc.
+* Standardized app behaviors to be more platform-compliant and canonical, e.g., proper use of app data directories.
+
+
+
+To learn more about Moly, check out [this blog post](https://dev.to/zhanghandong/moly-an-open-source-llm-client-implemented-in-pure-rust-1hmd) that demonstrates more cool features, screenshots, and examples of what you can do with Moly.
+Due to constraints from the underlying WasmEdge runtime, Moly currently runs only on major desktop platforms (Linux, macOS, Windows), but support for iOS and Android is planned.
+
 
 
 ## 3. Select contributions to other Rust app dev projects
@@ -141,7 +156,7 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
     * We also plan to contribute support for generating mobile app bundles, namely Android
 
 
-* We have made [myriad major contributions](https://github.com/makepad/makepad/pulls?q=author%3Akevinaboos) to the Makepad UI toolkit, as Robrix and Moly are two of the most complex apps built in Makepad
+* We have made [myriad major contributions](https://github.com/makepad/makepad/pulls?q=author%3Akevinaboos) to the Makepad UI toolkit, as Robrix and Moly are two of the most complex/demanding apps built in Makepad
     * Improvements to `PortalList`, a virtual viewport list with infinite scrolling
         * Better API with more introspection into the positional & visibility state of items in the list, its scrolling state, and its item caching behavior
         * Efficient implementations of smooth scrolling animations, e.g., jump to bottom or jump to a given item index
@@ -164,8 +179,9 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
 * [Our contributions](https://github.com/kornelski/rust-security-framework/pull/210) to the [`security-framework`] crate, which offers Rust bindings to Apple's security framework (for TLS, keychain, etc)
     * We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement [`robius-keychain`]
 
-* While not a direct contribution, we implemented a Rust auto-installer and configurer for the [Wasmedge WASM runtime]
-    * This massively simplifies both the developer build process and user installation procedure for Moly, which relies on Wasmedge to run LLMs locally.
+* We implemented a Rust auto-installer and configurer for the [WasmEdge WASM runtime], as mentioned [above](#moly-chat-with-local-llms-and-custom-ai-agents)
+    * This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on Wasmedge to run LLMs locally.
+    * We hope to transform this into the official install script for WasmEdge and upstream it for general usage there, as much of the effort involved was devoted to extracting the precise system configuration required to select and install the proper WasmEdge release.
 
 
 ## 4. Cross-collaboration with other UI and App Dev orgs
@@ -186,18 +202,19 @@ If you're in the Rust App Dev or UI space and would like to join future meetups,
 
 ## Roadmap for 2025
 
-As a technical organization, Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
-In terms of technical goals, our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible. 
+On the technical side, Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
+Our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible. 
 Our targeted platform features include (in rough priority order):
 * file/image/media picker (in progress)
-* system notifications (in progress)
-* toasts, pop-up messages, status bar
-* long-running background tasks/services
+* native system notifications (in progress)
+* toasts, pop-up messages, status bar icons
+  * We have implemented this in Makepad, but not with native widgets commonly used on Mobile platforms
+* Spawning long-running background tasks/services
 * system file/media store
 * native context menus
 * camera access & configuration
 * audio input (microphone)
-* system themeing state (e.g., dark mode)
+* system themeing choices (e.g., dark mode, key colors)
 * connectivity manager/subscriber
 * power/battery status
 * haptics/vibration
@@ -216,7 +233,7 @@ TODO: finish writing the overall roadmap
 
 
 
-In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelies) with other Rust UI toolkits, e.g., Dioxus.
+In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelines) with other Rust UI toolkits, e.g., Dioxus.
 Our first year of development has been centered on Makepad, in the sense that we've built two full-size Makepad apps, contributed significantly to Makepad itself, and have focused on test-driving our crates using Makepad apps (see [`robius-demo-simple`]).
 Now that we have successfully realized several platform feature abstraction crates, we would like to ensure that these can be easily utilized by apps built in other UI toolkits, e.g., Dioxus.
 TODO: mention Dioxus's [`dioxus-std`] and how we would like `robius-*` crates to fill in the gaps therein.
@@ -252,6 +269,8 @@ TODO
 [Moly]: https://github.com/moxin-org/moly
 [Makepad]: https://makepad.nl/
 [Makepad UI toolkit]: https://makepad.nl/
+[WasmEdge WASM Runtime]: https://wasmedge.org/
+[`moly-runner`]: https://github.com/moxin-org/moly/blob/a82d297b155fa64efd2cdb5d6b14c89148a1c70b/moly-runner/src/main.rs
 [`robius-location`]: https://github.com/project-robius/robius-location
 [`robius-authentication`]: https://crates.io/crates/robius-authentication
 [`robius-open`]: https://crates.io/crates/robius-open
