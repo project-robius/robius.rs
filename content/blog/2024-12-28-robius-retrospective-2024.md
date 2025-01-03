@@ -120,7 +120,7 @@ To learn more about Robrix, check out the following:
 
 ### Moly: chat with local LLMs and custom AI agents
 
-[Moly] (formerly *Moxin*) is a pure Rust GUI client for running local Large Language Models (LLMs) and chatting with various AI agents.
+[Moly] (f.k.a. *Moxin*) is a pure Rust GUI client for running local Large Language Models (LLMs) and chatting with various AI agents.
 You can discover, browse, and download major open-source AI models:
 ![Moly's discover LLM screen](moly_discover_screen.png)
 and then chat with them *locally* without contacting any hosted LLM service.
@@ -202,44 +202,69 @@ If you're in the Rust App Dev or UI space and would like to join future meetups,
 
 ## Roadmap for 2025
 
-On the technical side, Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
-Our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible. 
+Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
+
+#### More Rust abstractions for platform features 
+As a technical organization, our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible. 
 Our targeted platform features include (in rough priority order):
-* file/image/media picker (in progress)
-* native system notifications (in progress)
-* toasts, pop-up messages, status bar icons
-  * We have implemented this in Makepad, but not with native widgets commonly used on Mobile platforms
+* File/image/media picker (in progress)
+* Native system notifications (in progress)
+* Toasts, pop-up messages, status bar icons
+    * We have implemented this in Makepad, but not with native widgets commonly used on Mobile platforms
 * Spawning long-running background tasks/services
-* system file/media store
-* native context menus
-* camera access & configuration
-* audio input (microphone)
-* system themeing choices (e.g., dark mode, key colors)
-* connectivity manager/subscriber
-* power/battery status
-* haptics/vibration
+* System file/media store
+* Native context menus
+    * Same status as toasts above.
+* Camera access & configuration
+* Audio input (microphone)
+* System theming choices (e.g., dark mode, key colors)
+* Connectivity manager/subscriber
+* Power/battery status
+* Haptics/vibration
 
 
-TODO: mention concurrency management library with an interface that can help app devs easily write highly-performant apps that never block or bog down the main UI thread. We envision easy interfaces to offload code to background threads or async tasks, as well as for exchanging data between these background contexts and the performance-sensitive the UI main thread.
--- built on an abstraction that offers a compile-time token that can statically ensure whether something is executing on the main thread. (In Makepad, this is a non-Send/non-Sync reference to the UI contenxt `&mut Cx`)
+#### Better, more automated build tooling
+Another topic dear to our hearts is build tooling.
+We aim to improve the state of build tools such that the app developer themself can be relieved from the burden of managing and figuring out platform-specific details, such as which permissions/entitlements their app requires to build and run properly on mobile platforms.
+Ideally, we'd like to be able to auto-generate a fully-formed Android XML manifest or Apple `Info.plist` file with all of the necessary permissions that an app requires, without requiring the app dev to possess expert knowledge about the requirements of their app's dependencies and transitive dependencies.
+
+One such idea for realizing this is have each `robius-*` platform feature abstraction crate automatically emit its required permissions during the build process.
+Exactly *how* to export and encode this information is still up in the air, but we have discussed leveraging a linker-based approach similar to what [Dioxus's manganis project](https://github.com/DioxusLabs/manganis) does to encode resource/asset paths into special linker sections.
+This would allow a top-level tool to run after the `cargo build` process, and inspect the binary's special linker sections in order to automatically generate a full permissions/entitlements file for the given target platform.
+We envision that this could also be used for other arbitrary UI toolkits, not just Makepad, as well as emitted by other platform abstraction crates outside of the `robius-*` organization.
+
+ <!-- that deeply nested crates in the dependency graph have, e.g., location permissions. For this, we can mention Dioxus's approach towards resource management by leveraging special linker sections, which we can also leverage for enumerating and specifying required permissions in a standardized way.  -->
 
 
-We also aim to improve the state of build tooling such that the app developer themself can be relieved from the burden of managing and figuring out platform-specific details, such as permissions/entitlements that their app requires in order to build and run properly on mobile platforms like Android and iOS.
-In other words, we'd like to be able to auto-generate a fully-formed Android manifest or Apple `Info.plist` file with all of the necessary permissions that your app requires, without requiring the app dev to possess expert knowledge about the requirements of their app's dependencies and transitive dependencies.
- (TODO: mention the idea for automatically determining the requirements that deeply nested crates in the dependency graph have, e.g., . For this, we can mention Dioxus's approach towards resource management by leveraging special linker sections, which we can also leverage for enumerating and specifying required permissions in a standardized way. This can also be used across multiple UI toolkits arbitrarily, not just our current focus of Makepad.)
 
 
-TODO: finish writing the overall roadmap
-
-
-
-In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelines) with other Rust UI toolkits, e.g., Dioxus.
+#### Effortless integration with other UI toolkits
+In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelines) with other Rust UI toolkits, e.g., Dioxus, eGUI, and more.
 Our first year of development has been centered on Makepad, in the sense that we've built two full-size Makepad apps, contributed significantly to Makepad itself, and have focused on test-driving our crates using Makepad apps (see [`robius-demo-simple`]).
-Now that we have successfully realized several platform feature abstraction crates, we would like to ensure that these can be easily utilized by apps built in other UI toolkits, e.g., Dioxus.
-TODO: mention Dioxus's [`dioxus-std`] and how we would like `robius-*` crates to fill in the gaps therein.
+Thus, using Robius components in a Makepad app is quite easy for the app developer.
+
+Now that we have successfully realized several platform feature abstraction crates, we would like to ensure that these can be easily utilized by apps built in other UI toolkits.
+For example, one specific secondary goal for this year is to explore how `robius-*` crates could comprise Dioxus's [`dioxus-std`] library and fill in the gaps in their mobile platform support.
 
 
+Another related goal is to design a UI-focused concurrency management library with an interface that helps app devs easily write high-performance apps that never block or bog down the main UI thread with long-running operations.
+We envision easy interfaces to offload code to background threads or async tasks, as well as for exchanging data between these background contexts and the performance-sensitive the UI main thread.
+The inability to easily invoke async functions from the UI main thread (without causing performance hiccups) is a long-running frustration we have had when developing Robrix, as many SDKs are written with a hard dependency on an async executor, typically tokio.
 
+
+> To understand this concurrency challenge in more detail, [watch this presentation on Robrix (starting from 23:10)](https://youtu.be/DO5C7aITVyU?si=N_10UZBCR5g-w2D4&t=1390) or [check out slides 26-33 here](https://github.com/project-robius/files/blob/main/GOSIM%20China%202024/Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf).
+
+
+A key component of this is an abstraction for a *compile-time token* that statically ensures whether code is executing within the context of the main UI thread context.
+Such a type must be both non-`Send` and non-`Sync`, and only possible to construct on the main UI thread.
+This token is necessary because most platforms require many of their platform-provided APIs to be invoked on the main thread, and it's significantly better to check this at compile time than via a runtime assertion.
+We have realized this for Makepad via a mutable reference to the [context type](https://github.com/makepad/makepad/blob/0084948c176a99740af92a71578543c3fcc0b63f/platform/src/cx.rs#L55) `&mut Cx`, which is created only on the main UI thread and then passed as a mutable reference to all of the [event handlers and draw routines](https://github.com/makepad/makepad/blob/0084948c176a99740af92a71578543c3fcc0b63f/widgets/src/widget.rs#L45-L110).
+
+
+While this sort of concurrency library and statically-determinable thread context abstraction is highly desirable, it is also admittedly a longer-term goal that merits major effort beyond just 2025.
+
+
+#### Organizing more conferences & meet-ups
 On the organizational side, we intend to sponsor two more conferences for open-source Rust development and host informal Rust app dev unconferences co-located with those conferences. 
 The first will be [RustWeek 2025](https://rustweek.org/) (formerly "RustNL") in the Netherlands in May, and the second will be [GOSIM China](https://china2024.gosim.org/) in autumn 2025.
 With these (un)conferences, we aim to bring community members together again to collaborate, share ideas, and further advance the state-of-the-art for App Dev and UI in Rust.
