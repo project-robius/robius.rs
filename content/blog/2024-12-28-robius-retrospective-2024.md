@@ -273,11 +273,44 @@ With these (un)conferences, we aim to bring community members together again to 
 
 ### Robrix Roadmap for 2025 and beyond
 
-TODO
+While Robrix is off to a strong start, we still have a long way to go.
+We have planned several high-level phases of Robrix development over the next 18-24 months:
+1. Release an alpha version of Robrix with most fundamental Matrix features available.
+    * Realize sufficient functionality to be usable as a daily driver, but not yet to be a complete replacement for existing clients.
+    * This is nearly complete! See [Milestone 1](https://github.com/project-robius/robrix/milestone/1) on our GitHub page.
+2. Publish Robrix v1.0 with full Matrix functionality, for "power" users.
+    * Offer a responsive UI design with a dockable, multi-tab view of many rooms side-by-side, which also adapts to varying screen sizes (mobile, desktop, etc).
+        * ✅ This is already complete! ([as described above](#robrix-an-up-and-coming-matrix-chat-client-for-power-users))
+    * Achieve feature parity with existing major clients, including administrative features like a full settings pane, session management, room creation/admin, message search, threads, spaces, etc.
+        * See [Milestone 2](https://github.com/project-robius/robrix/milestone/2) on our GitHub page for more details.
+        * Generally, these features are *not* drivers of Robius development, as they don't require complex platform features, so they were initially lower priority.
+    * Distribute Robrix app bundles to platform app stores and package managers.
+3. Integrate local LLM runtimes (like [Moly](#moly-chat-with-local-llms-and-custom-ai-agents)) for powerful, advanced convenience features.
+    * LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from "what you missed" after a holiday.
+        > Here's an example UI prototype:
+        >
+        > <img alt="A prototype UI design for AI LLMs alongside Matrix rooms in Robrix" src="robrix_moly_prototype.png" width="45%" />
+    * AI chatbots can assist newcomers in large open-source projects by auto-answering FAQs, either privately or publicly to allow for additional interaction from real expert users.
+    * Key point: *fully-local* LLM runtimes **cannot jeopardize E2EE rooms or user data sovereignty**.
+4. Go beyond Matrix: Robrix as a central "hub" for federated & open-source services
+    * Collect multiple services into a unified app view, including ActivityPub-based microblogs (e.g., [Mastodon]), views of source code and related issues/pull requests, discussion forums (e.g., [Lemmy]), and more. 
+        * The exact set of supported services are TBD.
+    * The availability of many services in a single app context can enable unique combo features, such as a combined activity feed of notifications + news from various sources, or easy one-click broadcasting of project updates to multiple communities across different services.
 
+
+5. *[Long-term]* Explore how to use decentralized identity providers like [OpenWallet] to login to Robrix-supported services.
+    * Use Robrix as the first experimental testing ground for integrating a device-local wallet app as an ID provider for Matrix authentication. 
+    * For more info, check out [this presentation by Wenjing Chu, an OpenWallet expert](https://www.youtube.com/watch?v=eq9pnYB5-Xk) from the Matrix Conference 2024.
+
+
+While many of these are larger endeavors, we anticipate being able to complete at least milestones 1, 2, and 3 by the end of this coming year.
 
 
 ## Acknowledgments
+If you made it this far, thanks for reading! You must be a true fan of Rust app dev 😊!
+
+Before we depart, I'd like to thank the following key people who have been instrumental to the success of Project Robius over the past year.
+
 * The Makepad team: [Rik Arends](https://x.com/rikarends), [Eddy Bruël](https://github.com/ejpbruel2), [Sebastian Michailidis](https://twitter.com/SebMichailidis)
 * [Klim Tsoutsman](https://github.com/tsoutsman)
 * [WyeWorks](https://www.wyeworks.com/) developers: [Jorge Bejar](https://github.com/jmbejar),  [Julián Montes de Oca](https://github.com/joulei), [Facundo Mendizábal](https://github.com/fmzbl)
@@ -295,6 +328,9 @@ TODO
 [Makepad]: https://makepad.nl/
 [Makepad UI toolkit]: https://makepad.nl/
 [WasmEdge WASM Runtime]: https://wasmedge.org/
+[OpenWallet]: https://openwallet.foundation/
+[Mastodon]: https://joinmastodon.org/
+[Lemmy]: https://join-lemmy.org/
 [`moly-runner`]: https://github.com/moxin-org/moly/blob/a82d297b155fa64efd2cdb5d6b14c89148a1c70b/moly-runner/src/main.rs
 [`robius-location`]: https://github.com/project-robius/robius-location
 [`robius-authentication`]: https://crates.io/crates/robius-authentication
