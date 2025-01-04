@@ -58,7 +58,7 @@ We (with help from many collaborators) have built both small proof-of-concept de
 * [Robrix]: a Matrix chat client for power users
 * [Moly]: a local LLM chat runtime and AI agent explorer (previously "Moxin")
 
-Both of these apps are fully open-source and have releases available on GitHub, in case you'd like to download and try them out.
+Both of these apps are fully open-source and have releases available on GitHub, in case you'd like to download and try them out. (However, it's best to build them from source for the most up-to-date experience.)
 
 
 ### Robrix: an up-and-coming Matrix chat client for power users
@@ -200,7 +200,7 @@ If you're in the Rust App Dev or UI space and would like to join future meetups,
 
 
 
-## Roadmap for 2025
+## Project Robius Roadmap for 2025
 
 Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
 
@@ -271,7 +271,7 @@ With these (un)conferences, we aim to bring community members together again to 
 
 
 
-### Robrix Roadmap for 2025 and beyond
+## Robrix Roadmap for 2025 and beyond
 
 While Robrix is off to a strong start, we still have a long way to go.
 We have planned several high-level phases of Robrix development over the next 18-24 months:
