@@ -100,10 +100,12 @@ Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integra
 * In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by `robius-authentication`
 
 
+* TODO: confirm the below measurements. Add CPU Utilization??
+
 In addition to a sleek UI and robust platform integration, Robrix is highly performant and efficient thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
-Our rough benchmarks show that Robrix can easily achieve over 120 FPS (TODO: measure this) on an older M1 Macbook Pro, even when displaying a dozen rooms side-by-side.
-Robrix achieves this while using only around 100MB of system memory, which is less than 25% of what most Electron-based Matrix desktop clients consume.
-* TODO: CPU Utilization??
+Our rough benchmarks show that Robrix can easily achieve over 90 FPS (TODO: measure this) on an older M1 Macbook Pro, even when scrolling through 10+ rooms displayed side-by-side.
+Robrix achieves this while using only around 26-30% of the system RAM that major Electron-based Matrix desktop clients consume to display a single room.
+
 
 Most importantly, thanks to the power of Makepad and Robius, Robrix has zero platform-specific code.
 This makes it easy to maintain and develop features/bugfixes quickly, as you don't have to consider the idiosyncracies of each platform.
