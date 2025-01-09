@@ -29,7 +29,8 @@ We'll also take a deeper look at **Robrix**,  a multi-platform [Matrix](https://
 
 As our primary objective, we have published several crates intended to be used directly by app devs to access a given platform feature or OS service from their app. The main goal here is for each crate to offer a safe, platform-agnostic abstraction, such that the app dev need not worry about writing any platform-specific code or dealing with each platforms' idiosyncracies.
 
-We began working on these crates in late Spring of 2024; development has been a bit intermittent but we are ramping up for the coming year. While we expect to publish many more in the future, here is the current list:
+We began working on these crates in late Spring of 2024.
+While development started out gradually, we are significantly ramping up our efforts for the coming year and expect to publish more frequently. That being said, here is the current list:
 
 * [`robius-location`]: access the current geolocation of the user's device
 * [`robius-authentication`]: display a native biometric or password authentication prompt
@@ -39,8 +40,8 @@ We began working on these crates in late Spring of 2024; development has been a 
 * [`robius-url-handler`]: register your Rust app as the default handler for a URL scheme or file association
 * [`robius-keychain`]: store and retrieve secure data/passwords from the platform's secure storage facility
     * This crate was written from scratch, but we discovered [`keyring-rs`] shortly after finishing it. We intend to contribute our additional features, mostly Android support, into `keyring-rs`.
-* [`robius-file-dialog`]: display a native dialog for picking a file, directory, or image
-    * This is a custom implementation for iOS and Android, but uses [`rfd`] under the hood for Desktop platforms.
+* [`robius-dialog`]: (WIP) display a native dialog for showing a message or allowing the user to pick a file, directory, image, etc.
+    * This offers a custom implementation for iOS and Android, but uses [`rfd`] under the hood for Desktop platforms.
 
 We've also released some "lower-level" crates that aren't intended for direct use by an app developer, but they'd be useful for other developers that want to create their own platform abstractions.
 The above crates depend on these in various ways.
@@ -183,7 +184,7 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
     * We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement [`robius-keychain`]
 
 * We implemented a Rust auto-installer and configurer for the [WasmEdge WASM runtime], as mentioned [above](#moly-chat-with-local-llms-and-custom-ai-agents)
-    * This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on Wasmedge to run LLMs locally.
+    * This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on WasmEdge to run LLMs locally.
     * We hope to transform this into the official install script for WasmEdge and upstream it for general usage there, as much of the effort involved was devoted to extracting the precise system configuration required to select and install the proper WasmEdge release.
 
 
@@ -294,7 +295,7 @@ We have planned several high-level phases of Robrix development over the next 18
         >
         > <img alt="A prototype UI design for AI LLMs alongside Matrix rooms in Robrix" src="/blog/robrix_moly_prototype.png" width="45%" />
     * AI chatbots can assist newcomers in large open-source projects by auto-answering FAQs, either privately or publicly to allow for additional interaction from real expert users.
-    * Key point: *fully-local* LLM runtimes **cannot jeopardize E2EE rooms or user data sovereignty**.
+    * Key point: *fully-local* LLM runtimes **cannot jeopardize end-to-end encrypted (E2EE) rooms or user data sovereignty**.
 4. Go beyond Matrix: Robrix as a central "hub" for federated & open-source services
     * Collect multiple services into a unified app view, including ActivityPub-based microblogs (e.g., [Mastodon]), views of source code and related issues/pull requests, discussion forums (e.g., [Lemmy]), and more.
         * The exact set of supported services are TBD.
@@ -317,7 +318,7 @@ Before we depart, I'd like to thank the following key people who have been instr
 * The Makepad team: [Rik Arends](https://x.com/rikarends), [Eddy Bruël](https://github.com/ejpbruel2), [Sebastian Michailidis](https://twitter.com/SebMichailidis)
 * [Klim Tsoutsman](https://github.com/tsoutsman)
 * [WyeWorks](https://www.wyeworks.com/) developers: [Jorge Bejar](https://github.com/jmbejar),  [Julián Montes de Oca](https://github.com/joulei), [Facundo Mendizábal](https://github.com/fmzbl)
-* [Alex Zhang (Zhang Han Dong)](https://github.com/ZhangHanDong) and several contributors overseen by him: [@alanpoon](https://github.com/alanpoon), [@aaravlu](https://github.com/alanpoon), [@tyreseluo](https://github.com/tyreseluo), [@Guocork](https://github.com/Guocork)
+* [Alex Zhang (ZhangHanDong)](https://github.com/ZhangHanDong) and his team members: [@alanpoon](https://github.com/alanpoon), [@aaravlu](https://github.com/alanpoon), [@tyreseluo](https://github.com/tyreseluo), [@Guocork](https://github.com/Guocork)
 * [Cassaundra](https://github.com/cassaundra)
 * My colleagues who provide invaluable guidance, technical advice, and community connections: Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren
 * Linebender teammembers, for technical recommendations and serving as a sounding board for exchanging ideas
@@ -348,7 +349,8 @@ Before we depart, I'd like to thank the following key people who have been instr
 [`ndk-context`]: https://crates.io/crates/ndk-context
 [`Winit`]: https://crates.io/crates/winit
 [`robius-packaging-commands`]: https://github.com/project-robius/robius-packaging-commands
-[`robius-file-dialog`]: https://github.com/project-robius/robius-file-dialog
+[`robius-dialog`]: https://github.com/project-robius/robius-file-dialog
+[`rfd`]: https://crates.io/crates/rfd
 [`cargo-packager`]: https://crates.io/crates/cargo-packager
 [`security-framework`]: https://crates.io/crates/security-framework
 [`kittest`]: https://crates.io/crates/kittest
