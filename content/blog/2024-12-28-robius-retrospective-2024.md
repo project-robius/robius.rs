@@ -3,15 +3,15 @@ title = "Project Robius in 2024: one year of Rust App Dev"
 description = ""
 [extra]
 author = "Kevin Boos"
-twitter = ""
-mastodon = ""
-github = "kevinboos"
+twitter = "project_robius"
+mastodon = "https://mastodon.social/@kevinaboos"
+github = "kevinaboos"
 +++
-*Author: [Kevin Boos](https://github.com/kevinaboos). Published December 28th, 2024.*
+*Author: [Kevin Boos](https://github.com/kevinaboos). Published January 9th, 2024.*
 
 This past year marked the first year of work on **Project Robius**: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure Rust that work seamlessly across all major platforms.
 
-> 🛈 Project Robius in a nutshell
+> <font style="bold" color="#C85911"> **🛈 Project Robius in a nutshell** </font>
 >
 > While GUIs are the foundation of an app, there is more to developing a modern featureful app than just drawing a UI.
 > Project Robius aims to fill in the gaps in the Rust app dev ecosystem by focusing on everything *except*  the UI, such as abstractions for platform features & OS services, build & packaging tooling, and more.
@@ -60,7 +60,7 @@ We (with help from many collaborators) have built both small proof-of-concept de
 * [Robrix]: a Matrix chat client for power users
 * [Moly]: a local LLM chat runtime and AI agent explorer (previously "Moxin")
 
-Both of these apps are fully open-source and have releases available on GitHub, in case you'd like to download and try them out. (However, it's best to build them from source for the most up-to-date experience.)
+Both of these apps are fully open-source and have releases available on their GitHub pages linked above, in case you'd like to download and try them out. Note that it's best to build them from source for the most up-to-date experience.
 
 
 ### Robrix: an up-and-coming Matrix chat client for power users
@@ -85,11 +85,14 @@ No more wasted horizontal space!
 Another cool feature is that Robrix's UI can automatically transition to different view layouts based on window size. This enables our single codebase to run seamlessly on desktop and mobile platforms, but you can also use any view on any platform if you want.
 For example, we frequently enjoy using the mid-size tablet view (below, left) or the narrow mobile view (below, middle) on a smaller laptop screen too, in addition to on our smartphones (below, right).
 
-<p float="left">
-  <img align="middle" alt="Robrix mid-size UI view" src="/blog/robrix_midsize_ui.png" width="43%" />
-  <img align="middle" alt="Robrix narrow mobile UI view of the rooms list" src="/blog/robrix_mobile_view_rooms_list.png" width="27.5%" />
-  <img align="middle" alt="Robrix narrow mobile UI view on Android of a single room" src="/blog/robrix_android_view_single_room.png" width="25.9%" />
-</p>
+<!-- ![Robrix mid-size UI view](/blog/robrix_midsize_ui.png)![Robrix narrow mobile UI view of the rooms list](/blog/robrix_mobile_view_rooms_list.png)![Robrix narrow mobile UI view on Android of a single room](/blog/robrix_android_view_single_room.png) -->
+
+
+<div style="gap: 50px;">
+  <img style="width: 43%" alt="Robrix mid-size UI view" src="/blog/robrix_midsize_ui.png" />
+  <img style="width: 27.5%" alt="Robrix narrow mobile UI view of the rooms list" src="/blog/robrix_mobile_view_rooms_list.png" />
+  <img style="width: 25.9%" alt="Robrix narrow mobile UI view on Android of a single room" src="/blog/robrix_android_view_single_room.png" />
+</div>
 
 
 Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform:
@@ -102,7 +105,7 @@ Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integra
 * In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by `robius-authentication`
 
 
-* TODO: confirm the below measurements. Add CPU Utilization??
+TODO: confirm the below measurements. Add CPU Utilization??
 
 In addition to a sleek UI and robust platform integration, Robrix is highly performant and efficient thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
 Our rough benchmarks show that Robrix can easily achieve over 90 FPS (TODO: measure this) on an older M1 Macbook Pro, even when scrolling through 10+ rooms displayed side-by-side.
@@ -126,8 +129,11 @@ To learn more about Robrix, check out the following:
 
 [Moly] (f.k.a. *Moxin*) is a pure Rust GUI client for running local Large Language Models (LLMs) and chatting with various AI agents.
 You can discover, browse, and download major open-source AI models:
+
 ![Moly's discover LLM screen](/blog/moly_discover_screen.png)
+
 and then chat with them *locally* without contacting any hosted LLM service.
+
 ![Moly's LLM chat screen](/blog/moly_chat_screen.png)
 
 
@@ -193,7 +199,7 @@ Beyond publishing crates and developing apps, we also want to bring together peo
 To that end, Project Robius hosted an [App Dev unconference](https://2024.rustnl.org/unconf/) at RustNL 2024 (and also GOSIM Beijing 2024), in which a few dozen Rust developers from across the world met up to discuss the shared problems we all face in developing Rust apps and UI toolkits.
 We discussed everything from build tooling to text layout, accessibility, Winit compatibility, and more.
 A few of the topics & ideas from the unconference(s) have already made it past the discussion phase and have become real projects!
-* [`kittest`]: a universal UI testing framework built upon the AccessKit accessibility framework, spearheaded by the eGUI team!
+* [`kittest`]: a universal UI testing framework built upon the [AccessKit] accessibility framework, spearheaded by the eGUI team!
 * [Dioxus's work on hotreloading](https://www.reddit.com/r/rust/comments/1ezdjqx/media_i_added_instant_hotreloading_of_some_rust/) not just UI DSL code, but even real Rust code that implements app behavior!
 * Feedback given to the Rust project teams, primarily lang, libs, and compiler.
     * We focused on changes to Rust that will make future Rust apps easier to write, with simplified and more ergonomic code patterns for async and more.
@@ -279,30 +285,30 @@ With these (un)conferences, we aim to bring community members together again to 
 
 While Robrix is off to a strong start, we still have a long way to go.
 We have planned several high-level phases of Robrix development over the next 18-24 months:
-1. Release an alpha version of Robrix with most fundamental Matrix features available.
+1. <font color="gray">*[Q1 2025]*</font>&nbsp; Release an alpha version of Robrix with most fundamental Matrix features available.
     * Realize sufficient functionality to be usable as a daily driver, but not yet to be a complete replacement for existing clients.
     * This is nearly complete! See [Milestone 1](https://github.com/project-robius/robrix/milestone/1) on our GitHub page.
-2. Publish Robrix v1.0 with full Matrix functionality, for "power" users.
+2. <font color="gray">*[Summer 2025]*</font>&nbsp; Publish Robrix v1.0 with full Matrix functionality, for "power" users.
     * Offer a responsive UI design with a dockable, multi-tab view of many rooms side-by-side, which also adapts to varying screen sizes (mobile, desktop, etc).
         * ✅ This is already complete! ([as described above](#robrix-an-up-and-coming-matrix-chat-client-for-power-users))
     * Achieve feature parity with existing major clients, including administrative features like a full settings pane, session management, room creation/admin, message search, threads, spaces, etc.
         * See [Milestone 2](https://github.com/project-robius/robrix/milestone/2) on our GitHub page for more details.
         * Generally, these features are *not* drivers of Robius development, as they don't require complex platform features, so they were initially lower priority.
     * Distribute Robrix app bundles to platform app stores and package managers.
-3. Integrate local LLM runtimes (like [Moly](#moly-chat-with-local-llms-and-custom-ai-agents)) for powerful, advanced convenience features.
-    * LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from "what you missed" after a holiday.
-        > Here's an example UI prototype:
-        >
-        > <img alt="A prototype UI design for AI LLMs alongside Matrix rooms in Robrix" src="/blog/robrix_moly_prototype.png" width="45%" />
+3. <font color="gray">*[Q3 2025]*</font>&nbsp; Integrate local LLM runtimes (like [Moly](#moly-chat-with-local-llms-and-custom-ai-agents)) for powerful, advanced convenience features.
+    * LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from "what you missed" after a holiday. Here's a UI prototype:
+
+        <img style="width: 50%" alt="A prototype UI design for AI LLMs alongside Matrix rooms in Robrix" src="/blog/robrix_moly_prototype.png" />
+
     * AI chatbots can assist newcomers in large open-source projects by auto-answering FAQs, either privately or publicly to allow for additional interaction from real expert users.
-    * Key point: *fully-local* LLM runtimes **cannot jeopardize end-to-end encrypted (E2EE) rooms or user data sovereignty**.
-4. Go beyond Matrix: Robrix as a central "hub" for federated & open-source services
+    * Key point: *fully-local* LLM runtimes **cannot jeopardize end-to-end encrypted (E2EE) rooms or user data sovereignty**, so you can utilize LLMs with confidence that your privacy is being honored.
+4. <font color="gray">*[Late 2025]*</font>&nbsp; Go beyond Matrix: Robrix as a central "hub" for federated & open-source services
     * Collect multiple services into a unified app view, including ActivityPub-based microblogs (e.g., [Mastodon]), views of source code and related issues/pull requests, discussion forums (e.g., [Lemmy]), and more.
         * The exact set of supported services are TBD.
     * The availability of many services in a single app context can enable unique combo features, such as a combined activity feed of notifications + news from various sources, or easy one-click broadcasting of project updates to multiple communities across different services.
 
 
-5. *[Long-term]* Explore how to use decentralized identity providers like [OpenWallet] to login to Robrix-supported services.
+5. <font color="gray">*[Long-term]*</font>&nbsp; Explore how to use decentralized identity providers like [OpenWallet] to login to Robrix-supported services.
     * Use Robrix as the first experimental testing ground for integrating a device-local wallet app as an ID provider for Matrix authentication.
     * For more info, check out [this presentation by Wenjing Chu, an OpenWallet expert](https://www.youtube.com/watch?v=eq9pnYB5-Xk) from the Matrix Conference 2024.
 
@@ -356,3 +362,4 @@ Before we depart, I'd like to thank the following key people who have been instr
 [`kittest`]: https://crates.io/crates/kittest
 [`robius-demo-simple`]: https://github.com/project-robius/robius-demo-simple
 [`dioxus-std`]: https://dioxuslabs.com/learn/0.5/contributing/roadmap/#mobile
+[AccessKit]: https://accesskit.dev/
