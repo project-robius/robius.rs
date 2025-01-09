@@ -1,15 +1,16 @@
 +++
 title = "Project Robius in 2024: one year of Rust App Dev"
-description = ""
+description = "A retrospective on our progress in 2024 and a look ahead at our 2025 roadmap."
 [extra]
 author = "Kevin Boos"
 twitter = "project_robius"
 mastodon = "https://mastodon.social/@kevinaboos"
 github = "kevinaboos"
 +++
+
 *Author: [Kevin Boos](https://github.com/kevinaboos). Published January 9th, 2024.*
 
-This past year marked the first year of work on **Project Robius**: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure Rust that work seamlessly across all major platforms.
+This past year marked the first year of work on **Project Robius**: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure 🦀&nbsp;Rust&nbsp;🦀 that work seamlessly across all major platforms.
 
 > <font style="bold" color="#C85911"> **🛈 Project Robius in a nutshell** </font>
 >
@@ -18,7 +19,7 @@ This past year marked the first year of work on **Project Robius**: an open-sour
 > We leave UI work to the experts behind the many excellent Rust UI toolkits under active development.
 
 In this post, we'll take a look back on what we've accomplished so far to make the world of Rust App Dev a little better:
-1. The crate abstractions we've published for accessing platform-provided features from Rust code
+1. The crates we've published for accessing platform-provided features from Rust code
 2. The major apps we've built using [Makepad] + Robius together
 3. The contributions we've made to existing open-source projects in the App Dev space
 4. The connections we've fostered throughout the Rust community
@@ -85,8 +86,6 @@ No more wasted horizontal space!
 Another cool feature is that Robrix's UI can automatically transition to different view layouts based on window size. This enables our single codebase to run seamlessly on desktop and mobile platforms, but you can also use any view on any platform if you want.
 For example, we frequently enjoy using the mid-size tablet view (below, left) or the narrow mobile view (below, middle) on a smaller laptop screen too, in addition to on our smartphones (below, right).
 
-<!-- ![Robrix mid-size UI view](/blog/robrix_midsize_ui.png)![Robrix narrow mobile UI view of the rooms list](/blog/robrix_mobile_view_rooms_list.png)![Robrix narrow mobile UI view on Android of a single room](/blog/robrix_android_view_single_room.png) -->
-
 
 <div style="gap: 50px;">
   <img style="width: 43%" alt="Robrix mid-size UI view" src="/blog/robrix_midsize_ui.png" />
@@ -105,20 +104,19 @@ Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integra
 * In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by `robius-authentication`
 
 
-TODO: confirm the below measurements. Add CPU Utilization??
-
-In addition to a sleek UI and robust platform integration, Robrix is highly performant and efficient thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
-Our rough benchmarks show that Robrix can easily achieve over 90 FPS (TODO: measure this) on an older M1 Macbook Pro, even when scrolling through 10+ rooms displayed side-by-side.
-Robrix achieves this while using only around 26-30% of the system RAM that major Electron-based Matrix desktop clients consume to display a single room.
+In addition to a sleek UI and robust platform integration, Robrix achieves high performance and efficiency thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
+Robrix consistently hits the maximum 120 FPS on an older M1 Macbook Pro, remaining smooth and responsive even when scrolling through 10+ rooms displayed side-by-side.
+We achieve this while using only around 26-30% of the system RAM that major Electron-based Matrix desktop clients consume to display a single room.
+(Note: these are preliminary figures that require deeper benchmarking analysis before drawing conclusions from them.)
 
 
 Most importantly, thanks to the power of Makepad and Robius, Robrix has zero platform-specific code.
 This makes it easy to maintain and develop features/bugfixes quickly, as you don't have to consider the idiosyncracies of each platform.
-Thus, we invite you to check out our codebase and contribute any cool missing features that you'd love to have!
+Thus, we invite you to check out our codebase and contribute any cool features that you'd love to have!
 
 
-To learn more about Robrix, check out the following:
-* [Robrix on GitHub](https://github.com/project-robius/robrix)
+To learn more about Robrix, check out the following resources:
+* [Robrix's GitHub repository](https://github.com/project-robius/robrix)
 * [A recent conference talk about Robrix](https://www.youtube.com/watch?v=DO5C7aITVyU) ([PDF slides](https://github.com/project-robius/files/blob/main/GOSIM%20China%202024/Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf))
 * [Robrix's Project Tracker on GitHub](https://github.com/orgs/project-robius/projects/4/)
 * [Chat with us about Robrix on Matrix](https://matrix.to/#/#robius-robrix:matrix.org)

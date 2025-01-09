@@ -3,9 +3,12 @@ title = "Juice"
 sort_by = "weight"
 +++
 
-# Robius
+# Project Robius
 
 **Robius** is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.
+
+For the latest updates on Project Robius, see [our blog](/blog).
+
 
 ## Real apps/projects using Robius
 
@@ -15,7 +18,7 @@ sort_by = "weight"
   * Allows running LLMs locally and conversing with an AI Chatbot for each model,
     using the WasmEdge runtime as an LLM backend runtime.
 
-## Check these out for more info
+## Robius resources and links
 
 * [Project Robius (Github)](https://github.com/project-robius)
 * [The Robius Book](https://project-robius.github.io/book/)
@@ -42,4 +45,4 @@ sort_by = "weight"
       [PDF version (15MB)](https://github.com/project-robius/files/blob/041e980ec1d14bf325f1fb2ba743f8ed142a70cb/Robius%20-%20A%20Vision%20for%20Multi-platform%20App%20Development%20in%20Rust.pdf)
 
 
-## Curious about Performance? check out the [Blog](/blog)
+## Check out [our Blog](/blog) for more!
