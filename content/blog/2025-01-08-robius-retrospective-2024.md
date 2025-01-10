@@ -1,6 +1,6 @@
 +++
 title = "Project Robius in 2024: one year of Rust App Dev"
-description = "A retrospective on our progress in 2024 and a look ahead at our 2025 roadmap."
+description = "A retrospective on our progress in the world of Rust App Dev in 2024."
 [extra]
 author = "Kevin Boos"
 twitter = "project_robius"
@@ -67,7 +67,7 @@ Both of these apps are fully open-source and have releases available on their Gi
 ### Robrix: an up-and-coming Matrix chat client for power users
 
 We started [Robrix] about one year ago with the intention of it being a "flagship" Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
-Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage [vision for Robrix later in this article](#robrix-roadmap-for-2025-and-beyond).
+Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage [vision for Robrix in the next post](../robius-roadmap-2025#robrix-roadmap-for-2025-and-beyond).
 
 Robrix has come a long way over the past year, thanks to 750+ commits from 10 contributors!
 Since starting from scratch, we have created a functional Matrix chat client with most fundamental features already complete and working well, as shown by our feature status tracker below.
@@ -217,108 +217,9 @@ If you're in the Rust App Dev or UI space and would like to join future meetups,
 
 
 
-## Project Robius Roadmap for 2025
+## Our Roadmaps for 2025
 
-Project Robius in 2025 aims to continue the work we've begun in 2024 to improve the overall app dev experience in Rust.
-
-#### More Rust abstractions for platform features
-As a technical organization, our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible.
-Our targeted platform features include (in rough priority order):
-* File/image/media picker (in progress)
-* Native system notifications (in progress)
-* Toasts, pop-up messages, status bar icons
-    * We have implemented this in Makepad, but not with native widgets commonly used on Mobile platforms
-* Spawning long-running background tasks/services
-* System file/media store
-* Native context menus
-    * Same status as toasts above.
-* Camera access & configuration
-* Audio input (microphone)
-* System theming choices (e.g., dark mode, key colors)
-* Connectivity manager/subscriber
-* Power/battery status
-* Haptics/vibration
-
-
-#### Better, more automated build tooling
-Another topic dear to our hearts is build tooling.
-We aim to improve the state of build tools such that the app developer themself can be relieved from the burden of managing and figuring out platform-specific details, such as which permissions/entitlements their app requires to build and run properly on mobile platforms.
-Ideally, we'd like to be able to auto-generate a fully-formed Android XML manifest or Apple `Info.plist` file with all of the necessary permissions that an app requires, without requiring the app dev to possess expert knowledge about the requirements of their app's dependencies and transitive dependencies.
-
-One such idea for realizing this is have each `robius-*` platform feature abstraction crate automatically emit its required permissions during the build process.
-Exactly *how* to export and encode this information is still up in the air, but we have discussed leveraging a linker-based approach similar to what [Dioxus's manganis project](https://github.com/DioxusLabs/manganis) does to encode resource/asset paths into special linker sections.
-This would allow a top-level tool to run after the `cargo build` process, and inspect the binary's special linker sections in order to automatically generate a full permissions/entitlements file for the given target platform.
-We envision that this could also be used for other arbitrary UI toolkits, not just Makepad, as well as emitted by other platform abstraction crates outside of the `robius-*` organization.
-
- <!-- that deeply nested crates in the dependency graph have, e.g., location permissions. For this, we can mention Dioxus's approach towards resource management by leveraging special linker sections, which we can also leverage for enumerating and specifying required permissions in a standardized way.  -->
-
-
-
-
-#### Effortless integration with other UI toolkits
-In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelines) with other Rust UI toolkits, e.g., Dioxus, eGUI, and more.
-Our first year of development has been centered on Makepad, in the sense that we've built two full-size Makepad apps, contributed significantly to Makepad itself, and have focused on test-driving our crates using Makepad apps (see [`robius-demo-simple`]).
-Thus, using Robius components in a Makepad app is quite easy for the app developer.
-
-Now that we have successfully realized several platform feature abstraction crates, we would like to ensure that these can be easily utilized by apps built in other UI toolkits.
-For example, one specific secondary goal for this year is to explore how `robius-*` crates could comprise Dioxus's [`dioxus-std`] library and fill in the gaps in their mobile platform support.
-
-
-Another related goal is to design a UI-focused concurrency management library with an interface that helps app devs easily write high-performance apps that never block or bog down the main UI thread with long-running operations.
-We envision easy interfaces to offload code to background threads or async tasks, as well as for exchanging data between these background contexts and the performance-sensitive the UI main thread.
-The inability to easily invoke async functions from the UI main thread (without causing performance hiccups) is a long-running frustration we have had when developing Robrix, as many SDKs are written with a hard dependency on an async executor, typically tokio.
-
-
-> To understand this concurrency challenge in more detail, [watch this presentation on Robrix (starting from 23:10)](https://youtu.be/DO5C7aITVyU?si=N_10UZBCR5g-w2D4&t=1390) or [check out slides 26-33 here](https://github.com/project-robius/files/blob/main/GOSIM%20China%202024/Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf).
-
-
-A key component of this is an abstraction for a *compile-time token* that statically ensures whether code is executing within the context of the main UI thread context.
-Such a type must be both non-`Send` and non-`Sync`, and only possible to construct on the main UI thread.
-This token is necessary because most platforms require many of their platform-provided APIs to be invoked on the main thread, and it's significantly better to check this at compile time than via a runtime assertion.
-We have realized this for Makepad via a mutable reference to the [context type](https://github.com/makepad/makepad/blob/0084948c176a99740af92a71578543c3fcc0b63f/platform/src/cx.rs#L55) `&mut Cx`, which is created only on the main UI thread and then passed as a mutable reference to all of the [event handlers and draw routines](https://github.com/makepad/makepad/blob/0084948c176a99740af92a71578543c3fcc0b63f/widgets/src/widget.rs#L45-L110).
-
-
-While this sort of concurrency library and statically-determinable thread context abstraction is highly desirable, it is also admittedly a longer-term goal that merits major effort beyond just 2025.
-
-
-#### Organizing more conferences & meet-ups
-On the organizational side, we intend to sponsor two more conferences for open-source Rust development and host informal Rust app dev unconferences co-located with those conferences.
-The first will be [RustWeek 2025](https://rustweek.org/) (formerly "RustNL") in the Netherlands in May, and the second will be [GOSIM China](https://china2024.gosim.org/) in autumn 2025.
-With these (un)conferences, we aim to bring community members together again to collaborate, share ideas, and further advance the state-of-the-art for App Dev and UI in Rust.
-
-
-
-## Robrix Roadmap for 2025 and beyond
-
-While Robrix is off to a strong start, we still have a long way to go.
-We have planned several high-level phases of Robrix development over the next 18-24 months:
-1. <font color="gray">*[Q1 2025]*</font>&nbsp; Release an alpha version of Robrix with most fundamental Matrix features available.
-    * Realize sufficient functionality to be usable as a daily driver, but not yet to be a complete replacement for existing clients.
-    * This is nearly complete! See [Milestone 1](https://github.com/project-robius/robrix/milestone/1) on our GitHub page.
-2. <font color="gray">*[Summer 2025]*</font>&nbsp; Publish Robrix v1.0 with full Matrix functionality, for "power" users.
-    * Offer a responsive UI design with a dockable, multi-tab view of many rooms side-by-side, which also adapts to varying screen sizes (mobile, desktop, etc).
-        * ✅ This is already complete! ([as described above](#robrix-an-up-and-coming-matrix-chat-client-for-power-users))
-    * Achieve feature parity with existing major clients, including administrative features like a full settings pane, session management, room creation/admin, message search, threads, spaces, etc.
-        * See [Milestone 2](https://github.com/project-robius/robrix/milestone/2) on our GitHub page for more details.
-        * Generally, these features are *not* drivers of Robius development, as they don't require complex platform features, so they were of a lower priority initially.
-    * Distribute Robrix app bundles to platform app stores and package managers.
-3. <font color="gray">*[Q3 2025]*</font>&nbsp; Integrate local LLM runtimes (like [Moly](#moly-chat-with-local-llms-and-custom-ai-agents)) for powerful, advanced convenience features.
-    * LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from "what you missed" after a holiday. Here's a UI prototype: <br>
-        <a href="/blog/robrix_moly_prototype.png">
-            <img style="width: 50%" alt="A prototype UI design for AI LLMs alongside Matrix rooms in Robrix" src="/blog/robrix_moly_prototype.png" />
-        </a>
-    * AI chatbots can assist newcomers in large open-source projects by auto-answering FAQs, either privately or publicly to allow for additional interaction from real expert users.
-    * Key point: *fully-local* LLM runtimes **cannot jeopardize end-to-end encrypted (E2EE) rooms or user data sovereignty**, so you can utilize LLMs with confidence that your privacy is being honored.
-4. <font color="gray">*[Late 2025]*</font>&nbsp; Go beyond Matrix: Robrix as a central "hub" for federated & open-source services
-    * Collect multiple services into a unified app view, including ActivityPub-based microblogs (e.g., [Mastodon]), views of source code and related issues/pull requests, discussion forums (e.g., [Lemmy]), and more.
-        * The exact set of supported services are TBD.
-    * The availability of many services in a single app context can enable unique combo features, such as a combined activity feed of notifications + news from various sources, or easy one-click broadcasting of project updates to multiple communities across different services.
-5. <font color="gray">*[Long-term]*</font>&nbsp; Explore how to use decentralized identity providers like [OpenWallet] to login to Robrix-supported services.
-    * Use Robrix as the first experimental testing ground for integrating a device-local wallet app as an ID provider for Matrix authentication.
-    * For more info, check out [this presentation by Wenjing Chu, an OpenWallet expert](https://www.youtube.com/watch?v=eq9pnYB5-Xk) from the Matrix Conference 2024.
-
-
-While many of these are larger endeavors, we anticipate being able to complete at least milestones 1, 2, and 3 by the end of this coming year.
+[Check out our next blog post](../robius-roadmap-2025) for roadmaps for both Project Robius and Robrix in 2025 (and beyond).
 
 
 ## Acknowledgments
