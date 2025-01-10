@@ -12,7 +12,7 @@ github = "kevinaboos"
 
 This past year marked the first year of work on **Project Robius**: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure 🦀&nbsp;Rust&nbsp;🦀 that work seamlessly across all major platforms.
 
-> <font style="bold" color="#C85911"> **🛈 Project Robius in a nutshell** </font>
+> <font style="bold" color="#C85911"> **ℹ️ Project Robius in a nutshell** </font>
 >
 > While GUIs are the foundation of an app, there is more to developing a modern featureful app than just drawing a UI.
 > Project Robius aims to fill in the gaps in the Rust app dev ecosystem by focusing on everything *except*  the UI, such as abstractions for platform features & OS services, build & packaging tooling, and more.
@@ -175,8 +175,6 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
         * Automatically handles Makepad configuration and resource/asset discovery & bundling
     * We intend to add support for other Desktop package formats, namely Flatpack
     * We also plan to contribute support for generating mobile app bundles, namely Android
-
-
 * We have made [myriad major contributions](https://github.com/makepad/makepad/pulls?q=author%3Akevinaboos) to the Makepad UI toolkit, as Robrix and Moly are two of the most complex/demanding apps built in Makepad
     * Improvements to `PortalList`, a virtual viewport list with infinite scrolling
         * Better API with more introspection into the positional & visibility state of items in the list, its scrolling state, and its item caching behavior
@@ -196,10 +194,8 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
     * An improved app lifecycle model with dedicated events for all lifecycle stages, which is consistent across all platforms
     * Easier and more ergonomic `Actions` (widget-to-widget message events)
         * Plus support for delivering an action to a widget from a background thread or async task context
-
 * [Our contributions](https://github.com/kornelski/rust-security-framework/pull/210) to the [`security-framework`] crate, which offers Rust bindings to Apple's security framework (for TLS, keychain, etc)
     * We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement [`robius-keychain`]
-
 * We implemented a Rust auto-installer and configurer for the [WasmEdge WASM runtime], as mentioned [above](#moly-chat-with-local-llms-and-custom-ai-agents)
     * This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on WasmEdge to run LLMs locally.
     * We hope to transform this into the official install script for WasmEdge and upstream it for general usage there, as much of the effort involved was devoted to extracting the precise system configuration required to select and install the proper WasmEdge release.
@@ -307,7 +303,7 @@ We have planned several high-level phases of Robrix development over the next 18
         * Generally, these features are *not* drivers of Robius development, as they don't require complex platform features, so they were of a lower priority initially.
     * Distribute Robrix app bundles to platform app stores and package managers.
 3. <font color="gray">*[Q3 2025]*</font>&nbsp; Integrate local LLM runtimes (like [Moly](#moly-chat-with-local-llms-and-custom-ai-agents)) for powerful, advanced convenience features.
-    * LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from "what you missed" after a holiday. Here's a UI prototype:
+    * LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from "what you missed" after a holiday. Here's a UI prototype: <br>
         <a href="/blog/robrix_moly_prototype.png">
             <img style="width: 50%" alt="A prototype UI design for AI LLMs alongside Matrix rooms in Robrix" src="/blog/robrix_moly_prototype.png" />
         </a>

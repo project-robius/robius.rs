@@ -7,7 +7,7 @@ sort_by = "weight"
 
 **Robius** is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.
 
-For the latest updates on Project Robius, see [our blog](/blog).
+See [our blog](/blog) for the latest updates on Project Robius.
 
 
 ## Real apps/projects using Robius
