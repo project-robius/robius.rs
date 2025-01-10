@@ -194,7 +194,7 @@ In addition to creating, maintaining, and publishing our own crates for Rust app
     * An improved app lifecycle model with dedicated events for all lifecycle stages, which is consistent across all platforms
     * Easier and more ergonomic `Actions` (widget-to-widget message events)
         * Plus support for delivering an action to a widget from a background thread or async task context
-* [Our contributions](https://github.com/kornelski/rust-security-framework/pull/210) to the [`security-framework`] crate, which offers Rust bindings to Apple's security framework (for TLS, keychain, etc)
+* We made [minor contributions](https://github.com/kornelski/rust-security-framework/pull/210) to the [`security-framework`] crate, which offers Rust bindings to Apple's security framework (for TLS, keychain, etc)
     * We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement [`robius-keychain`]
 * We implemented a Rust auto-installer and configurer for the [WasmEdge WASM runtime], as mentioned [above](#moly-chat-with-local-llms-and-custom-ai-agents)
     * This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on WasmEdge to run LLMs locally.
