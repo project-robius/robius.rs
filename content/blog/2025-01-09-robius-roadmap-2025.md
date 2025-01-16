@@ -8,7 +8,7 @@ mastodon = "https://mastodon.social/@kevinaboos"
 github = "kevinaboos"
 +++
 
-*Author: [Kevin Boos](https://github.com/kevinaboos). Last updated on January 9th, 2024.*
+*Author: [Kevin Boos](https://github.com/kevinaboos). Last updated January 16th, 2024.* [Discuss this on Reddit](https://www.reddit.com/r/rust/comments/1i2wq5j/project_robius_in_2024_another_year_of_progress/).
 
 ‼️ **This is a continuation of [our previous post](../robius-retrospective-2024)**.
 
