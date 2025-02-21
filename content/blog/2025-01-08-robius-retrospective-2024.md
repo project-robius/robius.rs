@@ -230,7 +230,7 @@ Before we depart, I'd like to thank the following key people who have been instr
 * The Makepad team: [Rik Arends](https://x.com/rikarends), [Eddy Bruël](https://github.com/ejpbruel2), [Sebastian Michailidis](https://twitter.com/SebMichailidis)
 * [Klim Tsoutsman](https://github.com/tsoutsman)
 * [WyeWorks](https://www.wyeworks.com/) developers: [Jorge Bejar](https://github.com/jmbejar),  [Julián Montes de Oca](https://github.com/joulei), [Facundo Mendizábal](https://github.com/fmzbl)
-* [Alex Zhang (ZhangHanDong)](https://github.com/ZhangHanDong) and his team members: [@alanpoon](https://github.com/alanpoon), [@aaravlu](https://github.com/alanpoon), [@tyreseluo](https://github.com/tyreseluo), [@Guocork](https://github.com/Guocork)
+* [Alex Zhang (ZhangHanDong)](https://github.com/ZhangHanDong) and his team members: [@alanpoon](https://github.com/alanpoon), [@aaravlu](https://github.com/aaravlu), [@tyreseluo](https://github.com/tyreseluo), [@Guocork](https://github.com/Guocork)
 * [Cassaundra](https://github.com/cassaundra)
 * My colleagues who provide invaluable guidance, technical advice, and community connections: Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren
 * Linebender teammembers, for technical recommendations and serving as a sounding board for exchanging ideas
