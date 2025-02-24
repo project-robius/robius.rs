@@ -17,13 +17,14 @@ This is the first post in a series that explores how to create cross-platform ap
 Let’s dive into it! First, create a new binary project using `cargo`:
 
 ```shell
-$> cargo new mychat
+cargo new mychat
+cd mychat/
 ```
 
 Now, we want to add `makepad` as a dependency.
 
 ```shell
-$> cargo add makepad-widgets --git https://github.com/makepad/makepad --branch rik
+cargo add makepad-widgets --git https://github.com/makepad/makepad --branch rik
 ```
 
 We are now ready to create the necessary elements for an empty application to run. This requires modifying the existing main.rs and adding a few lines.
