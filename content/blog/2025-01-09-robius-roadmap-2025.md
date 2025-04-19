@@ -139,7 +139,7 @@ With these (un)conferences, we aim to bring community members together again to 
 As discussed in [our previous post](../robius-retrospective-2024#robrix-an-up-and-coming-matrix-chat-client-for-power-users), Robrix is an up-and-coming Matrix chat client for power users, and serves as a "flagship" Robius app to drive the development priorities of various Robius components.
 
 
-While Robrix iisoff to a strong start, we still have a long way to go, and we have a lot more cool features in mind beyond just Matrix chat support.
+While Robrix is off to a strong start, we still have a long way to go, and we have a lot more cool features in mind beyond just Matrix chat support.
 We have planned several high-level phases of Robrix development over the next 18-24 months:
 1. <font color="gray">*[Q1 2025]*</font>&nbsp; Release an alpha version of Robrix with most fundamental Matrix features available.
     * Realize sufficient functionality to be usable as a daily driver, but not yet to be a complete replacement for existing clients.
