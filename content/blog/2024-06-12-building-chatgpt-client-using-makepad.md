@@ -16,14 +16,14 @@ This is the first post in a series that explores how to create cross-platform ap
 
 Let’s dive into it! First, create a new binary project using `cargo`:
 
-```shell
+```sh
 cargo new mychat
 cd mychat/
 ```
 
 Now, we want to add `makepad` as a dependency.
 
-```shell
+```sh
 cargo add makepad-widgets --git https://github.com/makepad/makepad --branch rik
 ```
 

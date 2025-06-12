@@ -10,6 +10,9 @@ build_search_index = false
 # The site theme to use.
 theme = "juice"
 
+generate_feeds = true
+feed_filenames = ["atom.xml", "rss.xml"]
+
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
