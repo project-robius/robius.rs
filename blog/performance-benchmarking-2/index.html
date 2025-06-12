@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Benchmarking - Part 2 |  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+<link rel="stylesheet" type="text/css" href="/blog-post.css">
+
+</head>
+
+<body>
+    
+<header class="box-shadow">
+    
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+</header>
+
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-2/#updated-results">Updated Results</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-2/#cpu-processing"><small>- CPU Processing</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-2/#memory-usage"><small>- Memory Usage</small></a>
+                </div>
+                
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-2/#conclusion">Conclusion</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-2/#references">References</a>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+<h1>Performance Benchmarking - Part 2</h1>
+
+
+<p class="subtext">Scrolling Tests with WeChat &amp; TaoBao Apps Updated</p>
+
+
+<p>Several days ago we did a <a href="/blog/performance-benchmarking">performance benchmark</a> test between sample apps written in Android "native" vs. Makepad. Afterwards, we were given access to another version of the sample TaoBao app with more functionality, including more animation/video content in the scroll list, and the ability to turn toggle some of the special effects.</p>
+<p>So we did the same scrolling tests with this new version, both with the special features turned on, as well as with all features turned OFF, in order to compare the differences.</p>
+<h2 id="updated-results">Updated Results</h2>
+<p><img src="/blog/scrolling-test-table-2.png" alt="" /></p>
+<p>As can be seen from the results, they seem similar and consistent with our previous results from the image manipulation benchmarks.</p>
+<h3 id="cpu-processing">CPU Processing</h3>
+<p><img src="/blog/cpu-cycles-2.png" alt="" /></p>
+<p>On the CPU cycle, the sample Makepad WeChat app shows very little cycles used, having less than half of the Android "native" sample apps.</p>
+<p>The Native TaoBao apps were similar to the Official TaoBao in that they use a lot more CPU cycles. This also results in higher CPU frequency values.</p>
+<p>When special functionality are turned OFF, the Native TaoBao used ~40% less cycles. While the full-effect TaoBao used slightly more than the Official TaoBao app.</p>
+<p><img src="/blog/cpu-frequency-2.png" alt="" /></p>
+<p>The CPU frequencies also reflect that Makepad uses much less than the Android native counterparts.</p>
+<p>Not much difference were noticed with the new Native TaoBao versions for GPU memory usage.</p>
+<h3 id="memory-usage">Memory Usage</h3>
+<p>The CPU memory usage is more similar among the Android native and Makepad sample applications, with Makepad apps using slightly less CPU memory. This is consistent with less usage of the CPU cycles as well.</p>
+<p>As expected, the new Native TaoBao performed noticeably better when its special effects were turned off.</p>
+<p><img src="/blog/cpu-memory-2.png" alt="" /></p>
+<p>The GPU memory shows that Makepad apps use more memory than the Android native apps. This is currently the only area where Makepad is not as efficient. However, the Makepad team is currently working on an improvement that will decrease this usage in the near future.</p>
+<p>Not much difference were noticed with the new Native TaoBao versions for GPU memory usage.</p>
+<p><img src="/blog/gpu-memory-2.png" alt="" /></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Being a more fully developed Android Native TaoBao app, we noticed much smoother and faster scrolling speed and effects compared to the previous simpler "native" apps. The performance characteristics of this version matches more closely to the official Play Store TaoBao, though with less CPU memory footprint.</p>
+<p>Overall, the results still reflect what we had found in our previous benchmarking tests. The Makepad versions of the apps have consistently outperformed all other versions, at least in terms of pure scrolling tests.</p>
+<h2 id="references">References</h2>
+<p>Makepad WeChat sample:
+<a href="https://github.com/project-robius/makepad_wechat"><code>https://github.com/project-robius/makepad_wechat</code></a></p>
+<p>Makepad TaoBao sample:
+<a href="https://github.com/project-robius/makepad_taobao"><code>https://github.com/project-robius/makepad_taobao</code></a></p>
+
+
+<class="trunk-blog-author">
+    
+    <p>By: Edward Tan </p>
+    
+    <a href="https:&#x2F;&#x2F;edwardtan.com"> https:&#x2F;&#x2F;edwardtan.com </a>
+    
+    <br />
+    <a href="https://x.com/guofoo"> https://x.com/guofoo </a>
+    <br/>
+    <a href="https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo"> https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo </a>
+    <br />
+    <a href="https://github.com/guofoo"> https://github.com/guofoo </a>
+    
+    
+    <p>Published: 2023-11-17</p>
+    
+</div>
+
+
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>

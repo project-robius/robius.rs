@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Benchmarking on iOS |  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+<link rel="stylesheet" type="text/css" href="/blog-post.css">
+
+</head>
+
+<body>
+    
+<header class="box-shadow">
+    
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+</header>
+
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#graphics-effects">Graphics Effects</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#implementations">Implementations</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#devices">Devices</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#process">Process</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#results">Results</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#rounded-corners-and-text-scaling"><small>- Rounded Corners and Text Scaling</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#shadow-effects"><small>- Shadow Effects</small></a>
+                </div>
+                
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#summary">Summary</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking-ios/#references">References</a>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+<h1>Performance Benchmarking on iOS</h1>
+
+
+<p class="subtext">Graphics Effects Testing against Flutter and Swift UI on iOS</p>
+
+
+<p>After testing the <a href="/blog/performance-benchmarking">Performance Benchmarking</a>  of cross-platform applications written with Makepad on Android platforms, we decided to do some tests on iOS.</p>
+<p>Instead of using the exisitng mock WeChat and TaoBao apps, we had decided to focus more on graphics effects performance. For this, the team at WyeWorks had helped create a suite of graphics effects in an app called <strong>comp_demo</strong>.</p>
+<div style="display:flex">
+  <div style="flex:1;padding-right:5px;">
+<h2 id="graphics-effects">Graphics Effects</h2>
+<p>The effects below have been implemented in all three apps:</p>
+<ul>
+<li>Rounded Corner</li>
+<li>Bitmap Image RC</li>
+<li>Bitmap Text Scaling</li>
+<li>Vector Text Scaling</li>
+<li>Transparency effects</li>
+<li>Control Shadow</li>
+<li>Path Shadow</li>
+<li>Control Stroke</li>
+</ul>
+<h2 id="implementations">Implementations</h2>
+<p>The same set of features were implemented using Swift UI to run as iOS native application, using Flutter to run on iOS.</p>
+<p>Using Makepad, the same set of features were implemented and also ran on iOS.</p>
+<h2 id="devices">Devices</h2>
+<p>All 3 apps and tests were ran on the same iPhone 12 and iPhone 13 devices. The devices themselves were "clean" machines, meaning a new machine wihtout any extra applications installed, just the three test apps.</p>
+<p>The phones were running iOS 17.3.</p>
+  </div>
+  <div style="flex:1;padding-left:5px;">
+    <a href="/blog/iphone-comp-demo-ss.jpg" target="_new">
+      <img src="/blog/iphone-comp-demo-ss.jpg" alt="iPhone screenshot" />
+    </a>
+  </div>
+</div>
+<!-- ![<img src="/blog/iphone-comp-demo-ss.jpg" width="200"/>](/blog/iphone-comp-demo-ss.jpg) -->
+<!-- <figure>
+    <img src="/blog/iphone-comp-demo-ss.jpg" width="400"
+         alt="Main Screen">
+    <figcaption>Makepad comp_demo screenshot.</figcaption>
+</figure> -->
+<h2 id="process">Process</h2>
+<p>Collecting performance metrics on iOS is not as straightforward as on Android. Android's Perfetto tool automates most of the process of collecting and presenting the metrics, both in UI and JSON data formats. But on iOS, the Xcode's Instrumentation tool mainly deals with UI displays of real-time performance graphs. While this is helpful in some situations, it is not sufficient for the metrics that we wanted to collect.</p>
+<p>Hence, we had to utilize the <code>xcrun xctrace</code> commands to record metrics we are interested in, then use export to extract the metrics from the proprietary binary file formats into an xml file, and then convert it into csv format in order to be more human readable using a spreadsheet application.</p>
+<p>After running through the process several times, we devised scripts to automate as many of these manual steps as possible. This included running one command to start the recording process to do the test. And then one script to extract the proper data, and one more at the end to summarize the data that we're interested in, such as the CPU %, Memory usage, etc.</p>
+<h2 id="results">Results</h2>
+<p>The results were interesting to see. First, for most of the Swift UI version of the application, the data were not readily or easily seen. It seems that iOS "hides" or "combines" the actual application usage data with the operating system, such that it is not apparent which work was actually peformed and counted as part of the application and which were counted as OS.</p>
+<p><a href="/blog/ios-results-table.png"><img src="/blog/ios-results-table.png" alt="Results Table" /></a>
+(In the table above, red background means good, yellow means bad)</p>
+<p>So the more comparable test results are between the Makepad and Flutter apps. As both of these applications come with their own rendering layer, and do not utilize iOS's own native rendering.</p>
+<h3 id="rounded-corners-and-text-scaling">Rounded Corners and Text Scaling</h3>
+<p>From these results, it can be seen that in general, Makepad app's CPU % usage is often ~50% less than what the Flutter app's were. On the other hand, Makepad app's GPU % usage is often ~30% higher.</p>
+<p>Note that memory usage includes both the CPU and GPU memory in this case. Makepad's memory usage is in general much higher than the others. Part of the reason is that currently Makepad still bundles its own big font file as part of the app, which results in about 40MB of memory usage on its own.</p>
+<p>As part of the Project Robius's platform abstraction efforts, we hope to add feature for Makepad (and other Rust UI applications) to be able to easily use the underlying platform's system fonts. This will help reduce the memory footprint by a large amount.</p>
+<p>These results are actually very similar to those seen in the previous <a href="/blog/performance-benchmarking-2">Performance Benchmarking</a> of scrolling tests on Android. At that time, Makepad apps also exhibited the lower CPU but higher GPU usage pattern.</p>
+<p>This can be attributed to Makepad's architecture design of doing some work on CPU but doing a lot of other graphics manipulation on the GPU directly by utilizing shader programs. This allows certain graphics operations to be as simple as changing a variable, without the need for repeated drawcalls. Makepad also optimizes drawcalls by minimizing the number of them. It also has the flexibility of allowing users to write shader programs to execute on the GPU.</p>
+<h3 id="shadow-effects">Shadow Effects</h3>
+<p>For the shadow effects, we see the huge advantage that Makepad app has over the equivalent Flutter and even Swift apps.  Makepad app is the only one that managed a steady 60 fps rendering, while the Swift and Flutter apps struggled to stay in the ~45 fps range.</p>
+<p>The large CPU % spike also indicates that it is working extra hard to perform these graphics shadow effects.</p>
+<h2 id="summary">Summary</h2>
+<p>For a relatively new (~4 years) UI framework written in Rust, Makepad's performance can be seen as quite impressive, especially consdering it has been developed mainly by a team of 3 people.</p>
+<p>Part of the performance advantages can be attributed to the efficiency of the programming language Rust itself. But a major reason can be attributed to Makepad's novel design approach of having a mixed immediate mode + retained mode rendering system. Currently, the framework has not even begun to optimize specifically for performance tests. For example, the higher memory footprint is a current design decision, and has room for furter optimization according to <a href="https://x.com/rikarends">Rik</a>.</p>
+<p>We're looking forward to continuing to work closely with the Makepad team to bring the best cross-platform performance UI framework in Rust to all developers.</p>
+<h2 id="references">References</h2>
+<p>All tests were performed on the iOS build of the Makepad comp_demo app, running on iPhone 12 and iPhone 13.</p>
+<p>Makepad comp_demo app:
+<a href="https://github.com/project-robius/comp_demo"><code>https://github.com/project-robius/comp_demo</code></a></p>
+<p>iOS Benchmarking scripts:
+<a href="https://github.com/project-robius/benchmarking-ios"><code>https://github.com/project-robius/benchmarking-ios</code></a></p>
+<p>Makepad Framework:
+<a href="https://github.com/makepad/makepad"><code>https://github.com/makepad/makepad</code></a></p>
+
+
+<class="trunk-blog-author">
+    
+    <p>By: Edward Tan </p>
+    
+    <a href="https:&#x2F;&#x2F;edwardtan.com"> https:&#x2F;&#x2F;edwardtan.com </a>
+    
+    <br />
+    <a href="https://x.com/guofoo"> https://x.com/guofoo </a>
+    <br/>
+    <a href="https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo"> https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo </a>
+    <br />
+    <a href="https://github.com/guofoo"> https://github.com/guofoo </a>
+    
+    
+    <p>Published: 2024-05-25</p>
+    
+</div>
+
+
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>

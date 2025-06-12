@@ -1,0 +1,1188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title></title>
+      <link>https://robius.rs</link>
+      <description></description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://robius.rs/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Thu, 09 Jan 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Our Roadmaps for Project Robius &amp; Robrix in 2025</title>
+          <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/robius-roadmap-2025/</link>
+          <guid>https://robius.rs/blog/robius-roadmap-2025/</guid>
+          <description xml:base="https://robius.rs/blog/robius-roadmap-2025/">&lt;p&gt;&lt;em&gt;Author: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;kevinaboos&quot;&gt;Kevin Boos&lt;&#x2F;a&gt;. Last updated January 16th, 2024.&lt;&#x2F;em&gt; &lt;a href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;rust&#x2F;comments&#x2F;1i2wq5j&#x2F;project_robius_in_2024_another_year_of_progress&#x2F;&quot;&gt;Discuss this on Reddit&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;‼️ &lt;strong&gt;This is a continuation of &lt;a href=&quot;..&#x2F;robius-retrospective-2024&quot;&gt;our previous post&lt;&#x2F;a&gt;&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;We&#x27;ve just completed the first full year of work on &lt;strong&gt;Project Robius&lt;&#x2F;strong&gt;: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure 🦀 Rust 🦀 that work seamlessly across all major platforms.&lt;&#x2F;p&gt;
+&lt;p&gt;In this companion post, we&#x27;ll take a look at our roadmap for 2025 and beyond, both for Project Robius as a whole and for the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robrix&quot;&gt;Robrix&lt;&#x2F;a&gt; app specifically.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;project-robius-roadmap-for-2025&quot;&gt;Project Robius Roadmap for 2025&lt;&#x2F;h2&gt;
+&lt;p&gt;Project Robius in 2025 aims to continue the work we&#x27;ve begun in 2024 to improve the overall app dev experience in Rust.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;more-rust-abstractions-for-platform-features&quot;&gt;More Rust abstractions for platform features&lt;&#x2F;h4&gt;
+&lt;p&gt;As a technical organization, our primary ongoing focus will be to keep creating and publishing as many high-quality platform feature abstraction crates as possible.
+Now that we have a foundation established with &lt;a href=&quot;..&#x2F;robius-retrospective-2024#1-robius-crates-for-platform-feature-abstractions&quot;&gt;several existing crates&lt;&#x2F;a&gt;, we anticipate being able to make faster progress, especially with the expected addition of more contributors.
+Our targeted platform features include (in rough priority order):&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;File&#x2F;image&#x2F;media picker (in progress)&lt;&#x2F;li&gt;
+&lt;li&gt;Native system notifications (in progress)&lt;&#x2F;li&gt;
+&lt;li&gt;Toasts, pop-up messages, status bar icons
+&lt;ul&gt;
+&lt;li&gt;We have implemented this in Makepad, but not with native widgets commonly used on Mobile platforms&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Spawning long-running background tasks&#x2F;services&lt;&#x2F;li&gt;
+&lt;li&gt;System file&#x2F;media store&lt;&#x2F;li&gt;
+&lt;li&gt;Native context menus
+&lt;ul&gt;
+&lt;li&gt;Same status as toasts above.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Camera access &amp;amp; configuration&lt;&#x2F;li&gt;
+&lt;li&gt;Audio input (microphone)&lt;&#x2F;li&gt;
+&lt;li&gt;System theming choices (e.g., dark mode, key colors)&lt;&#x2F;li&gt;
+&lt;li&gt;Connectivity manager&#x2F;subscriber&lt;&#x2F;li&gt;
+&lt;li&gt;Power&#x2F;battery status&lt;&#x2F;li&gt;
+&lt;li&gt;Haptics&#x2F;vibration&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;better-more-automated-build-tooling&quot;&gt;Better, more automated build tooling&lt;&#x2F;h4&gt;
+&lt;p&gt;Another topic dear to our hearts is build tooling.
+We aim to improve the state of build tools such that the app developer themself can be relieved from the burden of managing and figuring out platform-specific details, such as which permissions&#x2F;entitlements their app requires to build and run properly on mobile platforms.
+Ideally, we&#x27;d like to be able to auto-generate a fully-formed Android XML manifest or Apple &lt;code&gt;Info.plist&lt;&#x2F;code&gt; file with all of the necessary permissions that an app requires, without requiring the app dev to possess expert knowledge about the requirements of their app&#x27;s dependencies and transitive dependencies.&lt;&#x2F;p&gt;
+&lt;p&gt;One such idea for realizing this is to make each &lt;code&gt;robius-*&lt;&#x2F;code&gt; platform feature abstraction crate automatically emit its required permissions during the build process.
+Exactly &lt;em&gt;how&lt;&#x2F;em&gt; to export and encode this information is still up in the air, but we have discussed leveraging a linker-based approach similar to what &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;DioxusLabs&#x2F;manganis&quot;&gt;Dioxus&#x27;s manganis project&lt;&#x2F;a&gt; does to encode resource&#x2F;asset paths into special linker sections.
+This would allow a top-level tool to run after the &lt;code&gt;cargo build&lt;&#x2F;code&gt; process, and inspect the binary&#x27;s special linker sections in order to automatically generate a full permissions&#x2F;entitlements file for the given target platform.
+We envision that this could also be used for other arbitrary UI toolkits, not just Makepad, as well as emitted by other platform abstraction crates outside of the &lt;code&gt;robius-*&lt;&#x2F;code&gt; organization.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;effortless-integration-with-other-ui-toolkits&quot;&gt;Effortless integration with other UI toolkits&lt;&#x2F;h4&gt;
+&lt;p&gt;In addition, we wish to explore deeper integration and first-class compatibility (and testing pipelines) with other Rust UI toolkits, e.g., Dioxus, eGUI, and more.
+Our first year of development has been centered on Makepad, in the sense that we&#x27;ve built two full-size Makepad apps, contributed significantly to Makepad itself, and have focused on test-driving our crates using Makepad apps (see &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-demo-simple&quot;&gt;&lt;code&gt;robius-demo-simple&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;).
+Thus, using Robius components in a Makepad app is quite easy for the app developer.
+All they need to do is add a dependency on a special &quot;marker&quot; crate that auto-configures all &lt;code&gt;robius-*&lt;&#x2F;code&gt; crates to work with Makepad, as shown below in Robrix&#x27;s &lt;code&gt;Cargo.toml&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;toml&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;&lt;span&gt;[dependencies]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;makepad-widgets &lt;&#x2F;span&gt;&lt;span&gt;= { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;branch &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;rik&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;robius-open &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0.1.2&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;robius-directories &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;5.0.1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;robius-location &lt;&#x2F;span&gt;&lt;span&gt;= { &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;git &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-location&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;## Including this crate automatically configures all `robius-*` crates to work with Makepad.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;robius-use-makepad &lt;&#x2F;span&gt;&lt;span&gt;= &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;0.1.1&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now that we have successfully realized several platform feature abstraction crates, we would like to ensure that these can be easily utilized by apps built in other UI toolkits.
+For example, one specific secondary goal for this year is to explore how &lt;code&gt;robius-*&lt;&#x2F;code&gt; crates could comprise Dioxus&#x27;s &lt;a href=&quot;https:&#x2F;&#x2F;dioxuslabs.com&#x2F;learn&#x2F;0.5&#x2F;contributing&#x2F;roadmap&#x2F;#mobile&quot;&gt;&lt;code&gt;dioxus-std&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; library and fill in the gaps in their mobile platform support.&lt;&#x2F;p&gt;
+&lt;p&gt;Another related goal is to design a UI-focused concurrency management library with an interface that helps app devs easily write high-performance apps that never block or bog down the main UI thread with long-running operations.
+We envision easy interfaces to offload code to background threads or async tasks, as well as for exchanging data between these background contexts and the performance-sensitive the UI main thread.
+The inability to easily invoke async functions from the UI main thread (without causing performance hiccups) is a long-running frustration we have had when developing Robrix, as many SDKs are written with a hard dependency on an async executor, typically tokio.
+This serves as strong motivation to ameliorate the overly-complex code patterns shown in the diagram below, in which Robrix&#x27;s structure of multiple execution contexts with myriad distinct communication mechanisms between them must be &lt;em&gt;manually&lt;&#x2F;em&gt; managed.&lt;&#x2F;p&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_concurrency_diagram.png&quot;&gt;
+    &lt;img style=&quot;width:98%&quot; src=&quot;&#x2F;blog&#x2F;robrix_concurrency_diagram.png&quot; alt=&quot;Diagram of how Robrix must manually manage mixed concurrency contexts&quot;&gt;
+&lt;&#x2F;a&gt;
+&lt;blockquote&gt;
+&lt;p&gt;To understand this concurrency challenge in more detail, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;DO5C7aITVyU?si=N_10UZBCR5g-w2D4&amp;amp;t=1390&quot;&gt;watch this presentation on Robrix (starting from 23:10)&lt;&#x2F;a&gt; or &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;files&#x2F;blob&#x2F;main&#x2F;GOSIM%20China%202024&#x2F;Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf&quot;&gt;check out slides 26-33 here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;A key component of this library is an abstract &lt;em&gt;compile-time token&lt;&#x2F;em&gt; that statically ensures whether code is executing within the context of the main UI thread context.
+Such a type must be both non-&lt;code&gt;Send&lt;&#x2F;code&gt; and non-&lt;code&gt;Sync&lt;&#x2F;code&gt;, and only possible to construct on the main UI thread.
+This token is necessary because most platforms require many of their platform-provided APIs to be invoked on the main thread, and it&#x27;s significantly better to check this at compile time than via a runtime assertion.
+We have realized this for Makepad via a mutable reference to the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&#x2F;blob&#x2F;0084948c176a99740af92a71578543c3fcc0b63f&#x2F;platform&#x2F;src&#x2F;cx.rs#L55&quot;&gt;context type&lt;&#x2F;a&gt; &lt;code&gt;&amp;amp;mut Cx&lt;&#x2F;code&gt;, which is created only on the main UI thread and then passed as a mutable reference to all of the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&#x2F;blob&#x2F;0084948c176a99740af92a71578543c3fcc0b63f&#x2F;widgets&#x2F;src&#x2F;widget.rs#L45-L110&quot;&gt;event handlers and draw routines&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s a simplified example of how we leverage this technique in Robrix to implement an efficient cache for user profile information, while avoiding the need to acquire any locks on the main UI thread.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F; Returns the cached user profile for the given user ID ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F; This function requires passing in a reference to `Cx`,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F; which isn&amp;#39;t used, but acts as a guarantee that this function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F; must only be called by the main UI thread.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;get_user_profile&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;user_id&lt;&#x2F;span&gt;&lt;span&gt;: OwnedUserId,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;fetch_if_missing&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;bool&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;) -&amp;gt; Option&amp;lt;UserProfile&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; access the TLS cache, defined below.
+&lt;&#x2F;span&gt;&lt;span&gt;    ...
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;thread_local! {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;static &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;USER_PROFILE_CACHE&lt;&#x2F;span&gt;&lt;span&gt;: RefCell&amp;lt;BTreeMap&amp;lt;OwnedUserId, UserProfileCacheEntry&amp;gt;&amp;gt; = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span&gt;{ ... };
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Robrix also uses this to statically ensure that a location initialization function can only be invoked from the main UI thread:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F; Starts listening for location requests and updates to the latest device location.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F;&#x2F; ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;init_location_subscriber&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;_cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx) -&amp;gt; Result&amp;lt;(), robius_location::Error&amp;gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    ...
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With a proper UI-agnostic abstraction for a statically-known thread context marker, we can do this not just in the Makepad app logic, but also within the &lt;code&gt;robius-*&lt;&#x2F;code&gt; platform feature crates themselves.
+Finally, while this sort of concurrency library and thread context abstractions are highly desirable, it&#x27;s also admittedly a longer-term goal that merits major effort beyond just 2025.&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;organizing-more-conferences-meet-ups&quot;&gt;Organizing more conferences &amp;amp; meet-ups&lt;&#x2F;h4&gt;
+&lt;p&gt;On the organizational side, we intend to sponsor two more conferences for open-source Rust development and host informal Rust app dev unconferences co-located with those conferences.
+These will be scheduled similarly to &lt;a href=&quot;..&#x2F;robius-retrospective-2024#4-cross-collaboration-with-other-ui-and-app-dev-orgs&quot;&gt;the ones we hosted in 2024&lt;&#x2F;a&gt;:
+the first will be &lt;a href=&quot;https:&#x2F;&#x2F;rustweek.org&#x2F;&quot;&gt;RustWeek 2025&lt;&#x2F;a&gt; (formerly &quot;RustNL&quot;) in the Netherlands in May, and the second will be &lt;a href=&quot;https:&#x2F;&#x2F;china2024.gosim.org&#x2F;&quot;&gt;GOSIM China&lt;&#x2F;a&gt; in autumn 2025.
+With these (un)conferences, we aim to bring community members together again to collaborate, share ideas, and to further advance the state-of-the-art for App Dev and UI in Rust.&lt;&#x2F;p&gt;
+&lt;hr style=&quot;border: none; width: 100%; color: #000000; background-color: #000000; height: 1px;&quot; &gt;
+&lt;h2 id=&quot;robrix-roadmap-for-2025-and-beyond&quot;&gt;Robrix Roadmap for 2025 and beyond&lt;&#x2F;h2&gt;
+&lt;p&gt;As discussed in &lt;a href=&quot;..&#x2F;robius-retrospective-2024#robrix-an-up-and-coming-matrix-chat-client-for-power-users&quot;&gt;our previous post&lt;&#x2F;a&gt;, Robrix is an up-and-coming Matrix chat client for power users, and serves as a &quot;flagship&quot; Robius app to drive the development priorities of various Robius components.&lt;&#x2F;p&gt;
+&lt;p&gt;While Robrix is off to a strong start, we still have a long way to go, and we have a lot more cool features in mind beyond just Matrix chat support.
+We have planned several high-level phases of Robrix development over the next 18-24 months:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;font color=&quot;gray&quot;&gt;&lt;em&gt;[Q1 2025]&lt;&#x2F;em&gt;&lt;&#x2F;font&gt;  Release an alpha version of Robrix with most fundamental Matrix features available.
+&lt;ul&gt;
+&lt;li&gt;Realize sufficient functionality to be usable as a daily driver, but not yet to be a complete replacement for existing clients.&lt;&#x2F;li&gt;
+&lt;li&gt;This is nearly complete! See &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robrix&#x2F;milestone&#x2F;1&quot;&gt;Milestone 1&lt;&#x2F;a&gt; on our GitHub page.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;font color=&quot;gray&quot;&gt;&lt;em&gt;[Summer 2025]&lt;&#x2F;em&gt;&lt;&#x2F;font&gt;  Publish Robrix v1.0 with full Matrix functionality, for &quot;power&quot; users.
+&lt;ul&gt;
+&lt;li&gt;Offer a responsive UI design with a dockable, multi-tab view of many rooms side-by-side, which also adapts to varying screen sizes (mobile, desktop, etc).
+&lt;ul&gt;
+&lt;li&gt;✅ This is already complete! (&lt;a href=&quot;..&#x2F;robius-retrospective-2024#robrix-an-up-and-coming-matrix-chat-client-for-power-users&quot;&gt;as described in our previous post&lt;&#x2F;a&gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Achieve feature parity with existing major clients, including administrative features like a full settings pane, session management, room creation&#x2F;admin, message search, threads, spaces, etc.
+&lt;ul&gt;
+&lt;li&gt;See &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robrix&#x2F;milestone&#x2F;2&quot;&gt;Milestone 2&lt;&#x2F;a&gt; on our GitHub page for more details.&lt;&#x2F;li&gt;
+&lt;li&gt;Generally, these features are &lt;em&gt;not&lt;&#x2F;em&gt; drivers of Robius development, as they don&#x27;t require complex platform features, so they were of a lower priority initially.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Distribute Robrix app bundles to platform app stores and package managers.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;font color=&quot;gray&quot;&gt;&lt;em&gt;[Q3 2025]&lt;&#x2F;em&gt;&lt;&#x2F;font&gt;  Integrate local LLM runtimes (like &lt;a href=&quot;..&#x2F;robius-retrospective-2024#moly-chat-with-local-llms-and-custom-ai-agents&quot;&gt;Moly&lt;&#x2F;a&gt;) for powerful, advanced convenience features.
+&lt;ul&gt;
+&lt;li&gt;LLMs or AI agents can summarize conversations, analyze important topics, and extract key action items from &quot;what you missed&quot; after a holiday. Here&#x27;s a UI prototype: &lt;br&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_moly_prototype.png&quot;&gt;
+&lt;img style=&quot;width: 50%&quot; alt=&quot;A prototype UI design for AI LLMs alongside Matrix rooms in Robrix&quot; src=&quot;&#x2F;blog&#x2F;robrix_moly_prototype.png&quot; &#x2F;&gt;
+&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;AI chatbots can assist newcomers in large open-source projects by auto-answering FAQs, either privately or publicly to allow for additional interaction from real expert users.&lt;&#x2F;li&gt;
+&lt;li&gt;Key point: &lt;em&gt;fully-local&lt;&#x2F;em&gt; LLM runtimes &lt;strong&gt;cannot jeopardize end-to-end encrypted (E2EE) rooms or user data sovereignty&lt;&#x2F;strong&gt;, so you can utilize LLMs with confidence that your privacy is being honored.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;font color=&quot;gray&quot;&gt;&lt;em&gt;[Late 2025]&lt;&#x2F;em&gt;&lt;&#x2F;font&gt;  Go beyond Matrix: Robrix as a central &quot;hub&quot; for federated &amp;amp; open-source services
+&lt;ul&gt;
+&lt;li&gt;Collect multiple services into a unified app view, including ActivityPub-based microblogs (e.g., &lt;a href=&quot;https:&#x2F;&#x2F;joinmastodon.org&#x2F;&quot;&gt;Mastodon&lt;&#x2F;a&gt;), views of source code and related issues&#x2F;pull requests, discussion forums (e.g., &lt;a href=&quot;https:&#x2F;&#x2F;join-lemmy.org&#x2F;&quot;&gt;Lemmy&lt;&#x2F;a&gt;), and more.
+&lt;ul&gt;
+&lt;li&gt;The exact set of supported services are TBD.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;The availability of many services in a single app context can enable unique combo features, such as a combined activity feed of notifications + news from various sources, or easy one-click broadcasting of project updates to multiple communities across different services.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;font color=&quot;gray&quot;&gt;&lt;em&gt;[Long-term]&lt;&#x2F;em&gt;&lt;&#x2F;font&gt;  Explore how to use decentralized identity providers like &lt;a href=&quot;https:&#x2F;&#x2F;openwallet.foundation&#x2F;&quot;&gt;OpenWallet&lt;&#x2F;a&gt; to login to Robrix-supported services.
+&lt;ul&gt;
+&lt;li&gt;Use Robrix as the first experimental testing ground for integrating a device-local wallet app as an ID provider for Matrix authentication.&lt;&#x2F;li&gt;
+&lt;li&gt;For more info, check out &lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=eq9pnYB5-Xk&quot;&gt;this presentation by Wenjing Chu, an OpenWallet expert&lt;&#x2F;a&gt; from the Matrix Conference 2024.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;While many of these are larger endeavors, we anticipate being able to complete at least milestones 1, 2, and 3 by the end of this coming year.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;acknowledgments&quot;&gt;Acknowledgments&lt;&#x2F;h2&gt;
+&lt;p&gt;I&#x27;d like to thank the following key people who have been instrumental to the success of Project Robius over the past year, and who will undoubtedly help it flourish in 2025.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Makepad team: &lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;rikarends&quot;&gt;Rik Arends&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ejpbruel2&quot;&gt;Eddy Bruël&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;SebMichailidis&quot;&gt;Sebastian Michailidis&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tsoutsman&quot;&gt;Klim Tsoutsman&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.wyeworks.com&#x2F;&quot;&gt;WyeWorks&lt;&#x2F;a&gt; developers: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;jmbejar&quot;&gt;Jorge Bejar&lt;&#x2F;a&gt;,  &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;joulei&quot;&gt;Julián Montes de Oca&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;fmzbl&quot;&gt;Facundo Mendizábal&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ZhangHanDong&quot;&gt;Alex Zhang (ZhangHanDong)&lt;&#x2F;a&gt; and his team members: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;alanpoon&quot;&gt;@alanpoon&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;aaravlu&quot;&gt;@aaravlu&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tyreseluo&quot;&gt;@tyreseluo&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Guocork&quot;&gt;@Guocork&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cassaundra&quot;&gt;Cassaundra&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;My colleagues who provide invaluable guidance, technical advice, and community connections: Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren&lt;&#x2F;li&gt;
+&lt;li&gt;Linebender teammembers, for technical recommendations and serving as a sounding board for exchanging ideas&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;smarizvi110&quot;&gt;@smarizvi110&lt;&#x2F;a&gt; and other miscellaneous contributors from the open-source community&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr style=&quot;border: none; width: 100%; color: #000000; background-color: #000000; height: 1px;&quot; &gt;
+&lt;!-- Links --&gt;
+</description>
+      </item>
+      <item>
+          <title>Project Robius in 2024: one year of Rust App Dev</title>
+          <pubDate>Wed, 08 Jan 2025 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/robius-retrospective-2024/</link>
+          <guid>https://robius.rs/blog/robius-retrospective-2024/</guid>
+          <description xml:base="https://robius.rs/blog/robius-retrospective-2024/">&lt;p&gt;&lt;em&gt;Author: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;kevinaboos&quot;&gt;Kevin Boos&lt;&#x2F;a&gt;. Last updated January 16th, 2025.&lt;&#x2F;em&gt; &lt;a href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;rust&#x2F;comments&#x2F;1i2wq5j&#x2F;project_robius_in_2024_another_year_of_progress&#x2F;&quot;&gt;Discuss this on Reddit&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;This past year marked the first year of work on &lt;strong&gt;Project Robius&lt;&#x2F;strong&gt;: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure 🦀 Rust 🦀 that work seamlessly across all major platforms.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;font style=&quot;bold&quot; color=&quot;#C85911&quot;&gt; &lt;strong&gt;ℹ️ Project Robius in a nutshell&lt;&#x2F;strong&gt; &lt;&#x2F;font&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;While GUIs are the foundation of an app, there is more to developing a modern featureful app than just drawing a UI.
+Project Robius aims to fill in the gaps in the Rust app dev ecosystem by focusing on everything &lt;em&gt;except&lt;&#x2F;em&gt;  the UI, such as abstractions for platform features &amp;amp; OS services, build &amp;amp; packaging tooling, and more.
+We leave UI work to the experts behind the many excellent Rust UI toolkits under active development.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;In this post, we&#x27;ll take a look back on what we&#x27;ve accomplished so far to make the world of Rust App Dev a little better:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;The crates we&#x27;ve published for accessing platform-provided features from Rust code&lt;&#x2F;li&gt;
+&lt;li&gt;The major apps we&#x27;ve built using &lt;a href=&quot;https:&#x2F;&#x2F;makepad.nl&#x2F;&quot;&gt;Makepad&lt;&#x2F;a&gt; + Robius together&lt;&#x2F;li&gt;
+&lt;li&gt;The contributions we&#x27;ve made to existing open-source projects in the App Dev space&lt;&#x2F;li&gt;
+&lt;li&gt;The connections we&#x27;ve fostered throughout the Rust community&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;We&#x27;ll also take a deeper look at &lt;strong&gt;Robrix&lt;&#x2F;strong&gt;,  a multi-platform &lt;a href=&quot;https:&#x2F;&#x2F;matrix.org&#x2F;&quot;&gt;Matrix&lt;&#x2F;a&gt; chat client written from scratch in Rust using the &lt;a href=&quot;https:&#x2F;&#x2F;makepad.nl&#x2F;&quot;&gt;Makepad UI toolkit&lt;&#x2F;a&gt; and Robius components.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-robius-crates-for-platform-feature-abstractions&quot;&gt;1. Robius crates for platform feature abstractions&lt;&#x2F;h2&gt;
+&lt;p&gt;As our primary objective, we have published several crates intended to be used directly by app devs to access a given platform feature or OS service from their app. The main goal here is for each crate to offer a safe, platform-agnostic abstraction, such that the app dev need not worry about writing any platform-specific code or dealing with each platforms&#x27; idiosyncracies.&lt;&#x2F;p&gt;
+&lt;p&gt;We began working on these crates in late Spring of 2024.
+While development started out gradually, we are significantly ramping up our efforts for the coming year and expect to publish more frequently. That being said, here is the current list:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-location&quot;&gt;&lt;code&gt;robius-location&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: access the current geolocation of the user&#x27;s device&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;robius-authentication&quot;&gt;&lt;code&gt;robius-authentication&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: display a native biometric or password authentication prompt&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;robius-open&quot;&gt;&lt;code&gt;robius-open&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: open a URI or file in a different app (determined by the system)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;robius-directories&quot;&gt;&lt;code&gt;robius-directories&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: access platform-standard directory locations for app data, user data, config, cache, etc
+&lt;ul&gt;
+&lt;li&gt;a fork of the &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;directories&quot;&gt;&lt;code&gt;directories&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; crate that adds support for Android&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-url-handler&quot;&gt;&lt;code&gt;robius-url-handler&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: register your Rust app as the default handler for a URL scheme or file association&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-keychain&quot;&gt;&lt;code&gt;robius-keychain&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: store and retrieve secure data&#x2F;passwords from the platform&#x27;s secure storage facility
+&lt;ul&gt;
+&lt;li&gt;This crate was written from scratch, but we discovered &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;keyring&quot;&gt;&lt;code&gt;keyring-rs&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; shortly after finishing it. We intend to contribute our additional features, mostly Android support, into &lt;code&gt;keyring-rs&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-file-dialog&quot;&gt;&lt;code&gt;robius-dialog&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: (WIP) display a native dialog for showing a message or allowing the user to pick a file, directory, image, etc.
+&lt;ul&gt;
+&lt;li&gt;This offers a custom implementation for iOS and Android, but uses &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;rfd&quot;&gt;&lt;code&gt;rfd&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; under the hood for Desktop platforms.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;We&#x27;ve also released some &quot;lower-level&quot; crates that aren&#x27;t intended for direct use by an app developer, but they&#x27;d be useful for other developers that want to create their own platform abstractions.
+The above crates depend on these in various ways.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;android-build&quot;&gt;&lt;code&gt;android-build&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: enables a Rust crate to automatically build Java code for Android targets, as part of a cargo build process via a &lt;code&gt;build.rs&lt;&#x2F;code&gt; build script.
+&lt;ul&gt;
+&lt;li&gt;The Java classfile(s) can then be used by your Rust app, typically via one of the above platform feature abstraction crates.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;robius-android-env&quot;&gt;&lt;code&gt;robius-android-env&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: abstracts access to Android states owned by various UI toolkits.
+&lt;ul&gt;
+&lt;li&gt;Many Android platform features require passing in the current activity or accessing the JavaVM or JNI environment state.&lt;&#x2F;li&gt;
+&lt;li&gt;This crate enables us to write other Rust crates that access Android platform features, such that they work seamlessly across many different UI toolkits.&lt;&#x2F;li&gt;
+&lt;li&gt;Directly supports &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;ndk-context&quot;&gt;&lt;code&gt;ndk-context&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, an existing crate which is compatible with many other UI toolkit components, e.g., [Winit]
+&lt;ul&gt;
+&lt;li&gt;This enables all of the above platform feature abstraction crates (plus any crate that depends on &lt;code&gt;robius-android-env&lt;&#x2F;code&gt;) to work with Winit-based apps on Android.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Compared to &lt;code&gt;ndk-context&lt;&#x2F;code&gt;, the &lt;code&gt;robius-android-env&lt;&#x2F;code&gt; crate offers a &quot;batteries-included&quot; experience that automatically &quot;just works&quot; with supported UI toolkits, such that the app dev doesn&#x27;t have to add any code to make things work.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;2-apps-built-in-2024-using-makepad-robius&quot;&gt;2. Apps built in 2024 using Makepad + Robius&lt;&#x2F;h2&gt;
+&lt;p&gt;We (with help from many collaborators) have built both small proof-of-concept demo apps and larger &quot;flagship&quot; apps using Makepad + Robius. Two of the most complex flagship apps we&#x27;ve been developing in 2024 are:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robrix&quot;&gt;Robrix&lt;&#x2F;a&gt;: a Matrix chat client for power users&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;moxin-org&#x2F;moly&quot;&gt;Moly&lt;&#x2F;a&gt;: a local LLM chat runtime and AI agent explorer (previously &quot;Moxin&quot;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Both of these apps are fully open-source and have releases available on their GitHub pages linked above, in case you&#x27;d like to download and try them out. Note that it&#x27;s best to build them from source for the most up-to-date experience.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;robrix-an-up-and-coming-matrix-chat-client-for-power-users&quot;&gt;Robrix: an up-and-coming Matrix chat client for power users&lt;&#x2F;h3&gt;
+&lt;p&gt;We started &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robrix&quot;&gt;Robrix&lt;&#x2F;a&gt; about one year ago with the intention of it being a &quot;flagship&quot; Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
+Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage &lt;a href=&quot;..&#x2F;robius-roadmap-2025#robrix-roadmap-for-2025-and-beyond&quot;&gt;vision for Robrix in the next post&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Robrix has come a long way over the past year, thanks to 750+ commits from 10 contributors!
+Since starting from scratch, we have created a functional Matrix chat client with most fundamental features already complete and working well, as shown by our feature status tracker below.&lt;&#x2F;p&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_feature_status_tracker.png&quot;&gt;
+    &lt;img style=&quot;width:98%&quot; src=&quot;&#x2F;blog&#x2F;robrix_feature_status_tracker.png&quot; alt=&quot;Robrix&#x27;s feature status tracker&quot;&gt;
+&lt;&#x2F;a&gt;
+&lt;p&gt;With these features in place, we have began dogfooding Robrix as a daily Matrix client!&lt;&#x2F;p&gt;
+&lt;p&gt;While not all main features are complete, Robrix &lt;em&gt;does&lt;&#x2F;em&gt; already have some cool features that help both power users and casual users be more productive.
+The biggest unique feature of Robrix is an &quot;IDE-like&quot; desktop UI that can display multiple rooms side-by-side in separate tabs, which can be docked and moved around via drag-n-drop actions.
+No more wasted horizontal space!&lt;&#x2F;p&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_desktop_ui.png&quot;&gt;
+    &lt;img style=&quot;width:98%&quot; src=&quot;&#x2F;blog&#x2F;robrix_desktop_ui.png&quot; alt=&quot;Robrix side-by-side dockable tab UI&quot;&gt;
+&lt;&#x2F;a&gt;
+&lt;p&gt;Another cool feature is that Robrix&#x27;s UI can automatically transition to different view layouts based on window size. This enables our single codebase to run seamlessly on desktop and mobile platforms, but you can also use any view on any platform if you want.
+For example, we frequently enjoy using the mid-size tablet view (below, left) or the narrow mobile view (below, middle) on a smaller laptop screen too, in addition to on our smartphones (below, right).&lt;&#x2F;p&gt;
+&lt;div style=&quot;gap: 50px;&quot;&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_midsize_ui.png&quot;&gt;
+    &lt;img style=&quot;width: 43%&quot; alt=&quot;Robrix mid-size UI view&quot; src=&quot;&#x2F;blog&#x2F;robrix_midsize_ui.png&quot; &#x2F;&gt;
+&lt;&#x2F;a&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_mobile_view_rooms_list.png&quot;&gt;
+    &lt;img style=&quot;width: 27.5%&quot; alt=&quot;Robrix narrow mobile UI view of the rooms list&quot; src=&quot;&#x2F;blog&#x2F;robrix_mobile_view_rooms_list.png&quot; &#x2F;&gt;
+&lt;&#x2F;a&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;robrix_android_view_single_room.png&quot;&gt;
+    &lt;img style=&quot;width: 25.9%&quot; alt=&quot;Robrix narrow mobile UI view on Android of a single room&quot; src=&quot;&#x2F;blog&#x2F;robrix_android_view_single_room.png&quot; &#x2F;&gt;
+&lt;&#x2F;a&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;robius-open&lt;&#x2F;code&gt; to open URLs, images, and downloaded files&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;robius-location&lt;&#x2F;code&gt; to obtain and share the user&#x27;s current location in a Matrix room&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;robius-url-handler&lt;&#x2F;code&gt; to register Robrix as a default handler for the &lt;code&gt;matrix:&lt;&#x2F;code&gt; URL scheme (and others)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;robius-directories&lt;&#x2F;code&gt; to ensure that we store app data and cached content in the platform-canonical directories&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;robius-keychain&lt;&#x2F;code&gt; to store a user&#x27;s login session tokens (this is a WIP)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;robius-packaging-commands&lt;&#x2F;code&gt; to help easily build app bundles for desktop platforms using cargo-packager&lt;&#x2F;li&gt;
+&lt;li&gt;In the future, we&#x27;ll allow users to mark individual rooms as &quot;secret&quot;, such that they are hidden behind an authentication prompt provided by &lt;code&gt;robius-authentication&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;In addition to a sleek UI and robust platform integration, Robrix achieves high performance and efficiency thanks to its underlying pure-Rust stack and Makepad&#x27;s emphasis on lightweight, performant code.
+Robrix consistently hits the maximum 120 FPS on an older M1 Macbook Pro, remaining smooth and responsive even when scrolling through 10+ rooms displayed side-by-side.
+We achieve this while using only around 26-30% of the system RAM that major Electron-based Matrix desktop clients consume to display a single room.
+(Note: these are preliminary figures that require deeper benchmarking analysis before drawing conclusions from them.)&lt;&#x2F;p&gt;
+&lt;p&gt;Most importantly, thanks to the power of Makepad and Robius, Robrix has zero platform-specific code.
+This makes it easy to maintain and develop features&#x2F;bugfixes quickly, as you don&#x27;t have to consider the idiosyncracies of each platform.
+Thus, we invite you to check out our codebase and contribute any cool features that you&#x27;d love to have!&lt;&#x2F;p&gt;
+&lt;p&gt;To learn more about Robrix, check out the following resources:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robrix&quot;&gt;Robrix&#x27;s GitHub repository&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=DO5C7aITVyU&quot;&gt;A recent conference talk about Robrix&lt;&#x2F;a&gt; (&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;files&#x2F;blob&#x2F;main&#x2F;GOSIM%20China%202024&#x2F;Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf&quot;&gt;PDF slides&lt;&#x2F;a&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;orgs&#x2F;project-robius&#x2F;projects&#x2F;4&#x2F;&quot;&gt;Robrix&#x27;s Project Tracker on GitHub&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;matrix.to&#x2F;#&#x2F;#robius-robrix:matrix.org&quot;&gt;Chat with us about Robrix on Matrix&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;moly-chat-with-local-llms-and-custom-ai-agents&quot;&gt;Moly: chat with local LLMs and custom AI agents&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;moxin-org&#x2F;moly&quot;&gt;Moly&lt;&#x2F;a&gt; (f.k.a. &lt;em&gt;Moxin&lt;&#x2F;em&gt;) is a pure Rust GUI client for running local Large Language Models (LLMs) and chatting with various AI agents.
+You can discover, browse, and download major open-source AI models:&lt;&#x2F;p&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;moly_discover_screen.png&quot;&gt;
+    &lt;img style=&quot;width:98%&quot; src=&quot;&#x2F;blog&#x2F;moly_discover_screen.png&quot; alt=&quot;Moly&#x27;s discover LLM screen&quot;&gt;
+&lt;&#x2F;a&gt;
+&lt;p&gt;and then chat with them &lt;em&gt;locally&lt;&#x2F;em&gt; without contacting any hosted LLM service.&lt;&#x2F;p&gt;
+&lt;a href=&quot;&#x2F;blog&#x2F;moly_chat_screen.png&quot;&gt;
+    &lt;img style=&quot;width:98%&quot; src=&quot;&#x2F;blog&#x2F;moly_chat_screen.png&quot; alt=&quot;Moly&#x27;s LLM chat screen&quot;&gt;
+&lt;&#x2F;a&gt;
+&lt;p&gt;Like Robrix, Moly was started about one year ago completely from scratch, and has been a significant driver for the development of fundamental Makepad widgets, components, and Robius infrastructure.
+For example, Project Robius contributions to Moly and to other projects (at the request of Moly) were driven by these needs:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Better packaging logic and build configuration, which became &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-packaging-commands&quot;&gt;&lt;code&gt;robius-packaging-commands&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;.
+&lt;ul&gt;
+&lt;li&gt;This cooperates with &lt;code&gt;cargo-packager&lt;&#x2F;code&gt; to generate Moly app bundles for all 3 major desktop platforms.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Portable Rust installation &amp;amp; setup &quot;scripts&quot; that run before the GUI app starts, which became &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;moxin-org&#x2F;moly&#x2F;blob&#x2F;a82d297b155fa64efd2cdb5d6b14c89148a1c70b&#x2F;moly-runner&#x2F;src&#x2F;main.rs&quot;&gt;&lt;code&gt;moly-runner&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;.
+&lt;ul&gt;
+&lt;li&gt;This was needed to install and configure the &lt;a href=&quot;https:&#x2F;&#x2F;wasmedge.org&#x2F;&quot;&gt;WasmEdge WASM runtime&lt;&#x2F;a&gt;, which is how Moly runs LLMs locally.&lt;&#x2F;li&gt;
+&lt;li&gt;This is also useful for setting up the complex WasmEdge + Moly development environment in just one click.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Many new Makepad widgets: modals, pop-up notifications, sliding panels, draggable sliders, etc.&lt;&#x2F;li&gt;
+&lt;li&gt;Standardized app behaviors to be more platform-compliant and canonical, e.g., proper use of app data directories.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;To learn more about Moly, check out &lt;a href=&quot;https:&#x2F;&#x2F;dev.to&#x2F;zhanghandong&#x2F;moly-an-open-source-llm-client-implemented-in-pure-rust-1hmd&quot;&gt;this blog post&lt;&#x2F;a&gt; that demonstrates more cool features, screenshots, and examples of what you can do with Moly.
+Due to constraints from the underlying WasmEdge runtime, Moly currently runs only on major desktop platforms (Linux, macOS, Windows), but support for iOS and Android is planned.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;3-select-contributions-to-other-rust-app-dev-projects&quot;&gt;3. Select contributions to other Rust app dev projects&lt;&#x2F;h2&gt;
+&lt;p&gt;In addition to creating, maintaining, and publishing our own crates for Rust app dev, we also strive to contribute to and improve existing crates that are already prominently used in the ecosystem.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;We began using and making contributions to &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;cargo-packager&quot;&gt;&lt;code&gt;cargo-packager&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, a packaging solution for Rust apps on Desktop target platforms created and open-sourced by Crab-Nebula, the folks behind the excellent Tauri ecosystem
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;crabnebula-dev&#x2F;cargo-packager&#x2F;pulls?q=author%3Akevinaboos&quot;&gt;Our contributions&lt;&#x2F;a&gt; were mostly minor bugfixes and improvements to allow the packaging infrastructure to be configured more flexibly&lt;&#x2F;li&gt;
+&lt;li&gt;As previously mentioned, we published &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-packaging-commands&quot;&gt;&lt;code&gt;robius-packaging-commands&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, a companion to &lt;code&gt;cargo-packager&lt;&#x2F;code&gt; that makes it easier to build &amp;amp; configure complex apps
+&lt;ul&gt;
+&lt;li&gt;Automatically calculates the set of dependencies for Debian &lt;code&gt;.deb&lt;&#x2F;code&gt; packages&lt;&#x2F;li&gt;
+&lt;li&gt;Automatically handles Makepad configuration and resource&#x2F;asset discovery &amp;amp; bundling&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;We intend to add support for other Desktop package formats, namely Flatpack&lt;&#x2F;li&gt;
+&lt;li&gt;We also plan to contribute support for generating mobile app bundles, namely Android&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;We have made &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&#x2F;pulls?q=author%3Akevinaboos&quot;&gt;myriad major contributions&lt;&#x2F;a&gt; to the Makepad UI toolkit, as Robrix and Moly are two of the most complex&#x2F;demanding apps built in Makepad
+&lt;ul&gt;
+&lt;li&gt;Improvements to &lt;code&gt;PortalList&lt;&#x2F;code&gt;, a virtual viewport list with infinite scrolling
+&lt;ul&gt;
+&lt;li&gt;Better API with more introspection into the positional &amp;amp; visibility state of items in the list, its scrolling state, and its item caching behavior&lt;&#x2F;li&gt;
+&lt;li&gt;Efficient implementations of smooth scrolling animations, e.g., jump to bottom or jump to a given item index&lt;&#x2F;li&gt;
+&lt;li&gt;Redesign how items are stored and indexed, and how visible items are tracked&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Rich text formatting for displaying both HTML and Markdown content
+&lt;ul&gt;
+&lt;li&gt;Including support for most formatting-relevant tags: (un)ordered lists, strikethrough&#x2F;underline, coloring, indentation, blockquote, code, etc.&lt;&#x2F;li&gt;
+&lt;li&gt;Special handling of interactive components like HTML links, which must preserve external formatting&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Multiple new widgets: avatar images with text fallback, abstractions over rich (HTML) text and plaintext, modals, sliding panes, etc&lt;&#x2F;li&gt;
+&lt;li&gt;Make writing event handlers more ergonomic by avoiding mutable borrows when querying views&#x2F;widgets&lt;&#x2F;li&gt;
+&lt;li&gt;Redesign of underlying Android platform layer to allow external crates to access Android system states&lt;&#x2F;li&gt;
+&lt;li&gt;Enable correct discovery of resource&#x2F;asset files in macOS&#x2F;iOS app bundles&lt;&#x2F;li&gt;
+&lt;li&gt;Many improvements to &lt;code&gt;cargo-makepad&lt;&#x2F;code&gt;, a build tool to generate mobile app packages
+&lt;ul&gt;
+&lt;li&gt;Overhaul code to generate Android APKs&lt;&#x2F;li&gt;
+&lt;li&gt;Properly install&#x2F;configure the NDK toolchain on all 3 desktop platforms, plus enable building native code (via &lt;code&gt;cc-rs&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;li&gt;Ensure backwards compatibility with standard Android Studio-managed SDKs&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;An improved app lifecycle model with dedicated events for all lifecycle stages, which is consistent across all platforms&lt;&#x2F;li&gt;
+&lt;li&gt;Easier and more ergonomic &lt;code&gt;Actions&lt;&#x2F;code&gt; (widget-to-widget message events)
+&lt;ul&gt;
+&lt;li&gt;Plus support for delivering an action to a widget from a background thread or async task context&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;We made &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;kornelski&#x2F;rust-security-framework&#x2F;pull&#x2F;210&quot;&gt;minor contributions&lt;&#x2F;a&gt; to the &lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;security-framework&quot;&gt;&lt;code&gt;security-framework&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; crate, which offers Rust bindings to Apple&#x27;s security framework (for TLS, keychain, etc)
+&lt;ul&gt;
+&lt;li&gt;We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;robius-keychain&quot;&gt;&lt;code&gt;robius-keychain&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;We implemented a Rust auto-installer and configurer for the &lt;a href=&quot;https:&#x2F;&#x2F;wasmedge.org&#x2F;&quot;&gt;WasmEdge WASM runtime&lt;&#x2F;a&gt;, as mentioned &lt;a href=&quot;https:&#x2F;&#x2F;robius.rs&#x2F;blog&#x2F;robius-retrospective-2024&#x2F;#moly-chat-with-local-llms-and-custom-ai-agents&quot;&gt;above&lt;&#x2F;a&gt;
+&lt;ul&gt;
+&lt;li&gt;This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on WasmEdge to run LLMs locally.&lt;&#x2F;li&gt;
+&lt;li&gt;We hope to transform this into the official install script for WasmEdge and upstream it for general usage there, as much of the effort involved was devoted to extracting the precise system configuration required to select and install the proper WasmEdge release.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;4-cross-collaboration-with-other-ui-and-app-dev-orgs&quot;&gt;4. Cross-collaboration with other UI and App Dev orgs&lt;&#x2F;h2&gt;
+&lt;p&gt;Beyond publishing crates and developing apps, we also want to bring together people of all stripes across the Ruist UI and App Dev ecosystem.
+To that end, Project Robius hosted an &lt;a href=&quot;https:&#x2F;&#x2F;2024.rustnl.org&#x2F;unconf&#x2F;&quot;&gt;App Dev unconference&lt;&#x2F;a&gt; at RustNL 2024 (and also GOSIM Beijing 2024), in which a few dozen Rust developers from across the world met up to discuss the shared problems we all face in developing Rust apps and UI toolkits.
+We discussed everything from build tooling to text layout, accessibility, Winit compatibility, and more.
+A few of the topics &amp;amp; ideas from the unconference(s) have already made it past the discussion phase and have become real projects!&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;crates.io&#x2F;crates&#x2F;kittest&quot;&gt;&lt;code&gt;kittest&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;: a universal UI testing framework built upon the &lt;a href=&quot;https:&#x2F;&#x2F;accesskit.dev&#x2F;&quot;&gt;AccessKit&lt;&#x2F;a&gt; accessibility framework, spearheaded by the eGUI team!&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;rust&#x2F;comments&#x2F;1ezdjqx&#x2F;media_i_added_instant_hotreloading_of_some_rust&#x2F;&quot;&gt;Dioxus&#x27;s work on hotreloading&lt;&#x2F;a&gt; not just UI DSL code, but even real Rust code that implements app behavior!&lt;&#x2F;li&gt;
+&lt;li&gt;Feedback given to the Rust project teams, primarily lang, libs, and compiler.
+&lt;ul&gt;
+&lt;li&gt;We focused on changes to Rust that will make future Rust apps easier to write, with simplified and more ergonomic code patterns for async and more.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;In addition, thanks to our colleague Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI &amp;amp; App Dev concerns, and to share ideas, solutions, progress updates.
+Attendees vary, but often include teammembers from &lt;a href=&quot;https:&#x2F;&#x2F;robius.rs&#x2F;&quot;&gt;Robius&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;makepad.nl&#x2F;&quot;&gt;Makepad&lt;&#x2F;a&gt;, the &lt;a href=&quot;https:&#x2F;&#x2F;linebender.org&#x2F;&quot;&gt;Linebender organization&lt;&#x2F;a&gt; (behind Xilem and more), &lt;a href=&quot;https:&#x2F;&#x2F;dioxuslabs.com&#x2F;&quot;&gt;Dioxus&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;emilk&#x2F;egui&quot;&gt;eGUI&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;www.pax.dev&#x2F;&quot;&gt;Pax&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;gfx-rs&#x2F;wgpu&quot;&gt;wgpu&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;slint.dev&#x2F;&quot;&gt;Slint&lt;&#x2F;a&gt;, and more.
+If you&#x27;re in the Rust App Dev or UI space and would like to join future meetups, consider getting in touch!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;our-roadmaps-for-2025&quot;&gt;Our Roadmaps for 2025&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a href=&quot;..&#x2F;robius-roadmap-2025&quot;&gt;Check out our next blog post&lt;&#x2F;a&gt; for roadmaps for both Project Robius and Robrix in 2025 (and beyond).&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;acknowledgments&quot;&gt;Acknowledgments&lt;&#x2F;h2&gt;
+&lt;p&gt;If you made it this far, thanks for reading! You must be a true fan of Rust app dev 😊!&lt;&#x2F;p&gt;
+&lt;p&gt;Before we depart, I&#x27;d like to thank the following key people who have been instrumental to the success of Project Robius over the past year.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Makepad team: &lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;rikarends&quot;&gt;Rik Arends&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ejpbruel2&quot;&gt;Eddy Bruël&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;SebMichailidis&quot;&gt;Sebastian Michailidis&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tsoutsman&quot;&gt;Klim Tsoutsman&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.wyeworks.com&#x2F;&quot;&gt;WyeWorks&lt;&#x2F;a&gt; developers: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;jmbejar&quot;&gt;Jorge Bejar&lt;&#x2F;a&gt;,  &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;joulei&quot;&gt;Julián Montes de Oca&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;fmzbl&quot;&gt;Facundo Mendizábal&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;ZhangHanDong&quot;&gt;Alex Zhang (ZhangHanDong)&lt;&#x2F;a&gt; and his team members: &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;alanpoon&quot;&gt;@alanpoon&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;aaravlu&quot;&gt;@aaravlu&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;tyreseluo&quot;&gt;@tyreseluo&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Guocork&quot;&gt;@Guocork&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;cassaundra&quot;&gt;Cassaundra&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;My colleagues who provide invaluable guidance, technical advice, and community connections: Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren&lt;&#x2F;li&gt;
+&lt;li&gt;Linebender teammembers, for technical recommendations and serving as a sounding board for exchanging ideas&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;smarizvi110&quot;&gt;@smarizvi110&lt;&#x2F;a&gt; and other miscellaneous contributors from the open-source community&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr style=&quot;border: none; width: 100%; color: #000000; background-color: #000000; height: 1px;&quot; &gt;
+&lt;!-- Links --&gt;
+</description>
+      </item>
+      <item>
+          <title>Building a ChatGPT client using Rust with Makepad</title>
+          <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/building-chatgpt-client-using-makepad/</link>
+          <guid>https://robius.rs/blog/building-chatgpt-client-using-makepad/</guid>
+          <description xml:base="https://robius.rs/blog/building-chatgpt-client-using-makepad/">&lt;p&gt;The Rust ecosystem is making significant strides in developing first-class tools for building production-ready applications compatible with major platforms. While there&#x27;s still work to be done to match the developer experience offered by other tech stacks, we can already explore our options. You&#x27;ll be impressed by what Rust can accomplish today.&lt;&#x2F;p&gt;
+&lt;p&gt;This is the first post in a series that explores how to create cross-platform applications with &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&quot;&gt;Makepad&lt;&#x2F;a&gt;, a notable application framework in the Rust community. It is also &lt;a href=&quot;https:&#x2F;&#x2F;project-robius.github.io&#x2F;book&#x2F;#key-community-projects&quot;&gt;one of the key projects under the Robuis initiative&lt;&#x2F;a&gt;. Although it&#x27;s still evolving and some aspects are being fine-tuned for general production readiness, we can now create impressive applications in just a few steps.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;create-a-new-makepad-application&quot;&gt;Create a new Makepad application&lt;&#x2F;h2&gt;
+&lt;p&gt;Let’s dive into it! First, create a new binary project using &lt;code&gt;cargo&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cargo&lt;&#x2F;span&gt;&lt;span&gt; new mychat
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;cd&lt;&#x2F;span&gt;&lt;span&gt; mychat&#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now, we want to add &lt;code&gt;makepad&lt;&#x2F;code&gt; as a dependency.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cargo&lt;&#x2F;span&gt;&lt;span&gt; add makepad-widgets&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --git&lt;&#x2F;span&gt;&lt;span&gt; https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt; --branch&lt;&#x2F;span&gt;&lt;span&gt; rik
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We are now ready to create the necessary elements for an empty application to run. This requires modifying the existing main.rs and adding a few lines.&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;src&#x2F;main.rs&lt;&#x2F;code&gt; file should contain the following:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    mychat::app::app_main()
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And the &lt;code&gt;src&#x2F;lib.rs&lt;&#x2F;code&gt; file:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub mod &lt;&#x2F;span&gt;&lt;span&gt;app;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The &lt;code&gt;src&#x2F;apps.rs&lt;&#x2F;code&gt; file is the actual entrypoint for Makepad applications. Here is our first version for this file:&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;makepad_widgets::*;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;3&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;live_design! {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;4&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    import makepad_widgets::base::*;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;5&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    import makepad_widgets::theme_desktop_dark::*;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;6&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;7&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    App = {{App}} {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;8&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        ui: &amp;lt;Window&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;9&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            window: {inner_size: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;800&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600&lt;&#x2F;span&gt;&lt;span&gt;)},
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            pass: {clear_color: #&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;000&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;11&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;12&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;13&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;14&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;15&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;app_main!(App);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;16&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;17&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(Live, LiveHook)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;18&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;19&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    #[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;live&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;20&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;: WidgetRef,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;21&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;22&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;23&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;LiveRegister &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;24&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;live_register&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;25&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        makepad_widgets::live_design(cx);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;26&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;27&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;28&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;29&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;AppMain &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;30&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;event&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;Event) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;31&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; scope = &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span&gt;Scope::empty();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;32&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(cx, event, scope);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;33&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;34&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;You can test our new application by executing the cargo run command. For now, you should see an empty window.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;understanding-our-application-s-anatomy&quot;&gt;Understanding our application&#x27;s anatomy&lt;&#x2F;h2&gt;
+&lt;p&gt;Looking at the code in &lt;code&gt;src&#x2F;app.rs&lt;&#x2F;code&gt;, we can see various sections. One section includes a call to the &lt;code&gt;live_design!&lt;&#x2F;code&gt; macro, provided by Makepad. This is where we define the UI components and layout of our application.&lt;&#x2F;p&gt;
+&lt;p&gt;Defining a top-level block named &lt;code&gt;App&lt;&#x2F;code&gt; is essential. The behavior of this &lt;code&gt;App&lt;&#x2F;code&gt; element, which represents the entire application, is determined by the Rust struct &lt;code&gt;App&lt;&#x2F;code&gt;. We&#x27;ll delve into this shortly. Note that our application has only one &lt;code&gt;Window&lt;&#x2F;code&gt; widget instance in the &lt;code&gt;App&lt;&#x2F;code&gt; definition, representing the &quot;empty window&quot; you see when running the application.&lt;&#x2F;p&gt;
+&lt;p&gt;So, how would we go about displaying a &quot;Hello world!&quot; message? It&#x27;s simply a matter of adding a &lt;code&gt;Label&lt;&#x2F;code&gt; widget instance inside the &lt;code&gt;Window&lt;&#x2F;code&gt; block.&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;3&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;live_design! {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;6&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;7&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    App = {{App}} {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;8&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        ui: &amp;lt;Window&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;9&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            window: {inner_size: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;vec2&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;800&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;600&lt;&#x2F;span&gt;&lt;span&gt;)},
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            pass: {clear_color: #&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;000&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;11&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;12&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Adding a label displaying some text
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;13&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            body = {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;14&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                &amp;lt;Label&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;15&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    margin: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;40&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;16&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    text: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello World!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;17&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    draw_text: {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;18&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        color: #&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;000&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;19&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;20&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;21&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;22&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;23&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;24&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If you modified the application while it was running, you may have noticed that the changes were immediately reflected. This is thanks to Makepad&#x27;s built-in Live Design feature which automatically detects UI related changes and &quot;hot reloads&quot; the GUI without any recompilation.&lt;&#x2F;p&gt;
+&lt;p&gt;All UI elements should be defined within a block named &lt;code&gt;body&lt;&#x2F;code&gt;, which is specified in the &lt;code&gt;Window&lt;&#x2F;code&gt; widget.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s take a deeper look at the Rust code section of the &lt;code&gt;src&#x2F;app.rs&lt;&#x2F;code&gt; file:&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;56&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;app_main!(App);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;57&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;58&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(Live, LiveHook)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;59&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;60&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    #[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;live&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;61&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;: WidgetRef,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;62&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;63&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;64&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;LiveRegister &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;65&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;live_register&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;66&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        makepad_widgets::live_design(cx);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;67&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;68&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;69&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;70&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;AppMain &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;71&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;event&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;Event) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;72&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; scope = &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span&gt;Scope::empty();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;73&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(cx, event, scope);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;74&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;75&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The Rust code in this file is connected to the application&#x27;s live UI code via the &lt;code&gt;app_main&lt;&#x2F;code&gt; macro (line 56). Makepad then recognizes the &lt;code&gt;App&lt;&#x2F;code&gt; struct as the one representing your application, and everything is tied together.&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;LiveRegister&lt;&#x2F;code&gt; trait must be implemented (lines 64-68) because the framework needs to know the locations of other &lt;code&gt;live_design&lt;&#x2F;code&gt; blocks to load them. Currently, we&#x27;re only including the &lt;code&gt;live_design&lt;&#x2F;code&gt; block included in &lt;code&gt;makepad-widgets&lt;&#x2F;code&gt;, giving us access to framework-provided widgets like &lt;code&gt;Window&lt;&#x2F;code&gt; and &lt;code&gt;Label&lt;&#x2F;code&gt;. However, as your project expands, you&#x27;ll likely define other parts of your application in different files.&lt;&#x2F;p&gt;
+&lt;p&gt;Finally, the &lt;code&gt;AppMain&lt;&#x2F;code&gt; trait must also be implemented, at least minimally, as we&#x27;ve done (see lines 70-75). For now, we&#x27;ve implemented the &lt;code&gt;handle_event&lt;&#x2F;code&gt; function, which describes what happens when the user interacts with the application. The line &lt;code&gt;self.ui.handle_event(cx, event, scope);&lt;&#x2F;code&gt; is important as it invokes the &lt;code&gt;handle_event&lt;&#x2F;code&gt; handler function in the internal widget instances, such as our label instance.&lt;&#x2F;p&gt;
+&lt;p&gt;In makepad, if you implement a &lt;code&gt;handle_event()&lt;&#x2F;code&gt; function, you effectively take control over event handling and propagation. Thus, you must explicitly pass events down into each subwidget (or &quot;child&quot; widget) within a widget, if you want each subwidget to be aware of the event and have the ability to handle or respond to it.
+This gives you ultimate power over how events propagate throughout different UI widgets&#x2F;components in the application.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A crucial aspect to note in Makepad is the existence of a Draw event. This event is triggered when elements on the screen need rendering. If we fail to pass all events to child elements, they will not display because this event will not reach them.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;building-the-user-interface-for-our-chat&quot;&gt;Building the user interface for our chat&lt;&#x2F;h2&gt;
+&lt;p&gt;We aim to create a basic version of a ChatGPT client, so let&#x27;s begin by designing a simple interface. It should include a text input field for the user&#x27;s prompt, a submit button to send the input to the ChatGPT API, and a list of messages to display the conversation.&lt;&#x2F;p&gt;
+&lt;p&gt;For simplicity, we&#x27;ll implement these features directly in our existing &lt;a href=&quot;http:&#x2F;&#x2F;app.rs&#x2F;&quot;&gt;&lt;code&gt;app.rs&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; file. In reality, larger applications would distribute different parts across multiple files. We&#x27;ll cover how to organize larger applications effectively in future posts.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s start by defining a general layout and adding the text input field and submit button.&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;bash&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;live_design! &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;5&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;6&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    App = {{App}} {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;7&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        ui: &amp;lt;Window&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;11&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            body = {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;12&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                height: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;13&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;14&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                margin: {top: 40, bottom: 40, left: 100, right: 100},
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;15&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;16&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                show_bg: true,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;17&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                draw_bg: {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;18&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    color: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;#330
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;19&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;20&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;21&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                flow: Down,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;22&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                spacing: 20,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;23&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;24&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                messages = &amp;lt;View&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;25&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    height: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;26&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;27&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    margin: 20,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;28&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;29&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;30&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                prompt = &amp;lt;View&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;31&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;32&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;33&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    margin: 20,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;34&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    spacing: 10,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;35&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;36&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    prompt_input = &amp;lt;TextInput&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;37&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;38&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;39&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        padding: 10,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;40&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        empty_message: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Type a message...&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;41&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;42&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;43&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    send_button = &amp;lt;Button&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;44&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;45&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        width: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;46&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        padding: 10,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;47&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        text: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Send&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;48&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;49&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;50&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;51&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;52&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;53&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We have replaced all our body block. If you run the application you should see the following:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;makepad-chatgpt-first-run.png&quot; alt=&quot;Chat interface&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;We arranged our layout using one of the Makepad&#x27;s fundamental building blocks: the &lt;code&gt;View&lt;&#x2F;code&gt; widget. One view can have a list of children elements to render in our interface. In our case, we added two nested views and configured the parent to have them vertically organized (indicated by &lt;code&gt;flow: Down&lt;&#x2F;code&gt; in line 21).&lt;&#x2F;p&gt;
+&lt;p&gt;Those two children views are identified as &lt;code&gt;messages&lt;&#x2F;code&gt; (line 24) and &lt;code&gt;prompt&lt;&#x2F;code&gt; (line 30). Though we&#x27;re not using those identifiers yet, they will be necessary for reference in the Rust code later. Observe that the first one uses &lt;code&gt;height: Fill&lt;&#x2F;code&gt; and the second &lt;code&gt;height: Fit&lt;&#x2F;code&gt;. This succinctly conveys that the messages section should take up all available vertical space, with each message taking only the minimum amount of vertical space required to fit the message content in., excluding the area required for the &lt;code&gt;prompt&lt;&#x2F;code&gt; view. The &lt;code&gt;prompt&lt;&#x2F;code&gt; view&#x27;s size relies solely on its inner content.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A common source of issues when working with Makepad is when you have a view sized with &lt;code&gt;Fit&lt;&#x2F;code&gt;, but the inner content uses &lt;code&gt;Fill&lt;&#x2F;code&gt;. This can cause something to not be displayed at all. When a widget uses &lt;code&gt;Fill&lt;&#x2F;code&gt;, it needs to know the parent&#x27;s size beforehand to calculate its own size. Conversely, when a widget is sized with &lt;code&gt;Fit&lt;&#x2F;code&gt;, it needs to calculate the space of its content, which must be calculated without knowing the parent&#x27;s size.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Here&#x27;s an alternate way to organize our &lt;code&gt;live_design&lt;&#x2F;code&gt; code:&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;live_design! {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;5&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;6&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    Messages = &amp;lt;View&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;7&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Empty for now
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;8&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;9&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    Prompt = &amp;lt;View&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;11&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        spacing: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;12&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;13&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &amp;lt;TextInput&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;14&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;15&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;16&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;17&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            empty_message: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Type a message...&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;18&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;19&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;20&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &amp;lt;Button&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;21&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;22&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            width: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;23&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;24&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            text: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Send&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;25&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;26&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;27&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;28&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    App = {{App}} {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;29&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        ui: &amp;lt;Window&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;32&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;33&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            body = {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;45&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;46&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                messages = &amp;lt;Messages&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;47&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    height: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;48&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;49&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    margin: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;20&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;50&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;51&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                prompt = &amp;lt;Prompt&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;52&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;53&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;54&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    margin: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;20&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;55&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;56&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;57&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;58&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;59&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This approach makes our &lt;code&gt;App&lt;&#x2F;code&gt; easier to read at first glance. These are specific parts of our user interface that have been assigned the aliases &lt;code&gt;Messages&lt;&#x2F;code&gt; (lines 6-8) and &lt;code&gt;Prompt&lt;&#x2F;code&gt;(10-26) and can be referred to from other points in the DSL. See into the &lt;code&gt;body&lt;&#x2F;code&gt; definitions and check how &lt;code&gt;Messages&lt;&#x2F;code&gt; (line 46) and &lt;code&gt;Prompt&lt;&#x2F;code&gt; (line 51) are instantiated.&lt;&#x2F;p&gt;
+&lt;p&gt;We&#x27;ve opted to extract almost everything into these named UI blocks. However, it&#x27;s worth noting that we still define (or override) the &lt;code&gt;height&lt;&#x2F;code&gt;, &lt;code&gt;width&lt;&#x2F;code&gt;, and &lt;code&gt;margin&lt;&#x2F;code&gt; where we use &lt;code&gt;Messages&lt;&#x2F;code&gt; and &lt;code&gt;Prompt&lt;&#x2F;code&gt; (see lines 46-48 and 52-54). This is because these values form part of the layout rules we establish in conjunction with the parent view. But, Makepad is highly flexible, allowing you to override as much content as desired to accommodate your needs in various ways.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;implementing-the-interaction&quot;&gt;Implementing the interaction&lt;&#x2F;h2&gt;
+&lt;p&gt;Currently, our application is limited to displaying user interface elements. Interaction is restricted to the text input, with no response when you click the &lt;code&gt;Send&lt;&#x2F;code&gt; button. Let&#x27;s enhance this interface.&lt;&#x2F;p&gt;
+&lt;p&gt;We need to make some changes to our UI code. We&#x27;ll add some labels to the &lt;code&gt;Message&lt;&#x2F;code&gt; widget to display responses. We&#x27;ll also add element identifiers, allowing us to reference them from Rust code later. Check the highlighted lines to spot the elements with identifiers.&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;2&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;live_design! {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;5&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;6&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    Messages = &amp;lt;View&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;7&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        height: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;8&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;9&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;20&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;11&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        flow: Down,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;12&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        spacing: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;20&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;13&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;14&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;&lt;span&gt;        user_message_bubble = &amp;lt;RoundedView&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;15&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            visible: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;16&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;17&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;18&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;19&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;20&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            draw_bg: {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;21&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                color: #&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;222
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;22&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;23&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            user_message = &amp;lt;Label&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;24&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;25&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;26&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;27&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;28&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;29&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;&lt;span&gt;        model_message_bubble = &amp;lt;RoundedView&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;30&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            visible: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;31&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;32&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;33&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;34&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;35&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            draw_bg: {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;36&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                color: #&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;222
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;37&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;38&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            model_message = &amp;lt;Label&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;39&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;40&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;41&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;42&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;43&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;44&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;45&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    Prompt = &amp;lt;View&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;46&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;47&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;48&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        margin: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;20&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;49&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        spacing: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;50&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;51&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;&lt;span&gt;        message_input = &amp;lt;TextInput&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;52&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;53&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            width: Fill,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;54&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;55&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            empty_message: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Type a message...&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;56&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;57&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;58&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;&lt;span&gt;        send_button = &amp;lt;Button&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;59&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            height: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;60&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            width: Fit,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;61&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            padding: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;62&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            text: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Send&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;63&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;64&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;96&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;98&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Note we are using &lt;code&gt;visible: false&lt;&#x2F;code&gt; in some views to hide the messages bubbles (lines 15 and 30). We plan to toggle the visibility once we have some messages to display.&lt;&#x2F;p&gt;
+&lt;p&gt;Now we can add the Rust logic to implement the “send button”.&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;114&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;AppMain &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;115&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;event&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;Event) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;116&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Added this line
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;117&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;match_event&lt;&#x2F;span&gt;&lt;span&gt;(cx, event);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;118&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;119&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; scope = &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span&gt;Scope::empty();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;120&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(cx, event, scope);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;121&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;122&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;123&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;124&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;MatchEvent &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;125&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_actions&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;actions&lt;&#x2F;span&gt;&lt;span&gt;:&amp;amp;Actions){
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;126&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;button&lt;&#x2F;span&gt;&lt;span&gt;(id!(send_button)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;clicked&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;actions) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;127&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Capture the text input value
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;128&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; user_prompt = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;text_input&lt;&#x2F;span&gt;&lt;span&gt;(id!(message_input)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;text&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;129&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;130&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Set the text of the user message label
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;131&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;label&lt;&#x2F;span&gt;&lt;span&gt;(id!(user_message)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_text&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;user_prompt);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;132&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;view&lt;&#x2F;span&gt;&lt;span&gt;(id!(user_message_bubble)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_visible&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;133&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;134&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Simulate a model response
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;135&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; model_response = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Hello, I am a model response!&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;136&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;label&lt;&#x2F;span&gt;&lt;span&gt;(id!(model_message)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_text&lt;&#x2F;span&gt;&lt;span&gt;(model_response);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;137&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;view&lt;&#x2F;span&gt;&lt;span&gt;(id!(model_message_bubble)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_visible&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;138&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;139&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;redraw&lt;&#x2F;span&gt;&lt;span&gt;(cx);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;140&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;141&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;142&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Let&#x27;s examine each of these code blocks in detail. First, we added a call to &lt;code&gt;self.match_event(cx, event)&lt;&#x2F;code&gt; in line 117, which allows us to use the simpler form of Event matching&#x2F;handling. This requires us to implement the &lt;code&gt;MatchEvent&lt;&#x2F;code&gt; trait for the &lt;code&gt;App&lt;&#x2F;code&gt; struct, which we can then use to check for and handle events like a &lt;code&gt;Button&lt;&#x2F;code&gt; click.&lt;&#x2F;p&gt;
+&lt;p&gt;Next, we implement &lt;code&gt;handle_actions&lt;&#x2F;code&gt; to handle the &lt;em&gt;clicked action&lt;&#x2F;em&gt; emitted by the button when the user clicks it (see lines 125-141). The key idea in Makepad is that widgets consume &lt;em&gt;events&lt;&#x2F;em&gt; from other sources and then can emit &lt;em&gt;actions&lt;&#x2F;em&gt; as needed to communicate with other widgets. In this case, the button instance already received and handled a click event and has emitted a related &lt;em&gt;clicked action&lt;&#x2F;em&gt;.
+We rely on the &lt;code&gt;clicked(&amp;amp;actions)&lt;&#x2F;code&gt; function (line 126) to check if the received actions were actually emited by this button instance.&lt;&#x2F;p&gt;
+&lt;p&gt;You may notice how we are relying on the identifiers we have in our &lt;code&gt;live_design&lt;&#x2F;code&gt; counterpart. Things like &lt;code&gt;self.ui.text_input(id!(message_input))&lt;&#x2F;code&gt;, &lt;code&gt;self.ui.label(id!(user_message))&lt;&#x2F;code&gt; and &lt;code&gt;self.ui.view(id!(model_message_bubble))&lt;&#x2F;code&gt;. This is the Makepad query system for UI elements from Rust code, which is very confortable to use. Just remember you need to use the appropriate function depending on the widget type you’re looking for. In other words, &lt;code&gt;self.ui.view(id!(message_input))&lt;&#x2F;code&gt; won’t return anything because the &lt;code&gt;message_input&lt;&#x2F;code&gt; id was used for a &lt;code&gt;TextInput&lt;&#x2F;code&gt; rather than a &lt;code&gt;View&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;As a final note, Makepad has a drawing mode which is quite explicit. So, it is our call to indicate to the framework that there were changes in the labels and views instances that needs to be redraw. Hence, we have an invocation to do it: &lt;code&gt;self.ui.redraw(cx)&lt;&#x2F;code&gt;, in the line 139. This is a very simple way to “redraw everything” that is not the most efficient way if you have a much more elaborated UI where only a tiny portion has changed, but it is probably a good way to start for now. Nothing stops you to try later to invoke &lt;code&gt;redraw&lt;&#x2F;code&gt; in the individual instances of &lt;code&gt;Label&lt;&#x2F;code&gt;, &lt;code&gt;View&lt;&#x2F;code&gt; and &lt;code&gt;TextInput&lt;&#x2F;code&gt; as necessary.&lt;&#x2F;p&gt;
+&lt;p&gt;Since we have changed Rust code we are required to recompile our application and run it again to see the changes. Hopefully, you will notice how fast Makepad applications recompile! This is a luxury to have in the Rust ecosystem thanks to the amount of care the Makepad team puts on it.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;makepad-chatgpt-first-interaction.png&quot; alt=&quot;First chat interaction&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;It is working! We need to have a model delivering smarter responses now 🙂&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;chatgpt-interaction&quot;&gt;ChatGPT interaction&lt;&#x2F;h2&gt;
+&lt;p&gt;It’s time to bring real conversation content to our app. We’re going to use the ChatGPT public API, so you will need to generate a key by signing into &lt;a href=&quot;http:&#x2F;&#x2F;platform.openai.com&quot;&gt;platform.openai.com&lt;&#x2F;a&gt;. Note the number of allowed requests is based on your &lt;a href=&quot;https:&#x2F;&#x2F;platform.openai.com&#x2F;docs&#x2F;guides&#x2F;rate-limits&#x2F;usage-tiers&quot;&gt;current usage tier&lt;&#x2F;a&gt;. Using the free tier, you may have to wait a bit while testing because you only get 3 requests per minute. In any case, our implementation will catch error responses and display them so the user always knows what&#x27;s going on.&lt;&#x2F;p&gt;
+&lt;p&gt;Once you have your API key, let’s implement the request to obtain a model response, by following the &lt;a href=&quot;https:&#x2F;&#x2F;platform.openai.com&#x2F;docs&#x2F;api-reference&#x2F;chat&#x2F;create&quot;&gt;official documentation&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;makepad_widgets::*;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;2&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;makepad_micro_serde::*;
+&lt;&#x2F;span&gt;&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;3&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;125&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;MatchEvent &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;126&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_actions&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;actions&lt;&#x2F;span&gt;&lt;span&gt;:&amp;amp;Actions){
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;127&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;button&lt;&#x2F;span&gt;&lt;span&gt;(id!(send_button)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;clicked&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;actions) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;128&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Capture the text input value
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;129&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; user_prompt = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;text_input&lt;&#x2F;span&gt;&lt;span&gt;(id!(message_input)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;text&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;130&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;131&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Set the text of the user message label
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;132&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;label&lt;&#x2F;span&gt;&lt;span&gt;(id!(user_message)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_text&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;user_prompt);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;133&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;view&lt;&#x2F;span&gt;&lt;span&gt;(id!(user_message_bubble)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_visible&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;134&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;redraw&lt;&#x2F;span&gt;&lt;span&gt;(cx);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;135&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;136&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a7adba;&quot;&gt;&#x2F;&#x2F; Replacing the hardcoded response with a real one
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;137&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;send_message_to_chat_gpt&lt;&#x2F;span&gt;&lt;span&gt;(cx, user_prompt);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;138&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;139&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;140&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;141&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;142&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;send_message_to_chat_gpt&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;message&lt;&#x2F;span&gt;&lt;span&gt;: String) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;143&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; completion_url = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;https:&#x2F;&#x2F;api.openai.com&#x2F;v1&#x2F;chat&#x2F;completions&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;144&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; request_id = live_id!(SendChatMessage);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;145&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let mut&lt;&#x2F;span&gt;&lt;span&gt; request = HttpRequest::new(completion_url, HttpMethod::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;POST&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;146&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;147&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    request.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_header&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;148&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Content-Type&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;(),
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;149&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;application&#x2F;json&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;150&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;151&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;152&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    request.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_header&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;153&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Authorization&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;(),
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;154&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;mark style=&quot;background-color:#a7adba30;&quot;&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Bearer &amp;lt;YOUR_ACCESS_KEY&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;&#x2F;mark&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;155&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    );
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;156&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;157&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    request.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_json_body&lt;&#x2F;span&gt;&lt;span&gt;(ChatPrompt {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;158&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        messages: vec![Message {content: message, role: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;user&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;()}],
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;159&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        model: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;gpt-3.5-turbo&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;to_string&lt;&#x2F;span&gt;&lt;span&gt;(),
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;160&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        max_tokens: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;161&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    });
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;162&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;163&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    cx.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;http_request&lt;&#x2F;span&gt;&lt;span&gt;(request_id, request);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;164&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;165&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;166&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(SerJson, DeJson)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;167&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;ChatPrompt {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;168&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;messages&lt;&#x2F;span&gt;&lt;span&gt;: Vec&amp;lt;Message&amp;gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;169&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;model&lt;&#x2F;span&gt;&lt;span&gt;: String,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;170&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;max_tokens&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;i32
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;171&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;172&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;173&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(SerJson, DeJson)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;174&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;Message {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;175&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;content&lt;&#x2F;span&gt;&lt;span&gt;: String,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;176&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;role&lt;&#x2F;span&gt;&lt;span&gt;: String
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;177&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;178&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Remember to use your own OpenAI access key in the line 154&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;With the addition of &lt;code&gt;send_message_to_chat_gpt()&lt;&#x2F;code&gt; (lines 142-164), we can send a request to the ChatGPT API server. Note that we’re not yet handling the response so we can focus on the request part. The &lt;code&gt;cx.http_request&lt;&#x2F;code&gt; (line 163) is the mechanism in Makepad to issue regular HTTP requests in a non-blocking manner. This ensures that our application UI won’t be blocked while the response is still pending.&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;HttpRequest::set_json_body()&lt;&#x2F;code&gt; function (line 157) receives a struct representing the JSON format expected by the server. Note that we define the &lt;code&gt;ChatPrompt&lt;&#x2F;code&gt; struct (line 167) for this purpose, and then derive &lt;code&gt;SerJson&lt;&#x2F;code&gt; and &lt;code&gt;DeJson&lt;&#x2F;code&gt; on them to automatically generate efficient JSON parsing logic for them. You can think of those traits as a simpler version of &lt;code&gt;Serde&lt;&#x2F;code&gt;, which we are importing in the line 2.&lt;&#x2F;p&gt;
+&lt;p&gt;Let’s now receive the responses and update the user interface:&lt;&#x2F;p&gt;
+&lt;pre data-linenos data-lang=&quot;rust&quot; style=&quot;background-color:#eff1f5;color:#4f5b66;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;114&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;impl &lt;&#x2F;span&gt;&lt;span&gt;MatchEvent &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;App {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;129&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;130&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_network_responses&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;131&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;132&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cx&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;mut&lt;&#x2F;span&gt;&lt;span&gt; Cx,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;133&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;responses&lt;&#x2F;span&gt;&lt;span&gt;: &amp;amp;NetworkResponsesEvent
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;134&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    ) {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;135&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; label = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;label&lt;&#x2F;span&gt;&lt;span&gt;(id!(model_message));
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;136&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;for&lt;&#x2F;span&gt;&lt;span&gt; event in responses {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;137&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;match &lt;&#x2F;span&gt;&lt;span&gt;&amp;amp;event.response {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;138&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                NetworkResponse::HttpResponse(response) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;139&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;match&lt;&#x2F;span&gt;&lt;span&gt; event.request_id {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;140&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        live_id!(SendChatMessage) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;141&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; response.status_code == &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;200 &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;142&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; chat_response =
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;143&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                    response.get_json_body::&amp;lt;ChatResponse&amp;gt;().&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;unwrap&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;144&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                label.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_text&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;145&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                    &amp;amp;chat_response.choices[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;].message.content
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;146&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                );
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;147&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                            } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;148&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                label.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_text&lt;&#x2F;span&gt;&lt;span&gt;(&amp;amp;format!(
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;149&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Failed to connect with OpenAI: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;{:?}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;150&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                    response.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;get_string_body&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;151&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                                ));
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;152&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;153&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;154&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;view&lt;&#x2F;span&gt;&lt;span&gt;(id!(model_message_bubble)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_visible&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;155&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;redraw&lt;&#x2F;span&gt;&lt;span&gt;(cx);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;156&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        },
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;157&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        _ =&amp;gt; (),
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;158&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;159&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;160&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                NetworkResponse::HttpRequestError(error) =&amp;gt; {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;161&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    label.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_text&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;162&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                        &amp;amp;format!(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Failed to connect with OpenAI &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;{:?}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, error)
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;163&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    );
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;164&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;view&lt;&#x2F;span&gt;&lt;span&gt;(id!(model_message_bubble)).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;set_visible&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;165&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.ui.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;redraw&lt;&#x2F;span&gt;&lt;span&gt;(cx);
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;166&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;167&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;                _ =&amp;gt; ()
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;168&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;169&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;170&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;171&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;209&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;210&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(SerJson, DeJson)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;211&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;ChatResponse {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;212&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;id&lt;&#x2F;span&gt;&lt;span&gt;: String,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;213&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;object&lt;&#x2F;span&gt;&lt;span&gt;: String,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;214&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;created&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;215&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;model&lt;&#x2F;span&gt;&lt;span&gt;: String,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;216&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;usage&lt;&#x2F;span&gt;&lt;span&gt;: Usage,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;217&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;choices&lt;&#x2F;span&gt;&lt;span&gt;: Vec&amp;lt;Choice&amp;gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;218&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;system_fingerprint&lt;&#x2F;span&gt;&lt;span&gt;: Option&amp;lt;String&amp;gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;219&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;220&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;221&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(SerJson, DeJson)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;222&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;pub struct &lt;&#x2F;span&gt;&lt;span&gt;Usage {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;223&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;prompt_tokens&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;224&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;completion_tokens&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;225&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;total_tokens&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;226&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;227&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;228&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;#[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;derive&lt;&#x2F;span&gt;&lt;span&gt;(SerJson, DeJson)]
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;229&lt;&#x2F;td&gt;&lt;td&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;struct &lt;&#x2F;span&gt;&lt;span&gt;Choice {
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;230&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;message&lt;&#x2F;span&gt;&lt;span&gt;: Message,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;231&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;finish_reason&lt;&#x2F;span&gt;&lt;span&gt;: String,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;232&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;index&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;i32&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;233&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;logprobs&lt;&#x2F;span&gt;&lt;span&gt;: Option&amp;lt;String&amp;gt;,
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;tr&gt;&lt;td&gt;234&lt;&#x2F;td&gt;&lt;td&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Makepad&#x27;s &lt;code&gt;MatchEvent&lt;&#x2F;code&gt; trait has a &lt;code&gt;handle_network_responses()&lt;&#x2F;code&gt; function, and by implementing it (lines 130-171) we now have a way to network-related events. This function is quite straightforward once we define a &lt;code&gt;ChatResponse&lt;&#x2F;code&gt; struct (line 211) to represent the JSON response format coming from ChatGPT.&lt;&#x2F;p&gt;
+&lt;p&gt;Once we retrieve the chat message from the response, we set the corresponding &lt;code&gt;Label&lt;&#x2F;code&gt; instance&#x27;s text (line 144). We also make sure that the parent view is visible (line 154) and everything gets redrawn (line 155). The parent visibility was hidden because we only want to display the messages bubbles once we have the messages&lt;&#x2F;p&gt;
+&lt;p&gt;If everything goes well with the ChatGPT API server, you should see an interaction like the following one:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;makepad-chatgpt-final-result.png&quot; alt=&quot;ChatGPT response displayed&quot; &#x2F;&gt;
+&lt;em&gt;This is what ChatGPT knows about Makepad...&lt;&#x2F;em&gt; 🙂&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;wrapping-up&quot;&gt;Wrapping up&lt;&#x2F;h2&gt;
+&lt;p&gt;Let&#x27;s take a look at what we have achieved in a few steps. We have a basic application with an easy-to-modify look and feel. In just a few dozen lines of code, we made a working chat client that shows real responses from ChatGPT models. Now, we invite you to try different platforms beyond the native desktop platform that we demonstrated in this post. Follow the instructions in the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&#x2F;?tab=readme-ov-file#build--run-instructions&quot;&gt;Makepad README&lt;&#x2F;a&gt; to see how to test this application in Android, iOS, and web.&lt;&#x2F;p&gt;
+&lt;p&gt;In a future post, we&#x27;ll cover how to implement a list of messages to make this app really feel like a true interactive chat app.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Have fun hacking with Makepad and Rust!&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Performance Benchmarking on iOS</title>
+          <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/performance-benchmarking-ios/</link>
+          <guid>https://robius.rs/blog/performance-benchmarking-ios/</guid>
+          <description xml:base="https://robius.rs/blog/performance-benchmarking-ios/">&lt;p&gt;After testing the &lt;a href=&quot;&#x2F;blog&#x2F;performance-benchmarking&quot;&gt;Performance Benchmarking&lt;&#x2F;a&gt;  of cross-platform applications written with Makepad on Android platforms, we decided to do some tests on iOS.&lt;&#x2F;p&gt;
+&lt;p&gt;Instead of using the exisitng mock WeChat and TaoBao apps, we had decided to focus more on graphics effects performance. For this, the team at WyeWorks had helped create a suite of graphics effects in an app called &lt;strong&gt;comp_demo&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;div style=&quot;display:flex&quot;&gt;
+  &lt;div style=&quot;flex:1;padding-right:5px;&quot;&gt;
+&lt;h2 id=&quot;graphics-effects&quot;&gt;Graphics Effects&lt;&#x2F;h2&gt;
+&lt;p&gt;The effects below have been implemented in all three apps:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Rounded Corner&lt;&#x2F;li&gt;
+&lt;li&gt;Bitmap Image RC&lt;&#x2F;li&gt;
+&lt;li&gt;Bitmap Text Scaling&lt;&#x2F;li&gt;
+&lt;li&gt;Vector Text Scaling&lt;&#x2F;li&gt;
+&lt;li&gt;Transparency effects&lt;&#x2F;li&gt;
+&lt;li&gt;Control Shadow&lt;&#x2F;li&gt;
+&lt;li&gt;Path Shadow&lt;&#x2F;li&gt;
+&lt;li&gt;Control Stroke&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;implementations&quot;&gt;Implementations&lt;&#x2F;h2&gt;
+&lt;p&gt;The same set of features were implemented using Swift UI to run as iOS native application, using Flutter to run on iOS.&lt;&#x2F;p&gt;
+&lt;p&gt;Using Makepad, the same set of features were implemented and also ran on iOS.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;devices&quot;&gt;Devices&lt;&#x2F;h2&gt;
+&lt;p&gt;All 3 apps and tests were ran on the same iPhone 12 and iPhone 13 devices. The devices themselves were &quot;clean&quot; machines, meaning a new machine wihtout any extra applications installed, just the three test apps.&lt;&#x2F;p&gt;
+&lt;p&gt;The phones were running iOS 17.3.&lt;&#x2F;p&gt;
+  &lt;&#x2F;div&gt;
+  &lt;div style=&quot;flex:1;padding-left:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;iphone-comp-demo-ss.jpg&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;iphone-comp-demo-ss.jpg&quot; alt=&quot;iPhone screenshot&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;!-- ![&lt;img src=&quot;&#x2F;blog&#x2F;iphone-comp-demo-ss.jpg&quot; width=&quot;200&quot;&#x2F;&gt;](&#x2F;blog&#x2F;iphone-comp-demo-ss.jpg) --&gt;
+&lt;!-- &lt;figure&gt;
+    &lt;img src=&quot;&#x2F;blog&#x2F;iphone-comp-demo-ss.jpg&quot; width=&quot;400&quot;
+         alt=&quot;Main Screen&quot;&gt;
+    &lt;figcaption&gt;Makepad comp_demo screenshot.&lt;&#x2F;figcaption&gt;
+&lt;&#x2F;figure&gt; --&gt;
+&lt;h2 id=&quot;process&quot;&gt;Process&lt;&#x2F;h2&gt;
+&lt;p&gt;Collecting performance metrics on iOS is not as straightforward as on Android. Android&#x27;s Perfetto tool automates most of the process of collecting and presenting the metrics, both in UI and JSON data formats. But on iOS, the Xcode&#x27;s Instrumentation tool mainly deals with UI displays of real-time performance graphs. While this is helpful in some situations, it is not sufficient for the metrics that we wanted to collect.&lt;&#x2F;p&gt;
+&lt;p&gt;Hence, we had to utilize the &lt;code&gt;xcrun xctrace&lt;&#x2F;code&gt; commands to record metrics we are interested in, then use export to extract the metrics from the proprietary binary file formats into an xml file, and then convert it into csv format in order to be more human readable using a spreadsheet application.&lt;&#x2F;p&gt;
+&lt;p&gt;After running through the process several times, we devised scripts to automate as many of these manual steps as possible. This included running one command to start the recording process to do the test. And then one script to extract the proper data, and one more at the end to summarize the data that we&#x27;re interested in, such as the CPU %, Memory usage, etc.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;&#x2F;h2&gt;
+&lt;p&gt;The results were interesting to see. First, for most of the Swift UI version of the application, the data were not readily or easily seen. It seems that iOS &quot;hides&quot; or &quot;combines&quot; the actual application usage data with the operating system, such that it is not apparent which work was actually peformed and counted as part of the application and which were counted as OS.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;&#x2F;blog&#x2F;ios-results-table.png&quot;&gt;&lt;img src=&quot;&#x2F;blog&#x2F;ios-results-table.png&quot; alt=&quot;Results Table&quot; &#x2F;&gt;&lt;&#x2F;a&gt;
+(In the table above, red background means good, yellow means bad)&lt;&#x2F;p&gt;
+&lt;p&gt;So the more comparable test results are between the Makepad and Flutter apps. As both of these applications come with their own rendering layer, and do not utilize iOS&#x27;s own native rendering.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;rounded-corners-and-text-scaling&quot;&gt;Rounded Corners and Text Scaling&lt;&#x2F;h3&gt;
+&lt;p&gt;From these results, it can be seen that in general, Makepad app&#x27;s CPU % usage is often ~50% less than what the Flutter app&#x27;s were. On the other hand, Makepad app&#x27;s GPU % usage is often ~30% higher.&lt;&#x2F;p&gt;
+&lt;p&gt;Note that memory usage includes both the CPU and GPU memory in this case. Makepad&#x27;s memory usage is in general much higher than the others. Part of the reason is that currently Makepad still bundles its own big font file as part of the app, which results in about 40MB of memory usage on its own.&lt;&#x2F;p&gt;
+&lt;p&gt;As part of the Project Robius&#x27;s platform abstraction efforts, we hope to add feature for Makepad (and other Rust UI applications) to be able to easily use the underlying platform&#x27;s system fonts. This will help reduce the memory footprint by a large amount.&lt;&#x2F;p&gt;
+&lt;p&gt;These results are actually very similar to those seen in the previous &lt;a href=&quot;&#x2F;blog&#x2F;performance-benchmarking-2&quot;&gt;Performance Benchmarking&lt;&#x2F;a&gt; of scrolling tests on Android. At that time, Makepad apps also exhibited the lower CPU but higher GPU usage pattern.&lt;&#x2F;p&gt;
+&lt;p&gt;This can be attributed to Makepad&#x27;s architecture design of doing some work on CPU but doing a lot of other graphics manipulation on the GPU directly by utilizing shader programs. This allows certain graphics operations to be as simple as changing a variable, without the need for repeated drawcalls. Makepad also optimizes drawcalls by minimizing the number of them. It also has the flexibility of allowing users to write shader programs to execute on the GPU.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;shadow-effects&quot;&gt;Shadow Effects&lt;&#x2F;h3&gt;
+&lt;p&gt;For the shadow effects, we see the huge advantage that Makepad app has over the equivalent Flutter and even Swift apps.  Makepad app is the only one that managed a steady 60 fps rendering, while the Swift and Flutter apps struggled to stay in the ~45 fps range.&lt;&#x2F;p&gt;
+&lt;p&gt;The large CPU % spike also indicates that it is working extra hard to perform these graphics shadow effects.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;&#x2F;h2&gt;
+&lt;p&gt;For a relatively new (~4 years) UI framework written in Rust, Makepad&#x27;s performance can be seen as quite impressive, especially consdering it has been developed mainly by a team of 3 people.&lt;&#x2F;p&gt;
+&lt;p&gt;Part of the performance advantages can be attributed to the efficiency of the programming language Rust itself. But a major reason can be attributed to Makepad&#x27;s novel design approach of having a mixed immediate mode + retained mode rendering system. Currently, the framework has not even begun to optimize specifically for performance tests. For example, the higher memory footprint is a current design decision, and has room for furter optimization according to &lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;rikarends&quot;&gt;Rik&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;We&#x27;re looking forward to continuing to work closely with the Makepad team to bring the best cross-platform performance UI framework in Rust to all developers.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;&#x2F;h2&gt;
+&lt;p&gt;All tests were performed on the iOS build of the Makepad comp_demo app, running on iPhone 12 and iPhone 13.&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad comp_demo app:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;comp_demo&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;comp_demo&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;iOS Benchmarking scripts:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;benchmarking-ios&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;benchmarking-ios&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad Framework:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Performance Improvements with SDF</title>
+          <pubDate>Mon, 29 Jan 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/performance-improvements-with-sdf/</link>
+          <guid>https://robius.rs/blog/performance-improvements-with-sdf/</guid>
+          <description xml:base="https://robius.rs/blog/performance-improvements-with-sdf/">&lt;p&gt;Recently, the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&quot;&gt;Makepad&lt;&#x2F;a&gt; framework updated its font handling with SDF generation algorithms. We decided to test out the WeChat and TaoBao apps built using this latest iteration of the framework to see if there are any changes to performance. The tests are same as before: fast scrolling of the main content screen back and forth within a 10 second window.&lt;&#x2F;p&gt;
+&lt;p&gt;The WeChat and TaoBao apps&#x27; code have pretty much stayed the same. The only change was made last month to work with Makepad&#x27;s then-new &lt;code&gt;MatchEvent()&lt;&#x2F;code&gt; event handling paradigm, which simplified the code base and reduced the size of it by 20~30%.&lt;&#x2F;p&gt;
+&lt;p&gt;The SDF algorithm changes in Makepad Framework itself is transparent to the application developer. It is a Makepad internal performance optimization.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;results-summary&quot;&gt;Results Summary&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;makepad-taobao&quot;&gt;Makepad TaoBao&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;makepad-sdf-taobao-results.png&quot; alt=&quot;TaoBao Results Summary&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;As can be seen from the preliminary results, the CPU Cycles of the application reduced by about 12%, while the average and max CPU frequency went up by 18% and 56% respectively. This is because the SDF generation takes more CPU processing initially to process the fonts, but once it&#x27;s done, the overall CPU usage is reduced during subsequent rendering.&lt;&#x2F;p&gt;
+&lt;p&gt;The CPU memory usage increased by an insignificant amount. But the GPU memory usage both reduced by over 23%. This is a significant improvement over the old Makepad way of using the Font Atlas feature. The dynamic SDF generation algorithm uses less than 1&#x2F;4 of the GPU memory, a huge improvement.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;makepad-wechat&quot;&gt;Makepad WeChat&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;makepad-sdf-wechat-results.png&quot; alt=&quot;WeChat Results Summary&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Unlike the TaoBao app, the WeChat app is more &quot;text-centric&quot;, with less images and mostly text-based rendering. The improvements here are more apparent.&lt;&#x2F;p&gt;
+&lt;p&gt;The CPU cycles reduced by 24%, while the CPU frequency increases by average of 15% and max of 21% respectively.&lt;&#x2F;p&gt;
+&lt;p&gt;The GPU memory usage reductions were even more significant, with 35% less average memory usage and 32% decrease in max memory usage.&lt;&#x2F;p&gt;
+&lt;p&gt;The detailed chart of each of the metrics follows below.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;individual-graphs&quot;&gt;Individual Graphs&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;cpu-cycles&quot;&gt;CPU Cycles&lt;&#x2F;h3&gt;
+&lt;p&gt;On the CPU cycle, we see the significant reduction of CPU cycles with the new SDF algorithm as compared to the old Font Atlas rendering.&lt;&#x2F;p&gt;
+&lt;p&gt;For the mostly text-based app such as WeChat, the results are more significant.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;(For all graphs, the right side bar(s) is the new Makepad with SDF.)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Makepad TaoBao&lt;&#x2F;th&gt;&lt;th&gt;Makepad WeChat&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;div style=&quot;display:flex&quot;&gt;
+  &lt;div style=&quot;flex:1;padding-right:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;cpu-cycles-3.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;cpu-cycles-3.png&quot; width=&quot;100%&quot; alt=&quot;CPU Cycles&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+  &lt;div style=&quot;flex:1;padding-left:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;cpu-cycles-4.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;cpu-cycles-4.png&quot; width=&quot;100%&quot; alt=&quot;CPU Cycles&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;h3 id=&quot;cpu-frequency&quot;&gt;CPU Frequency&lt;&#x2F;h3&gt;
+&lt;p&gt;The only metric where the new method resulted in higher values due to running of the SDF algorithm.&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Makepad TaoBao&lt;&#x2F;th&gt;&lt;th&gt;Makepad WeChat&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;div style=&quot;display:flex&quot;&gt;
+  &lt;div style=&quot;flex:1;padding-right:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;cpu-frequency-3.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;cpu-frequency-3.png&quot; width=&quot;100%&quot; alt=&quot;CPU Frequency&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+  &lt;div style=&quot;flex:1;padding-left:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;cpu-frequency-4.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;cpu-frequency-4.png&quot; width=&quot;100%&quot; alt=&quot;CPU Frequency&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;h3 id=&quot;cpu-memory-usage&quot;&gt;CPU Memory Usage&lt;&#x2F;h3&gt;
+&lt;p&gt;The CPU memory usage had minimal increases compared to the previous method.&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Makepad TaoBao&lt;&#x2F;th&gt;&lt;th&gt;Makepad WeChat&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;div style=&quot;display:flex&quot;&gt;
+  &lt;div style=&quot;flex:1;padding-right:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;cpu-memory-3.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;cpu-memory-3.png&quot; width=&quot;100%&quot; alt=&quot;CPU Memory&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+  &lt;div style=&quot;flex:1;padding-left:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;cpu-memory-4.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;cpu-memory-4.png&quot; width=&quot;100%&quot; alt=&quot;CPU Memory&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;h3 id=&quot;gpu-memory-usage&quot;&gt;GPU Memory Usage&lt;&#x2F;h3&gt;
+&lt;p&gt;The GPU memory shows reflects the biggest difference between the old and new algorithms. Both averagea and maximum GPU memory usage were reduced by over 30%.&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Makepad TaoBao&lt;&#x2F;th&gt;&lt;th&gt;Makepad WeChat&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;div style=&quot;display:flex&quot;&gt;
+  &lt;div style=&quot;flex:1;padding-right:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;gpu-memory-3.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;gpu-memory-3.png&quot; width=&quot;100%&quot; alt=&quot;GPU Memory&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+  &lt;div style=&quot;flex:1;padding-left:5px;&quot;&gt;
+    &lt;a href=&quot;&#x2F;blog&#x2F;gpu-memory-4.png&quot; target=&quot;_new&quot;&gt;
+      &lt;img src=&quot;&#x2F;blog&#x2F;gpu-memory-4.png&quot; width=&quot;100%&quot; alt=&quot;GPU Memory&quot; &#x2F;&gt;
+    &lt;&#x2F;a&gt;
+  &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;The results of these tests validates the benefits of the SDF generation algorithm that the latest Makepad has incorporated. CPU Cycles were reduced, indicating less processing after the initial ramp up. With SDF, Makepad can also cache the generation of the SDF on local storage to lower the CPU usage.&lt;&#x2F;p&gt;
+&lt;p&gt;The GPU memory use reduction is the most significant difference. The usage of the SDF generation algorithm reduced GPU memory usage by a large amount. In addition, it will also provide improved performance for dynamically scaled texts.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;&#x2F;h2&gt;
+&lt;p&gt;All tests were performed on the Android build of the Makepad TaoBao and Makepad WeChat apps, running on Google Pixel 7 Pro.  The tests were run a minimum of 6 times each, and the results were averaged.&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad WeChat sample app:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_wechat&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_wechat&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad TaoBao sample app:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_taobao&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_taobao&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Android Benchmarking scripts:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;benchmarking-android&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;benchmarking-android&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad Framework:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;makepad&#x2F;makepad&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;SDF Generation Algorithm:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;LykenSol&#x2F;sdfer&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;LykenSol&#x2F;sdfer&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Performance Benchmarking - Part 2</title>
+          <pubDate>Fri, 17 Nov 2023 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/performance-benchmarking-2/</link>
+          <guid>https://robius.rs/blog/performance-benchmarking-2/</guid>
+          <description xml:base="https://robius.rs/blog/performance-benchmarking-2/">&lt;p&gt;Several days ago we did a &lt;a href=&quot;&#x2F;blog&#x2F;performance-benchmarking&quot;&gt;performance benchmark&lt;&#x2F;a&gt; test between sample apps written in Android &quot;native&quot; vs. Makepad. Afterwards, we were given access to another version of the sample TaoBao app with more functionality, including more animation&#x2F;video content in the scroll list, and the ability to turn toggle some of the special effects.&lt;&#x2F;p&gt;
+&lt;p&gt;So we did the same scrolling tests with this new version, both with the special features turned on, as well as with all features turned OFF, in order to compare the differences.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;updated-results&quot;&gt;Updated Results&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;scrolling-test-table-2.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;As can be seen from the results, they seem similar and consistent with our previous results from the image manipulation benchmarks.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;cpu-processing&quot;&gt;CPU Processing&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;cpu-cycles-2.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;On the CPU cycle, the sample Makepad WeChat app shows very little cycles used, having less than half of the Android &quot;native&quot; sample apps.&lt;&#x2F;p&gt;
+&lt;p&gt;The Native TaoBao apps were similar to the Official TaoBao in that they use a lot more CPU cycles. This also results in higher CPU frequency values.&lt;&#x2F;p&gt;
+&lt;p&gt;When special functionality are turned OFF, the Native TaoBao used ~40% less cycles. While the full-effect TaoBao used slightly more than the Official TaoBao app.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;cpu-frequency-2.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The CPU frequencies also reflect that Makepad uses much less than the Android native counterparts.&lt;&#x2F;p&gt;
+&lt;p&gt;Not much difference were noticed with the new Native TaoBao versions for GPU memory usage.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;memory-usage&quot;&gt;Memory Usage&lt;&#x2F;h3&gt;
+&lt;p&gt;The CPU memory usage is more similar among the Android native and Makepad sample applications, with Makepad apps using slightly less CPU memory. This is consistent with less usage of the CPU cycles as well.&lt;&#x2F;p&gt;
+&lt;p&gt;As expected, the new Native TaoBao performed noticeably better when its special effects were turned off.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;cpu-memory-2.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The GPU memory shows that Makepad apps use more memory than the Android native apps. This is currently the only area where Makepad is not as efficient. However, the Makepad team is currently working on an improvement that will decrease this usage in the near future.&lt;&#x2F;p&gt;
+&lt;p&gt;Not much difference were noticed with the new Native TaoBao versions for GPU memory usage.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;gpu-memory-2.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;Being a more fully developed Android Native TaoBao app, we noticed much smoother and faster scrolling speed and effects compared to the previous simpler &quot;native&quot; apps. The performance characteristics of this version matches more closely to the official Play Store TaoBao, though with less CPU memory footprint.&lt;&#x2F;p&gt;
+&lt;p&gt;Overall, the results still reflect what we had found in our previous benchmarking tests. The Makepad versions of the apps have consistently outperformed all other versions, at least in terms of pure scrolling tests.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;&#x2F;h2&gt;
+&lt;p&gt;Makepad WeChat sample:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_wechat&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_wechat&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad TaoBao sample:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_taobao&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_taobao&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Performance Benchmarking</title>
+          <pubDate>Mon, 13 Nov 2023 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://robius.rs/blog/performance-benchmarking/</link>
+          <guid>https://robius.rs/blog/performance-benchmarking/</guid>
+          <description xml:base="https://robius.rs/blog/performance-benchmarking/">&lt;p&gt;The last time we did a performance benchmark test, it was a few months ago. At that time we used only one simple application, an image manipulation program. During the GOSIM Workshop in September, I had mentioned that we would be doing more performance benchmarking tests and we have done just that.&lt;&#x2F;p&gt;
+&lt;p&gt;This time we used Makepad to write a sample WeChat application and a sample TaoBao application. The main test criteria is to stress the &quot;scrolling&quot; feature of the apps. We also had access to two sample applications of the same written in Android &quot;native&quot;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;test-methodology&quot;&gt;Test Methodology&lt;&#x2F;h2&gt;
+&lt;p&gt;Scrolling is one of the most important and common operations for mobile applications. For WeChat, a messaging application, and TaoBao, an e-commerce application, a smooth scrolling experience is often one of the key factors in user satisfaction with the application.&lt;&#x2F;p&gt;
+&lt;p&gt;We benchmarked similar performance metrics as last time using Google &lt;a href=&quot;https:&#x2F;&#x2F;ui.perfetto.dev&quot;&gt;Perfetto&lt;&#x2F;a&gt; tool. These include:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU Cycles&lt;&#x2F;li&gt;
+&lt;li&gt;CPU Frequency (Average &amp;amp; Max)&lt;&#x2F;li&gt;
+&lt;li&gt;CPU Memory (Average &amp;amp; Max)&lt;&#x2F;li&gt;
+&lt;li&gt;GPU Memory (Average &amp;amp; Max)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;To test, we use the applications&#x27; main message or product list page. We exercise the scrolling by quickly swiping up and down on this scrollable page. We first quickly swipe for 6 to 10 times up (to make the list go down) and then 6 to 10 times down and repeat, until we reach the 10 seconds sample time.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;(Note that in real applications the scrolling list might have network dependencies such as loading of images, etc. But for the sample applications, the images are cached locally to the mobile app so there’s no network latency or variance.)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In order to have some more data points, we also benchmarked the official TaoBao app from the Google Play Store.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;scrolling-test-table.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;As can be seen from the results, they seem similar and consistent with our previous results from the image manipulation benchmarks.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;cpu-processing&quot;&gt;CPU Processing&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;cpu-cycles.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;On the CPU cycle, the sample Makepad WeChat app shows very little cycles used, having less than half of the Android native sample app.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;cpu-frequency.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The CPU frequencies also reflect that Makepad uses much less than the Android native counterparts.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;memory-usage&quot;&gt;Memory Usage&lt;&#x2F;h3&gt;
+&lt;p&gt;The CPU memory usage is more similar among the Android native and Makepad sample applications, with Makepad apps using slightly less CPU memory. This is consistent with less usage of the CPU cycles as well.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;cpu-memory.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The GPU memory shows that Makepad apps use more memory than the Android native apps. This is currently the only area where Makepad is not as efficient. However, the Makepad team is currently working on an improvement that will decrease this usage in the near future.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;blog&#x2F;gpu-memory.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;Being a fully functioning application, the official TaoBao app had a much higher CPU cycle and CPU memory than the rest.&lt;&#x2F;p&gt;
+&lt;p&gt;Also, there seems to be multiple processes related to the TaoBao application. We only counted the main TaoBao process. If we were to add the data from the TaoBao GPU process, then it will increase the amount of GPU memory usage by about 70 MB.&lt;&#x2F;p&gt;
+&lt;p&gt;Overall, the results are consistent to what we found in our early benchmarking test. As Makepad framework continues to improve and evolve, the numbers will undoubtably change. We will periodically run more of these performance benchmarking and post our updates.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;&#x2F;h2&gt;
+&lt;p&gt;Makepad WeChat sample:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_wechat&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_wechat&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Makepad TaoBao sample:
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_taobao&quot;&gt;&lt;code&gt;https:&#x2F;&#x2F;github.com&#x2F;project-robius&#x2F;makepad_taobao&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

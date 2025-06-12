@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project Robius in 2024: one year of Rust App Dev |  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+<link rel="stylesheet" type="text/css" href="/blog-post.css">
+
+</head>
+
+<body>
+    
+<header class="box-shadow">
+    
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+</header>
+
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#1-robius-crates-for-platform-feature-abstractions">1. Robius crates for platform feature abstractions</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#2-apps-built-in-2024-using-makepad-robius">2. Apps built in 2024 using Makepad + Robius</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#robrix-an-up-and-coming-matrix-chat-client-for-power-users"><small>- Robrix: an up-and-coming Matrix chat client for power users</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#moly-chat-with-local-llms-and-custom-ai-agents"><small>- Moly: chat with local LLMs and custom AI agents</small></a>
+                </div>
+                
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#3-select-contributions-to-other-rust-app-dev-projects">3. Select contributions to other Rust app dev projects</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#4-cross-collaboration-with-other-ui-and-app-dev-orgs">4. Cross-collaboration with other UI and App Dev orgs</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#our-roadmaps-for-2025">Our Roadmaps for 2025</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/robius-retrospective-2024/#acknowledgments">Acknowledgments</a>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+<h1>Project Robius in 2024: one year of Rust App Dev</h1>
+
+
+<p class="subtext">A retrospective on our progress in the world of Rust App Dev in 2024.</p>
+
+
+<p><em>Author: <a href="https://github.com/kevinaboos">Kevin Boos</a>. Last updated January 16th, 2025.</em> <a href="https://www.reddit.com/r/rust/comments/1i2wq5j/project_robius_in_2024_another_year_of_progress/">Discuss this on Reddit</a>.</p>
+<p>This past year marked the first year of work on <strong>Project Robius</strong>: an open-source decentralized endeavor to enable developers to write immersive, fully-featured apps in pure 🦀 Rust 🦀 that work seamlessly across all major platforms.</p>
+<blockquote>
+<p><font style="bold" color="#C85911"> <strong>ℹ️ Project Robius in a nutshell</strong> </font></p>
+<p>While GUIs are the foundation of an app, there is more to developing a modern featureful app than just drawing a UI.
+Project Robius aims to fill in the gaps in the Rust app dev ecosystem by focusing on everything <em>except</em>  the UI, such as abstractions for platform features &amp; OS services, build &amp; packaging tooling, and more.
+We leave UI work to the experts behind the many excellent Rust UI toolkits under active development.</p>
+</blockquote>
+<p>In this post, we'll take a look back on what we've accomplished so far to make the world of Rust App Dev a little better:</p>
+<ol>
+<li>The crates we've published for accessing platform-provided features from Rust code</li>
+<li>The major apps we've built using <a href="https://makepad.nl/">Makepad</a> + Robius together</li>
+<li>The contributions we've made to existing open-source projects in the App Dev space</li>
+<li>The connections we've fostered throughout the Rust community</li>
+</ol>
+<p>We'll also take a deeper look at <strong>Robrix</strong>,  a multi-platform <a href="https://matrix.org/">Matrix</a> chat client written from scratch in Rust using the <a href="https://makepad.nl/">Makepad UI toolkit</a> and Robius components.</p>
+<h2 id="1-robius-crates-for-platform-feature-abstractions">1. Robius crates for platform feature abstractions</h2>
+<p>As our primary objective, we have published several crates intended to be used directly by app devs to access a given platform feature or OS service from their app. The main goal here is for each crate to offer a safe, platform-agnostic abstraction, such that the app dev need not worry about writing any platform-specific code or dealing with each platforms' idiosyncracies.</p>
+<p>We began working on these crates in late Spring of 2024.
+While development started out gradually, we are significantly ramping up our efforts for the coming year and expect to publish more frequently. That being said, here is the current list:</p>
+<ul>
+<li><a href="https://github.com/project-robius/robius-location"><code>robius-location</code></a>: access the current geolocation of the user's device</li>
+<li><a href="https://crates.io/crates/robius-authentication"><code>robius-authentication</code></a>: display a native biometric or password authentication prompt</li>
+<li><a href="https://crates.io/crates/robius-open"><code>robius-open</code></a>: open a URI or file in a different app (determined by the system)</li>
+<li><a href="https://crates.io/crates/robius-directories"><code>robius-directories</code></a>: access platform-standard directory locations for app data, user data, config, cache, etc
+<ul>
+<li>a fork of the <a href="https://crates.io/crates/directories"><code>directories</code></a> crate that adds support for Android</li>
+</ul>
+</li>
+<li><a href="https://github.com/project-robius/robius-url-handler"><code>robius-url-handler</code></a>: register your Rust app as the default handler for a URL scheme or file association</li>
+<li><a href="https://github.com/project-robius/robius-keychain"><code>robius-keychain</code></a>: store and retrieve secure data/passwords from the platform's secure storage facility
+<ul>
+<li>This crate was written from scratch, but we discovered <a href="https://crates.io/crates/keyring"><code>keyring-rs</code></a> shortly after finishing it. We intend to contribute our additional features, mostly Android support, into <code>keyring-rs</code>.</li>
+</ul>
+</li>
+<li><a href="https://github.com/project-robius/robius-file-dialog"><code>robius-dialog</code></a>: (WIP) display a native dialog for showing a message or allowing the user to pick a file, directory, image, etc.
+<ul>
+<li>This offers a custom implementation for iOS and Android, but uses <a href="https://crates.io/crates/rfd"><code>rfd</code></a> under the hood for Desktop platforms.</li>
+</ul>
+</li>
+</ul>
+<p>We've also released some "lower-level" crates that aren't intended for direct use by an app developer, but they'd be useful for other developers that want to create their own platform abstractions.
+The above crates depend on these in various ways.</p>
+<ul>
+<li><a href="https://crates.io/crates/android-build"><code>android-build</code></a>: enables a Rust crate to automatically build Java code for Android targets, as part of a cargo build process via a <code>build.rs</code> build script.
+<ul>
+<li>The Java classfile(s) can then be used by your Rust app, typically via one of the above platform feature abstraction crates.</li>
+</ul>
+</li>
+<li><a href="https://crates.io/crates/robius-android-env"><code>robius-android-env</code></a>: abstracts access to Android states owned by various UI toolkits.
+<ul>
+<li>Many Android platform features require passing in the current activity or accessing the JavaVM or JNI environment state.</li>
+<li>This crate enables us to write other Rust crates that access Android platform features, such that they work seamlessly across many different UI toolkits.</li>
+<li>Directly supports <a href="https://crates.io/crates/ndk-context"><code>ndk-context</code></a>, an existing crate which is compatible with many other UI toolkit components, e.g., [Winit]
+<ul>
+<li>This enables all of the above platform feature abstraction crates (plus any crate that depends on <code>robius-android-env</code>) to work with Winit-based apps on Android.</li>
+</ul>
+</li>
+<li>Compared to <code>ndk-context</code>, the <code>robius-android-env</code> crate offers a "batteries-included" experience that automatically "just works" with supported UI toolkits, such that the app dev doesn't have to add any code to make things work.</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-apps-built-in-2024-using-makepad-robius">2. Apps built in 2024 using Makepad + Robius</h2>
+<p>We (with help from many collaborators) have built both small proof-of-concept demo apps and larger "flagship" apps using Makepad + Robius. Two of the most complex flagship apps we've been developing in 2024 are:</p>
+<ul>
+<li><a href="https://github.com/project-robius/robrix">Robrix</a>: a Matrix chat client for power users</li>
+<li><a href="https://github.com/moxin-org/moly">Moly</a>: a local LLM chat runtime and AI agent explorer (previously "Moxin")</li>
+</ul>
+<p>Both of these apps are fully open-source and have releases available on their GitHub pages linked above, in case you'd like to download and try them out. Note that it's best to build them from source for the most up-to-date experience.</p>
+<h3 id="robrix-an-up-and-coming-matrix-chat-client-for-power-users">Robrix: an up-and-coming Matrix chat client for power users</h3>
+<p>We started <a href="https://github.com/project-robius/robrix">Robrix</a> about one year ago with the intention of it being a "flagship" Robius app — one that would help drive the development (and priority) of various Robius components and demonstrate their utility.
+Since then, our plans for Robrix have expanded beyond it serving as just a demo app or a basic Matrix client; we discuss our longer-term, multi-stage <a href="../robius-roadmap-2025#robrix-roadmap-for-2025-and-beyond">vision for Robrix in the next post</a>.</p>
+<p>Robrix has come a long way over the past year, thanks to 750+ commits from 10 contributors!
+Since starting from scratch, we have created a functional Matrix chat client with most fundamental features already complete and working well, as shown by our feature status tracker below.</p>
+<a href="/blog/robrix_feature_status_tracker.png">
+    <img style="width:98%" src="/blog/robrix_feature_status_tracker.png" alt="Robrix's feature status tracker">
+</a>
+<p>With these features in place, we have began dogfooding Robrix as a daily Matrix client!</p>
+<p>While not all main features are complete, Robrix <em>does</em> already have some cool features that help both power users and casual users be more productive.
+The biggest unique feature of Robrix is an "IDE-like" desktop UI that can display multiple rooms side-by-side in separate tabs, which can be docked and moved around via drag-n-drop actions.
+No more wasted horizontal space!</p>
+<a href="/blog/robrix_desktop_ui.png">
+    <img style="width:98%" src="/blog/robrix_desktop_ui.png" alt="Robrix side-by-side dockable tab UI">
+</a>
+<p>Another cool feature is that Robrix's UI can automatically transition to different view layouts based on window size. This enables our single codebase to run seamlessly on desktop and mobile platforms, but you can also use any view on any platform if you want.
+For example, we frequently enjoy using the mid-size tablet view (below, left) or the narrow mobile view (below, middle) on a smaller laptop screen too, in addition to on our smartphones (below, right).</p>
+<div style="gap: 50px;">
+<a href="/blog/robrix_midsize_ui.png">
+    <img style="width: 43%" alt="Robrix mid-size UI view" src="/blog/robrix_midsize_ui.png" />
+</a>
+<a href="/blog/robrix_mobile_view_rooms_list.png">
+    <img style="width: 27.5%" alt="Robrix narrow mobile UI view of the rooms list" src="/blog/robrix_mobile_view_rooms_list.png" />
+</a>
+<a href="/blog/robrix_android_view_single_room.png">
+    <img style="width: 25.9%" alt="Robrix narrow mobile UI view on Android of a single room" src="/blog/robrix_android_view_single_room.png" />
+</a>
+</div>
+<p>Beyond a sleek UI, Robrix also leverages multiple Robius crates for deep integration with the native platform:</p>
+<ul>
+<li><code>robius-open</code> to open URLs, images, and downloaded files</li>
+<li><code>robius-location</code> to obtain and share the user's current location in a Matrix room</li>
+<li><code>robius-url-handler</code> to register Robrix as a default handler for the <code>matrix:</code> URL scheme (and others)</li>
+<li><code>robius-directories</code> to ensure that we store app data and cached content in the platform-canonical directories</li>
+<li><code>robius-keychain</code> to store a user's login session tokens (this is a WIP)</li>
+<li><code>robius-packaging-commands</code> to help easily build app bundles for desktop platforms using cargo-packager</li>
+<li>In the future, we'll allow users to mark individual rooms as "secret", such that they are hidden behind an authentication prompt provided by <code>robius-authentication</code></li>
+</ul>
+<p>In addition to a sleek UI and robust platform integration, Robrix achieves high performance and efficiency thanks to its underlying pure-Rust stack and Makepad's emphasis on lightweight, performant code.
+Robrix consistently hits the maximum 120 FPS on an older M1 Macbook Pro, remaining smooth and responsive even when scrolling through 10+ rooms displayed side-by-side.
+We achieve this while using only around 26-30% of the system RAM that major Electron-based Matrix desktop clients consume to display a single room.
+(Note: these are preliminary figures that require deeper benchmarking analysis before drawing conclusions from them.)</p>
+<p>Most importantly, thanks to the power of Makepad and Robius, Robrix has zero platform-specific code.
+This makes it easy to maintain and develop features/bugfixes quickly, as you don't have to consider the idiosyncracies of each platform.
+Thus, we invite you to check out our codebase and contribute any cool features that you'd love to have!</p>
+<p>To learn more about Robrix, check out the following resources:</p>
+<ul>
+<li><a href="https://github.com/project-robius/robrix">Robrix's GitHub repository</a></li>
+<li><a href="https://www.youtube.com/watch?v=DO5C7aITVyU">A recent conference talk about Robrix</a> (<a href="https://github.com/project-robius/files/blob/main/GOSIM%20China%202024/Robrix%20Talk%20GOSIM%20China%20October%2017%2C%202024.pdf">PDF slides</a>)</li>
+<li><a href="https://github.com/orgs/project-robius/projects/4/">Robrix's Project Tracker on GitHub</a></li>
+<li><a href="https://matrix.to/#/#robius-robrix:matrix.org">Chat with us about Robrix on Matrix</a></li>
+</ul>
+<h3 id="moly-chat-with-local-llms-and-custom-ai-agents">Moly: chat with local LLMs and custom AI agents</h3>
+<p><a href="https://github.com/moxin-org/moly">Moly</a> (f.k.a. <em>Moxin</em>) is a pure Rust GUI client for running local Large Language Models (LLMs) and chatting with various AI agents.
+You can discover, browse, and download major open-source AI models:</p>
+<a href="/blog/moly_discover_screen.png">
+    <img style="width:98%" src="/blog/moly_discover_screen.png" alt="Moly's discover LLM screen">
+</a>
+<p>and then chat with them <em>locally</em> without contacting any hosted LLM service.</p>
+<a href="/blog/moly_chat_screen.png">
+    <img style="width:98%" src="/blog/moly_chat_screen.png" alt="Moly's LLM chat screen">
+</a>
+<p>Like Robrix, Moly was started about one year ago completely from scratch, and has been a significant driver for the development of fundamental Makepad widgets, components, and Robius infrastructure.
+For example, Project Robius contributions to Moly and to other projects (at the request of Moly) were driven by these needs:</p>
+<ul>
+<li>Better packaging logic and build configuration, which became <a href="https://github.com/project-robius/robius-packaging-commands"><code>robius-packaging-commands</code></a>.
+<ul>
+<li>This cooperates with <code>cargo-packager</code> to generate Moly app bundles for all 3 major desktop platforms.</li>
+</ul>
+</li>
+<li>Portable Rust installation &amp; setup "scripts" that run before the GUI app starts, which became <a href="https://github.com/moxin-org/moly/blob/a82d297b155fa64efd2cdb5d6b14c89148a1c70b/moly-runner/src/main.rs"><code>moly-runner</code></a>.
+<ul>
+<li>This was needed to install and configure the <a href="https://wasmedge.org/">WasmEdge WASM runtime</a>, which is how Moly runs LLMs locally.</li>
+<li>This is also useful for setting up the complex WasmEdge + Moly development environment in just one click.</li>
+</ul>
+</li>
+<li>Many new Makepad widgets: modals, pop-up notifications, sliding panels, draggable sliders, etc.</li>
+<li>Standardized app behaviors to be more platform-compliant and canonical, e.g., proper use of app data directories.</li>
+</ul>
+<p>To learn more about Moly, check out <a href="https://dev.to/zhanghandong/moly-an-open-source-llm-client-implemented-in-pure-rust-1hmd">this blog post</a> that demonstrates more cool features, screenshots, and examples of what you can do with Moly.
+Due to constraints from the underlying WasmEdge runtime, Moly currently runs only on major desktop platforms (Linux, macOS, Windows), but support for iOS and Android is planned.</p>
+<h2 id="3-select-contributions-to-other-rust-app-dev-projects">3. Select contributions to other Rust app dev projects</h2>
+<p>In addition to creating, maintaining, and publishing our own crates for Rust app dev, we also strive to contribute to and improve existing crates that are already prominently used in the ecosystem.</p>
+<ul>
+<li>We began using and making contributions to <a href="https://crates.io/crates/cargo-packager"><code>cargo-packager</code></a>, a packaging solution for Rust apps on Desktop target platforms created and open-sourced by Crab-Nebula, the folks behind the excellent Tauri ecosystem
+<ul>
+<li><a href="https://github.com/crabnebula-dev/cargo-packager/pulls?q=author%3Akevinaboos">Our contributions</a> were mostly minor bugfixes and improvements to allow the packaging infrastructure to be configured more flexibly</li>
+<li>As previously mentioned, we published <a href="https://github.com/project-robius/robius-packaging-commands"><code>robius-packaging-commands</code></a>, a companion to <code>cargo-packager</code> that makes it easier to build &amp; configure complex apps
+<ul>
+<li>Automatically calculates the set of dependencies for Debian <code>.deb</code> packages</li>
+<li>Automatically handles Makepad configuration and resource/asset discovery &amp; bundling</li>
+</ul>
+</li>
+<li>We intend to add support for other Desktop package formats, namely Flatpack</li>
+<li>We also plan to contribute support for generating mobile app bundles, namely Android</li>
+</ul>
+</li>
+<li>We have made <a href="https://github.com/makepad/makepad/pulls?q=author%3Akevinaboos">myriad major contributions</a> to the Makepad UI toolkit, as Robrix and Moly are two of the most complex/demanding apps built in Makepad
+<ul>
+<li>Improvements to <code>PortalList</code>, a virtual viewport list with infinite scrolling
+<ul>
+<li>Better API with more introspection into the positional &amp; visibility state of items in the list, its scrolling state, and its item caching behavior</li>
+<li>Efficient implementations of smooth scrolling animations, e.g., jump to bottom or jump to a given item index</li>
+<li>Redesign how items are stored and indexed, and how visible items are tracked</li>
+</ul>
+</li>
+<li>Rich text formatting for displaying both HTML and Markdown content
+<ul>
+<li>Including support for most formatting-relevant tags: (un)ordered lists, strikethrough/underline, coloring, indentation, blockquote, code, etc.</li>
+<li>Special handling of interactive components like HTML links, which must preserve external formatting</li>
+</ul>
+</li>
+<li>Multiple new widgets: avatar images with text fallback, abstractions over rich (HTML) text and plaintext, modals, sliding panes, etc</li>
+<li>Make writing event handlers more ergonomic by avoiding mutable borrows when querying views/widgets</li>
+<li>Redesign of underlying Android platform layer to allow external crates to access Android system states</li>
+<li>Enable correct discovery of resource/asset files in macOS/iOS app bundles</li>
+<li>Many improvements to <code>cargo-makepad</code>, a build tool to generate mobile app packages
+<ul>
+<li>Overhaul code to generate Android APKs</li>
+<li>Properly install/configure the NDK toolchain on all 3 desktop platforms, plus enable building native code (via <code>cc-rs</code>)</li>
+<li>Ensure backwards compatibility with standard Android Studio-managed SDKs</li>
+</ul>
+</li>
+<li>An improved app lifecycle model with dedicated events for all lifecycle stages, which is consistent across all platforms</li>
+<li>Easier and more ergonomic <code>Actions</code> (widget-to-widget message events)
+<ul>
+<li>Plus support for delivering an action to a widget from a background thread or async task context</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>We made <a href="https://github.com/kornelski/rust-security-framework/pull/210">minor contributions</a> to the <a href="https://crates.io/crates/security-framework"><code>security-framework</code></a> crate, which offers Rust bindings to Apple's security framework (for TLS, keychain, etc)
+<ul>
+<li>We added a few missing APIs to enabling updating or deleting keychain items, which we needed to fully implement <a href="https://github.com/project-robius/robius-keychain"><code>robius-keychain</code></a></li>
+</ul>
+</li>
+<li>We implemented a Rust auto-installer and configurer for the <a href="https://wasmedge.org/">WasmEdge WASM runtime</a>, as mentioned <a href="https://robius.rs/blog/robius-retrospective-2024/#moly-chat-with-local-llms-and-custom-ai-agents">above</a>
+<ul>
+<li>This massively simplifies both the developer-side build process and the user installation procedure for Moly, which relies on WasmEdge to run LLMs locally.</li>
+<li>We hope to transform this into the official install script for WasmEdge and upstream it for general usage there, as much of the effort involved was devoted to extracting the precise system configuration required to select and install the proper WasmEdge release.</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-cross-collaboration-with-other-ui-and-app-dev-orgs">4. Cross-collaboration with other UI and App Dev orgs</h2>
+<p>Beyond publishing crates and developing apps, we also want to bring together people of all stripes across the Ruist UI and App Dev ecosystem.
+To that end, Project Robius hosted an <a href="https://2024.rustnl.org/unconf/">App Dev unconference</a> at RustNL 2024 (and also GOSIM Beijing 2024), in which a few dozen Rust developers from across the world met up to discuss the shared problems we all face in developing Rust apps and UI toolkits.
+We discussed everything from build tooling to text layout, accessibility, Winit compatibility, and more.
+A few of the topics &amp; ideas from the unconference(s) have already made it past the discussion phase and have become real projects!</p>
+<ul>
+<li><a href="https://crates.io/crates/kittest"><code>kittest</code></a>: a universal UI testing framework built upon the <a href="https://accesskit.dev/">AccessKit</a> accessibility framework, spearheaded by the eGUI team!</li>
+<li><a href="https://www.reddit.com/r/rust/comments/1ezdjqx/media_i_added_instant_hotreloading_of_some_rust/">Dioxus's work on hotreloading</a> not just UI DSL code, but even real Rust code that implements app behavior!</li>
+<li>Feedback given to the Rust project teams, primarily lang, libs, and compiler.
+<ul>
+<li>We focused on changes to Rust that will make future Rust apps easier to write, with simplified and more ergonomic code patterns for async and more.</li>
+</ul>
+</li>
+</ul>
+<p>In addition, thanks to our colleague Sid Askary, we began monthly meet-ups to chat about ongoing Rust UI &amp; App Dev concerns, and to share ideas, solutions, progress updates.
+Attendees vary, but often include teammembers from <a href="https://robius.rs/">Robius</a>, <a href="https://makepad.nl/">Makepad</a>, the <a href="https://linebender.org/">Linebender organization</a> (behind Xilem and more), <a href="https://dioxuslabs.com/">Dioxus</a>, <a href="https://github.com/emilk/egui">eGUI</a>, <a href="https://www.pax.dev/">Pax</a>, <a href="https://github.com/gfx-rs/wgpu">wgpu</a>, <a href="https://slint.dev/">Slint</a>, and more.
+If you're in the Rust App Dev or UI space and would like to join future meetups, consider getting in touch!</p>
+<h2 id="our-roadmaps-for-2025">Our Roadmaps for 2025</h2>
+<p><a href="../robius-roadmap-2025">Check out our next blog post</a> for roadmaps for both Project Robius and Robrix in 2025 (and beyond).</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>If you made it this far, thanks for reading! You must be a true fan of Rust app dev 😊!</p>
+<p>Before we depart, I'd like to thank the following key people who have been instrumental to the success of Project Robius over the past year.</p>
+<ul>
+<li>The Makepad team: <a href="https://x.com/rikarends">Rik Arends</a>, <a href="https://github.com/ejpbruel2">Eddy Bruël</a>, <a href="https://twitter.com/SebMichailidis">Sebastian Michailidis</a></li>
+<li><a href="https://github.com/tsoutsman">Klim Tsoutsman</a></li>
+<li><a href="https://www.wyeworks.com/">WyeWorks</a> developers: <a href="https://github.com/jmbejar">Jorge Bejar</a>,  <a href="https://github.com/joulei">Julián Montes de Oca</a>, <a href="https://github.com/fmzbl">Facundo Mendizábal</a></li>
+<li><a href="https://github.com/ZhangHanDong">Alex Zhang (ZhangHanDong)</a> and his team members: <a href="https://github.com/alanpoon">@alanpoon</a>, <a href="https://github.com/aaravlu">@aaravlu</a>, <a href="https://github.com/tyreseluo">@tyreseluo</a>, <a href="https://github.com/Guocork">@Guocork</a></li>
+<li><a href="https://github.com/cassaundra">Cassaundra</a></li>
+<li>My colleagues who provide invaluable guidance, technical advice, and community connections: Yue Chen, Edward Tan, Sid Askary, Yong He, Mats Lundgren</li>
+<li>Linebender teammembers, for technical recommendations and serving as a sounding board for exchanging ideas</li>
+<li><a href="https://github.com/smarizvi110">@smarizvi110</a> and other miscellaneous contributors from the open-source community</li>
+</ul>
+<hr style="border: none; width: 100%; color: #000000; background-color: #000000; height: 1px;" >
+<!-- Links -->
+
+
+<class="trunk-blog-author">
+    
+    <p>By: Kevin Boos </p>
+    
+    <br />
+    <a href="https://x.com/project_robius"> https://x.com/project_robius </a>
+    <br/>
+    <a href="https:&#x2F;&#x2F;mastodon.social&#x2F;@kevinaboos"> https:&#x2F;&#x2F;mastodon.social&#x2F;@kevinaboos </a>
+    <br />
+    <a href="https://github.com/kevinaboos"> https://github.com/kevinaboos </a>
+    
+    
+    <p>Published: 2025-01-08</p>
+    
+</div>
+
+
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>

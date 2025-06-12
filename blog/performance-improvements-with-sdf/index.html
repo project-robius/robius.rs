@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Improvements with SDF |  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+<link rel="stylesheet" type="text/css" href="/blog-post.css">
+
+</head>
+
+<body>
+    
+<header class="box-shadow">
+    
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+</header>
+
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#results-summary">Results Summary</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#makepad-taobao"><small>- Makepad TaoBao</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#makepad-wechat"><small>- Makepad WeChat</small></a>
+                </div>
+                
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#individual-graphs">Individual Graphs</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#cpu-cycles"><small>- CPU Cycles</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#cpu-frequency"><small>- CPU Frequency</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#cpu-memory-usage"><small>- CPU Memory Usage</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#gpu-memory-usage"><small>- GPU Memory Usage</small></a>
+                </div>
+                
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#conclusion">Conclusion</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-improvements-with-sdf/#references">References</a>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+<h1>Performance Improvements with SDF</h1>
+
+
+<p class="subtext">Preliminary Results for Latest Makepad with Updated SDF Generation Algorithm</p>
+
+
+<p>Recently, the <a href="https://github.com/makepad/makepad">Makepad</a> framework updated its font handling with SDF generation algorithms. We decided to test out the WeChat and TaoBao apps built using this latest iteration of the framework to see if there are any changes to performance. The tests are same as before: fast scrolling of the main content screen back and forth within a 10 second window.</p>
+<p>The WeChat and TaoBao apps' code have pretty much stayed the same. The only change was made last month to work with Makepad's then-new <code>MatchEvent()</code> event handling paradigm, which simplified the code base and reduced the size of it by 20~30%.</p>
+<p>The SDF algorithm changes in Makepad Framework itself is transparent to the application developer. It is a Makepad internal performance optimization.</p>
+<h2 id="results-summary">Results Summary</h2>
+<h3 id="makepad-taobao">Makepad TaoBao</h3>
+<p><img src="/blog/makepad-sdf-taobao-results.png" alt="TaoBao Results Summary" /></p>
+<p>As can be seen from the preliminary results, the CPU Cycles of the application reduced by about 12%, while the average and max CPU frequency went up by 18% and 56% respectively. This is because the SDF generation takes more CPU processing initially to process the fonts, but once it's done, the overall CPU usage is reduced during subsequent rendering.</p>
+<p>The CPU memory usage increased by an insignificant amount. But the GPU memory usage both reduced by over 23%. This is a significant improvement over the old Makepad way of using the Font Atlas feature. The dynamic SDF generation algorithm uses less than 1/4 of the GPU memory, a huge improvement.</p>
+<h3 id="makepad-wechat">Makepad WeChat</h3>
+<p><img src="/blog/makepad-sdf-wechat-results.png" alt="WeChat Results Summary" /></p>
+<p>Unlike the TaoBao app, the WeChat app is more "text-centric", with less images and mostly text-based rendering. The improvements here are more apparent.</p>
+<p>The CPU cycles reduced by 24%, while the CPU frequency increases by average of 15% and max of 21% respectively.</p>
+<p>The GPU memory usage reductions were even more significant, with 35% less average memory usage and 32% decrease in max memory usage.</p>
+<p>The detailed chart of each of the metrics follows below.</p>
+<h2 id="individual-graphs">Individual Graphs</h2>
+<h3 id="cpu-cycles">CPU Cycles</h3>
+<p>On the CPU cycle, we see the significant reduction of CPU cycles with the new SDF algorithm as compared to the old Font Atlas rendering.</p>
+<p>For the mostly text-based app such as WeChat, the results are more significant.</p>
+<blockquote>
+<p><em>(For all graphs, the right side bar(s) is the new Makepad with SDF.)</em></p>
+</blockquote>
+<table><thead><tr><th>Makepad TaoBao</th><th>Makepad WeChat</th></tr></thead><tbody>
+</tbody></table>
+<div style="display:flex">
+  <div style="flex:1;padding-right:5px;">
+    <a href="/blog/cpu-cycles-3.png" target="_new">
+      <img src="/blog/cpu-cycles-3.png" width="100%" alt="CPU Cycles" />
+    </a>
+  </div>
+  <div style="flex:1;padding-left:5px;">
+    <a href="/blog/cpu-cycles-4.png" target="_new">
+      <img src="/blog/cpu-cycles-4.png" width="100%" alt="CPU Cycles" />
+    </a>
+  </div>
+</div>
+<h3 id="cpu-frequency">CPU Frequency</h3>
+<p>The only metric where the new method resulted in higher values due to running of the SDF algorithm.</p>
+<table><thead><tr><th>Makepad TaoBao</th><th>Makepad WeChat</th></tr></thead><tbody>
+</tbody></table>
+<div style="display:flex">
+  <div style="flex:1;padding-right:5px;">
+    <a href="/blog/cpu-frequency-3.png" target="_new">
+      <img src="/blog/cpu-frequency-3.png" width="100%" alt="CPU Frequency" />
+    </a>
+  </div>
+  <div style="flex:1;padding-left:5px;">
+    <a href="/blog/cpu-frequency-4.png" target="_new">
+      <img src="/blog/cpu-frequency-4.png" width="100%" alt="CPU Frequency" />
+    </a>
+  </div>
+</div>
+<h3 id="cpu-memory-usage">CPU Memory Usage</h3>
+<p>The CPU memory usage had minimal increases compared to the previous method.</p>
+<table><thead><tr><th>Makepad TaoBao</th><th>Makepad WeChat</th></tr></thead><tbody>
+</tbody></table>
+<div style="display:flex">
+  <div style="flex:1;padding-right:5px;">
+    <a href="/blog/cpu-memory-3.png" target="_new">
+      <img src="/blog/cpu-memory-3.png" width="100%" alt="CPU Memory" />
+    </a>
+  </div>
+  <div style="flex:1;padding-left:5px;">
+    <a href="/blog/cpu-memory-4.png" target="_new">
+      <img src="/blog/cpu-memory-4.png" width="100%" alt="CPU Memory" />
+    </a>
+  </div>
+</div>
+<h3 id="gpu-memory-usage">GPU Memory Usage</h3>
+<p>The GPU memory shows reflects the biggest difference between the old and new algorithms. Both averagea and maximum GPU memory usage were reduced by over 30%.</p>
+<table><thead><tr><th>Makepad TaoBao</th><th>Makepad WeChat</th></tr></thead><tbody>
+</tbody></table>
+<div style="display:flex">
+  <div style="flex:1;padding-right:5px;">
+    <a href="/blog/gpu-memory-3.png" target="_new">
+      <img src="/blog/gpu-memory-3.png" width="100%" alt="GPU Memory" />
+    </a>
+  </div>
+  <div style="flex:1;padding-left:5px;">
+    <a href="/blog/gpu-memory-4.png" target="_new">
+      <img src="/blog/gpu-memory-4.png" width="100%" alt="GPU Memory" />
+    </a>
+  </div>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<p>The results of these tests validates the benefits of the SDF generation algorithm that the latest Makepad has incorporated. CPU Cycles were reduced, indicating less processing after the initial ramp up. With SDF, Makepad can also cache the generation of the SDF on local storage to lower the CPU usage.</p>
+<p>The GPU memory use reduction is the most significant difference. The usage of the SDF generation algorithm reduced GPU memory usage by a large amount. In addition, it will also provide improved performance for dynamically scaled texts.</p>
+<h2 id="references">References</h2>
+<p>All tests were performed on the Android build of the Makepad TaoBao and Makepad WeChat apps, running on Google Pixel 7 Pro.  The tests were run a minimum of 6 times each, and the results were averaged.</p>
+<p>Makepad WeChat sample app:
+<a href="https://github.com/project-robius/makepad_wechat"><code>https://github.com/project-robius/makepad_wechat</code></a></p>
+<p>Makepad TaoBao sample app:
+<a href="https://github.com/project-robius/makepad_taobao"><code>https://github.com/project-robius/makepad_taobao</code></a></p>
+<p>Android Benchmarking scripts:
+<a href="https://github.com/project-robius/benchmarking-android"><code>https://github.com/project-robius/benchmarking-android</code></a></p>
+<p>Makepad Framework:
+<a href="https://github.com/makepad/makepad"><code>https://github.com/makepad/makepad</code></a></p>
+<p>SDF Generation Algorithm:
+<a href="https://github.com/LykenSol/sdfer"><code>https://github.com/LykenSol/sdfer</code></a></p>
+
+
+<class="trunk-blog-author">
+    
+    <p>By: Edward Tan </p>
+    
+    <a href="https:&#x2F;&#x2F;edwardtan.com"> https:&#x2F;&#x2F;edwardtan.com </a>
+    
+    <br />
+    <a href="https://x.com/guofoo"> https://x.com/guofoo </a>
+    <br/>
+    <a href="https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo"> https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo </a>
+    <br />
+    <a href="https://github.com/guofoo"> https://github.com/guofoo </a>
+    
+    
+    <p>Published: 2024-01-29</p>
+    
+</div>
+
+
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>

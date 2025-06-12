@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+</head>
+
+<body>
+    
+
+    <header class="pos-absolute" style="background-color: transparent">
+        
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+    </header>
+
+    <div class="hero">
+        
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <section class="text-center">
+            <h1 class="heading-text" style="font-size: 50px">
+                ROBIUS
+            </h1>
+            <h3 class="title-text">
+                <b>Robius</b> is a fully open-source, decentralized, community-driven effort to enable multi-platform application development
+                in Rust.
+            </h3>
+            <div>
+                <a href="https://matrix.to/#/#robius:matrix.org"  data-size="large" data-show-count="true">
+                    <img src="https://img.shields.io/matrix/robius-general%3Amatrix.org?server_fqdn=matrix.org&style=for-the-badge&logo=matrix&label=%23Robius%3Amatrix.org&color=B7410E" />
+                </a>
+                <a class="github-button" href="https://github.com/project-robius" data-size="large" data-show-count="true" aria-label="Star project/robius on GitHub">Star
+                </a>
+                <a href="https://project-robius.github.io/book/" data-size="large" data-show-count="true">
+                    <img src="https://img.shields.io/badge/Robius_Book-blueviolet?style=for-the-badge&logo=mdbook" />
+                </a>
+                <a href="https://x.com/project_robius/" data-size="large" data-show-count="true">
+                    <img alt="X (formerly Twitter) URL" src="https://img.shields.io/twitter/url?url=https%3A%2F%2Fx.com%2Fproject_robius&style=for-the-badge&logo=x">
+                </a>
+            </div>
+        </section>
+        <img class="hero-image" style="width: 40%" src="https://robius.rs/robius-logo-680.png">
+
+        <div class="explore-more text"
+            onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+            ⇩ Explore More ⇩
+        </div>
+        <style>
+            .hero section {
+                padding: 0 5rem;
+            }
+
+            @media screen and (max-width: 768px) {
+                .hero section {
+                    padding: 0 2rem;
+                }
+
+                .hero-image {
+                    display: none
+                }
+            }
+        </style>
+        
+    </div>
+
+    
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/#project-robius">Project Robius</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/#real-apps-projects-using-robius"><small>- Real apps&#x2F;projects using Robius</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/#robius-resources-and-links"><small>- Robius resources and links</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/#check-out-our-blog-for-more"><small>- Check out our Blog for more!</small></a>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+            <div id="features" class="heading-text">Overview</div>
+            <h1 id="project-robius">Project Robius</h1>
+<p><strong>Robius</strong> is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.</p>
+<p>See <a href="/blog">our blog</a> for the latest updates on Project Robius.</p>
+<h2 id="real-apps-projects-using-robius">Real apps/projects using Robius</h2>
+<ul>
+<li><a href="https://github.com/project-robius/robrix">Robrix: the Robius Matrix chat client</a>.
+<ul>
+<li>Supports Matrix chat, with more fediverse services to come!</li>
+</ul>
+</li>
+<li><a href="https://github.com/project-robius/moxin">Moxin: a local explorer for open-source LLMs</a>.
+<ul>
+<li>Allows running LLMs locally and conversing with an AI Chatbot for each model,
+using the WasmEdge runtime as an LLM backend runtime.</li>
+</ul>
+</li>
+</ul>
+<h2 id="robius-resources-and-links">Robius resources and links</h2>
+<ul>
+<li><a href="https://github.com/project-robius">Project Robius (Github)</a></li>
+<li><a href="https://project-robius.github.io/book/">The Robius Book</a></li>
+<li>Presentations about Robius:
+<ul>
+<li><strong>Project Robius's first status update &amp; demo</strong> (<a href="https://2024.rustnl.org/speakers/#kevin">RustNL 2024</a>)
+<ul>
+<li>Videos: <a href="https://www.youtube.com/watch?v=Dg4hlfettn8">YouTube Link</a>
+<div >
+    <iframe
+        src="https://www.youtube.com/embed/Dg4hlfettn8"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen>
+    </iframe>
+</div></li>
+<li>Slides:
+<a href="https://github.com/project-robius/files/raw/3ac0a9d2e9f3c78ea51b4875abe02d288fa3685f/RustNL%202024%20and%20GOSIM%20Europe%202024/Robius%20Talk%20RustNL%20May%208,%202024.pptx">PowerPoint (19MB)</a>,
+<a href="https://github.com/project-robius/files/blob/3ac0a9d2e9f3c78ea51b4875abe02d288fa3685f/RustNL%202024%20and%20GOSIM%20Europe%202024/Robius%20Talk%20RustNL%20May%208%2C%202024.pdf">PDF version (12MB)</a></li>
+</ul>
+</li>
+<li><strong>Robrix: a Matrix chat client and more</strong> (<a href="https://europe2024.gosim.org/schedule#fediverse">GOSIM Europe 2024</a>)
+<ul>
+<li>Videos: <a href="https://www.youtube.com/watch?v=P8RGF942A5g">YouTube link</a>
+<div >
+    <iframe
+        src="https://www.youtube.com/embed/P8RGF942A5g"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen>
+    </iframe>
+</div></li>
+<li>Slides:
+<a href="https://github.com/project-robius/files/raw/3ac0a9d2e9f3c78ea51b4875abe02d288fa3685f/RustNL%202024%20and%20GOSIM%20Europe%202024/Robrix%20Talk%20GOSIM%20Europe%20May%206,%202024.pptx">PowerPoint (22MB)</a>,
+<a href="https://github.com/project-robius/files/blob/3ac0a9d2e9f3c78ea51b4875abe02d288fa3685f/RustNL%202024%20and%20GOSIM%20Europe%202024/Robrix%20Talk%20GOSIM%20Europe%20May%206%2C%202024.pdf">PDF version (16MB)</a></li>
+</ul>
+</li>
+<li><strong>Introducing our vision for Project Robius</strong> (<a href="https://workshop2023.gosim.org/schedule#mobile">GOSIM 2023</a>)
+<ul>
+<li>Videos:
+<a href="https://youtu.be/8JfOXfmwotQ?si=kLogqnaApYPNuSq8&amp;t=6802">YouTube link</a>,
+<a href="https://www.bilibili.com/video/BV1AN4y1Z7vs/">Bilibili link</a>
+<div >
+    <iframe
+        src="https://www.youtube.com/embed/8JfOXfmwotQ"
+        webkitallowfullscreen
+        mozallowfullscreen
+        allowfullscreen>
+    </iframe>
+</div></li>
+<li>Slides:
+<a href="https://github.com/project-robius/files/raw/041e980ec1d14bf325f1fb2ba743f8ed142a70cb/Robius%20-%20A%20Vision%20for%20Multi-platform%20App%20Development%20in%20Rust.pptx">PowerPoint (18MB)</a>,
+<a href="https://github.com/project-robius/files/blob/041e980ec1d14bf325f1fb2ba743f8ed142a70cb/Robius%20-%20A%20Vision%20for%20Multi-platform%20App%20Development%20in%20Rust.pdf">PDF version (15MB)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="check-out-our-blog-for-more">Check out <a href="/blog">our Blog</a> for more!</h2>
+
+            
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>

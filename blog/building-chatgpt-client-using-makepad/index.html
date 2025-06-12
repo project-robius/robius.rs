@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Building a ChatGPT client using Rust with Makepad |  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+<link rel="stylesheet" type="text/css" href="/blog-post.css">
+
+</head>
+
+<body>
+    
+<header class="box-shadow">
+    
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+</header>
+
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/building-chatgpt-client-using-makepad/#create-a-new-makepad-application">Create a new Makepad application</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/building-chatgpt-client-using-makepad/#understanding-our-application-s-anatomy">Understanding our application&#x27;s anatomy</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/building-chatgpt-client-using-makepad/#building-the-user-interface-for-our-chat">Building the user interface for our chat</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/building-chatgpt-client-using-makepad/#implementing-the-interaction">Implementing the interaction</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/building-chatgpt-client-using-makepad/#chatgpt-interaction">ChatGPT interaction</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/building-chatgpt-client-using-makepad/#wrapping-up">Wrapping up</a>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+<h1>Building a ChatGPT client using Rust with Makepad</h1>
+
+
+<p class="subtext">Learn how to implement a cross-platform application from scratch with Rust and the Makepad framework</p>
+
+
+<p>The Rust ecosystem is making significant strides in developing first-class tools for building production-ready applications compatible with major platforms. While there's still work to be done to match the developer experience offered by other tech stacks, we can already explore our options. You'll be impressed by what Rust can accomplish today.</p>
+<p>This is the first post in a series that explores how to create cross-platform applications with <a href="https://github.com/makepad/makepad">Makepad</a>, a notable application framework in the Rust community. It is also <a href="https://project-robius.github.io/book/#key-community-projects">one of the key projects under the Robuis initiative</a>. Although it's still evolving and some aspects are being fine-tuned for general production readiness, we can now create impressive applications in just a few steps.</p>
+<h2 id="create-a-new-makepad-application">Create a new Makepad application</h2>
+<p>Let’s dive into it! First, create a new binary project using <code>cargo</code>:</p>
+<pre data-lang="sh" style="background-color:#eff1f5;color:#4f5b66;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> new mychat
+</span><span style="color:#96b5b4;">cd</span><span> mychat/
+</span></code></pre>
+<p>Now, we want to add <code>makepad</code> as a dependency.</p>
+<pre data-lang="sh" style="background-color:#eff1f5;color:#4f5b66;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#bf616a;">cargo</span><span> add makepad-widgets</span><span style="color:#bf616a;"> --git</span><span> https://github.com/makepad/makepad</span><span style="color:#bf616a;"> --branch</span><span> rik
+</span></code></pre>
+<p>We are now ready to create the necessary elements for an empty application to run. This requires modifying the existing main.rs and adding a few lines.</p>
+<p>The <code>src/main.rs</code> file should contain the following:</p>
+<pre data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">main</span><span>() {
+</span><span>    mychat::app::app_main()
+</span><span>}
+</span></code></pre>
+<p>And the <code>src/lib.rs</code> file:</p>
+<pre data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#b48ead;">pub mod </span><span>app;
+</span></code></pre>
+<p>The <code>src/apps.rs</code> file is the actual entrypoint for Makepad applications. Here is our first version for this file:</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>1</td><td><span style="color:#b48ead;">use </span><span>makepad_widgets::*;
+</span></td></tr><tr><td>2</td><td><span>
+</span></td></tr><tr><td>3</td><td><span>live_design! {
+</span></td></tr><tr><td>4</td><td><span>    import makepad_widgets::base::*;
+</span></td></tr><tr><td>5</td><td><span>    import makepad_widgets::theme_desktop_dark::*;
+</span></td></tr><tr><td>6</td><td><span>
+</span></td></tr><tr><td>7</td><td><span>    App = {{App}} {
+</span></td></tr><tr><td>8</td><td><span>        ui: &lt;Window&gt; {
+</span></td></tr><tr><td>9</td><td><span>            window: {inner_size: </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">800</span><span>, </span><span style="color:#d08770;">600</span><span>)},
+</span></td></tr><tr><td>10</td><td><span>            pass: {clear_color: #</span><span style="color:#d08770;">000</span><span>}
+</span></td></tr><tr><td>11</td><td><span>        }
+</span></td></tr><tr><td>12</td><td><span>    }
+</span></td></tr><tr><td>13</td><td><span>}
+</span></td></tr><tr><td>14</td><td><span>
+</span></td></tr><tr><td>15</td><td><span>app_main!(App);
+</span></td></tr><tr><td>16</td><td><span>
+</span></td></tr><tr><td>17</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(Live, LiveHook)]
+</span></td></tr><tr><td>18</td><td><span style="color:#b48ead;">pub struct </span><span>App {
+</span></td></tr><tr><td>19</td><td><span>    #[</span><span style="color:#bf616a;">live</span><span>]
+</span></td></tr><tr><td>20</td><td><span>    </span><span style="color:#bf616a;">ui</span><span>: WidgetRef,
+</span></td></tr><tr><td>21</td><td><span>}
+</span></td></tr><tr><td>22</td><td><span>
+</span></td></tr><tr><td>23</td><td><span style="color:#b48ead;">impl </span><span>LiveRegister </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>24</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">live_register</span><span>(</span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx) {
+</span></td></tr><tr><td>25</td><td><span>        makepad_widgets::live_design(cx);
+</span></td></tr><tr><td>26</td><td><span>    }
+</span></td></tr><tr><td>27</td><td><span>}
+</span></td></tr><tr><td>28</td><td><span>
+</span></td></tr><tr><td>29</td><td><span style="color:#b48ead;">impl </span><span>AppMain </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>30</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">handle_event</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx, </span><span style="color:#bf616a;">event</span><span>: &amp;Event) {
+</span></td></tr><tr><td>31</td><td><span>        </span><span style="color:#b48ead;">let</span><span> scope = &amp;</span><span style="color:#b48ead;">mut </span><span>Scope::empty();
+</span></td></tr><tr><td>32</td><td><span>        </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">handle_event</span><span>(cx, event, scope);
+</span></td></tr><tr><td>33</td><td><span>    }
+</span></td></tr><tr><td>34</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>You can test our new application by executing the cargo run command. For now, you should see an empty window.</p>
+<h2 id="understanding-our-application-s-anatomy">Understanding our application's anatomy</h2>
+<p>Looking at the code in <code>src/app.rs</code>, we can see various sections. One section includes a call to the <code>live_design!</code> macro, provided by Makepad. This is where we define the UI components and layout of our application.</p>
+<p>Defining a top-level block named <code>App</code> is essential. The behavior of this <code>App</code> element, which represents the entire application, is determined by the Rust struct <code>App</code>. We'll delve into this shortly. Note that our application has only one <code>Window</code> widget instance in the <code>App</code> definition, representing the "empty window" you see when running the application.</p>
+<p>So, how would we go about displaying a "Hello world!" message? It's simply a matter of adding a <code>Label</code> widget instance inside the <code>Window</code> block.</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>3</td><td><span>live_design! {
+</span></td></tr><tr><td>6</td><td><span>
+</span></td></tr><tr><td>7</td><td><span>    App = {{App}} {
+</span></td></tr><tr><td>8</td><td><span>        ui: &lt;Window&gt; {
+</span></td></tr><tr><td>9</td><td><span>            window: {inner_size: </span><span style="color:#96b5b4;">vec2</span><span>(</span><span style="color:#d08770;">800</span><span>, </span><span style="color:#d08770;">600</span><span>)},
+</span></td></tr><tr><td>10</td><td><span>            pass: {clear_color: #</span><span style="color:#d08770;">000</span><span>}
+</span></td></tr><tr><td>11</td><td><span>
+</span></td></tr><tr><td>12</td><td><span>            </span><span style="color:#a7adba;">// Adding a label displaying some text
+</span></td></tr><tr><td>13</td><td><span>            body = {
+</span></td></tr><tr><td>14</td><td><span>                &lt;Label&gt; {
+</span></td></tr><tr><td>15</td><td><span>                    margin: </span><span style="color:#d08770;">40</span><span>,
+</span></td></tr><tr><td>16</td><td><span>                    text: &quot;</span><span style="color:#a3be8c;">Hello World!</span><span>&quot;
+</span></td></tr><tr><td>17</td><td><span>                    draw_text: {
+</span></td></tr><tr><td>18</td><td><span>                        color: #</span><span style="color:#d08770;">000</span><span>,
+</span></td></tr><tr><td>19</td><td><span>                    }
+</span></td></tr><tr><td>20</td><td><span>                }
+</span></td></tr><tr><td>21</td><td><span>            }
+</span></td></tr><tr><td>22</td><td><span>        }
+</span></td></tr><tr><td>23</td><td><span>    }
+</span></td></tr><tr><td>24</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>If you modified the application while it was running, you may have noticed that the changes were immediately reflected. This is thanks to Makepad's built-in Live Design feature which automatically detects UI related changes and "hot reloads" the GUI without any recompilation.</p>
+<p>All UI elements should be defined within a block named <code>body</code>, which is specified in the <code>Window</code> widget.</p>
+<p>Let's take a deeper look at the Rust code section of the <code>src/app.rs</code> file:</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>56</td><td><span>app_main!(App);
+</span></td></tr><tr><td>57</td><td><span>
+</span></td></tr><tr><td>58</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(Live, LiveHook)]
+</span></td></tr><tr><td>59</td><td><span style="color:#b48ead;">pub struct </span><span>App {
+</span></td></tr><tr><td>60</td><td><span>    #[</span><span style="color:#bf616a;">live</span><span>]
+</span></td></tr><tr><td>61</td><td><span>    </span><span style="color:#bf616a;">ui</span><span>: WidgetRef,
+</span></td></tr><tr><td>62</td><td><span>}
+</span></td></tr><tr><td>63</td><td><span>
+</span></td></tr><tr><td>64</td><td><span style="color:#b48ead;">impl </span><span>LiveRegister </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>65</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">live_register</span><span>(</span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx) {
+</span></td></tr><tr><td>66</td><td><span>        makepad_widgets::live_design(cx);
+</span></td></tr><tr><td>67</td><td><span>    }
+</span></td></tr><tr><td>68</td><td><span>}
+</span></td></tr><tr><td>69</td><td><span>
+</span></td></tr><tr><td>70</td><td><span style="color:#b48ead;">impl </span><span>AppMain </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>71</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">handle_event</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx, </span><span style="color:#bf616a;">event</span><span>: &amp;Event) {
+</span></td></tr><tr><td>72</td><td><span>        </span><span style="color:#b48ead;">let</span><span> scope = &amp;</span><span style="color:#b48ead;">mut </span><span>Scope::empty();
+</span></td></tr><tr><td>73</td><td><span>        </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">handle_event</span><span>(cx, event, scope);
+</span></td></tr><tr><td>74</td><td><span>    }
+</span></td></tr><tr><td>75</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>The Rust code in this file is connected to the application's live UI code via the <code>app_main</code> macro (line 56). Makepad then recognizes the <code>App</code> struct as the one representing your application, and everything is tied together.</p>
+<p>The <code>LiveRegister</code> trait must be implemented (lines 64-68) because the framework needs to know the locations of other <code>live_design</code> blocks to load them. Currently, we're only including the <code>live_design</code> block included in <code>makepad-widgets</code>, giving us access to framework-provided widgets like <code>Window</code> and <code>Label</code>. However, as your project expands, you'll likely define other parts of your application in different files.</p>
+<p>Finally, the <code>AppMain</code> trait must also be implemented, at least minimally, as we've done (see lines 70-75). For now, we've implemented the <code>handle_event</code> function, which describes what happens when the user interacts with the application. The line <code>self.ui.handle_event(cx, event, scope);</code> is important as it invokes the <code>handle_event</code> handler function in the internal widget instances, such as our label instance.</p>
+<p>In makepad, if you implement a <code>handle_event()</code> function, you effectively take control over event handling and propagation. Thus, you must explicitly pass events down into each subwidget (or "child" widget) within a widget, if you want each subwidget to be aware of the event and have the ability to handle or respond to it.
+This gives you ultimate power over how events propagate throughout different UI widgets/components in the application.</p>
+<blockquote>
+<p>A crucial aspect to note in Makepad is the existence of a Draw event. This event is triggered when elements on the screen need rendering. If we fail to pass all events to child elements, they will not display because this event will not reach them.</p>
+</blockquote>
+<h2 id="building-the-user-interface-for-our-chat">Building the user interface for our chat</h2>
+<p>We aim to create a basic version of a ChatGPT client, so let's begin by designing a simple interface. It should include a text input field for the user's prompt, a submit button to send the input to the ChatGPT API, and a list of messages to display the conversation.</p>
+<p>For simplicity, we'll implement these features directly in our existing <a href="http://app.rs/"><code>app.rs</code></a> file. In reality, larger applications would distribute different parts across multiple files. We'll cover how to organize larger applications effectively in future posts.</p>
+<p>Let's start by defining a general layout and adding the text input field and submit button.</p>
+<pre data-linenos data-lang="bash" style="background-color:#eff1f5;color:#4f5b66;" class="language-bash "><code class="language-bash" data-lang="bash"><table><tbody><tr><td>2</td><td><span style="color:#bf616a;">live_design! </span><span>{
+</span></td></tr><tr><td>5</td><td><span>
+</span></td></tr><tr><td>6</td><td><span>    App = {{App}} {
+</span></td></tr><tr><td>7</td><td><span>        ui: &lt;Window&gt; {
+</span></td></tr><tr><td>10</td><td><span>
+</span></td></tr><tr><td>11</td><td><span>            body = {
+</span></td></tr><tr><td>12</td><td><span>                height: Fill,
+</span></td></tr><tr><td>13</td><td><span>                width: Fill,
+</span></td></tr><tr><td>14</td><td><span>                margin: {top: 40, bottom: 40, left: 100, right: 100},
+</span></td></tr><tr><td>15</td><td><span>
+</span></td></tr><tr><td>16</td><td><span>                show_bg: true,
+</span></td></tr><tr><td>17</td><td><span>                draw_bg: {
+</span></td></tr><tr><td>18</td><td><span>                    color: </span><span style="color:#a7adba;">#330
+</span></td></tr><tr><td>19</td><td><span>                }
+</span></td></tr><tr><td>20</td><td><span>
+</span></td></tr><tr><td>21</td><td><span>                flow: Down,
+</span></td></tr><tr><td>22</td><td><span>                spacing: 20,
+</span></td></tr><tr><td>23</td><td><span>
+</span></td></tr><tr><td>24</td><td><span>                messages = &lt;View&gt; {
+</span></td></tr><tr><td>25</td><td><span>                    height: Fill,
+</span></td></tr><tr><td>26</td><td><span>                    width: Fill,
+</span></td></tr><tr><td>27</td><td><span>                    margin: 20,
+</span></td></tr><tr><td>28</td><td><span>                }
+</span></td></tr><tr><td>29</td><td><span>
+</span></td></tr><tr><td>30</td><td><span>                prompt = &lt;View&gt; {
+</span></td></tr><tr><td>31</td><td><span>                    height: Fit,
+</span></td></tr><tr><td>32</td><td><span>                    width: Fill,
+</span></td></tr><tr><td>33</td><td><span>                    margin: 20,
+</span></td></tr><tr><td>34</td><td><span>                    spacing: 10,
+</span></td></tr><tr><td>35</td><td><span>
+</span></td></tr><tr><td>36</td><td><span>                    prompt_input = &lt;TextInput&gt; {
+</span></td></tr><tr><td>37</td><td><span>                        height: Fit,
+</span></td></tr><tr><td>38</td><td><span>                        width: Fill,
+</span></td></tr><tr><td>39</td><td><span>                        padding: 10,
+</span></td></tr><tr><td>40</td><td><span>                        empty_message: &quot;</span><span style="color:#a3be8c;">Type a message...</span><span>&quot;,
+</span></td></tr><tr><td>41</td><td><span>                    }
+</span></td></tr><tr><td>42</td><td><span>
+</span></td></tr><tr><td>43</td><td><span>                    send_button = &lt;Button&gt; {
+</span></td></tr><tr><td>44</td><td><span>                        height: Fit,
+</span></td></tr><tr><td>45</td><td><span>                        width: Fit,
+</span></td></tr><tr><td>46</td><td><span>                        padding: 10,
+</span></td></tr><tr><td>47</td><td><span>                        text: &quot;</span><span style="color:#a3be8c;">Send</span><span>&quot;,
+</span></td></tr><tr><td>48</td><td><span>                    }
+</span></td></tr><tr><td>49</td><td><span>                }
+</span></td></tr><tr><td>50</td><td><span>            }
+</span></td></tr><tr><td>51</td><td><span>        }
+</span></td></tr><tr><td>52</td><td><span>    }
+</span></td></tr><tr><td>53</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>We have replaced all our body block. If you run the application you should see the following:</p>
+<p><img src="/blog/makepad-chatgpt-first-run.png" alt="Chat interface" /></p>
+<p>We arranged our layout using one of the Makepad's fundamental building blocks: the <code>View</code> widget. One view can have a list of children elements to render in our interface. In our case, we added two nested views and configured the parent to have them vertically organized (indicated by <code>flow: Down</code> in line 21).</p>
+<p>Those two children views are identified as <code>messages</code> (line 24) and <code>prompt</code> (line 30). Though we're not using those identifiers yet, they will be necessary for reference in the Rust code later. Observe that the first one uses <code>height: Fill</code> and the second <code>height: Fit</code>. This succinctly conveys that the messages section should take up all available vertical space, with each message taking only the minimum amount of vertical space required to fit the message content in., excluding the area required for the <code>prompt</code> view. The <code>prompt</code> view's size relies solely on its inner content.</p>
+<blockquote>
+<p>A common source of issues when working with Makepad is when you have a view sized with <code>Fit</code>, but the inner content uses <code>Fill</code>. This can cause something to not be displayed at all. When a widget uses <code>Fill</code>, it needs to know the parent's size beforehand to calculate its own size. Conversely, when a widget is sized with <code>Fit</code>, it needs to calculate the space of its content, which must be calculated without knowing the parent's size.</p>
+</blockquote>
+<p>Here's an alternate way to organize our <code>live_design</code> code:</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>2</td><td><span>live_design! {
+</span></td></tr><tr><td>5</td><td><span>
+</span></td></tr><tr><td>6</td><td><span>    Messages = &lt;View&gt; {
+</span></td></tr><tr><td>7</td><td><span>        </span><span style="color:#a7adba;">// Empty for now
+</span></td></tr><tr><td>8</td><td><span>    }
+</span></td></tr><tr><td>9</td><td><span>
+</span></td></tr><tr><td>10</td><td><span>    Prompt = &lt;View&gt; {
+</span></td></tr><tr><td>11</td><td><span>        spacing: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>12</td><td><span>
+</span></td></tr><tr><td>13</td><td><span>        &lt;TextInput&gt; {
+</span></td></tr><tr><td>14</td><td><span>            height: Fit,
+</span></td></tr><tr><td>15</td><td><span>            width: Fill,
+</span></td></tr><tr><td>16</td><td><span>            padding: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>17</td><td><span>            empty_message: &quot;</span><span style="color:#a3be8c;">Type a message...</span><span>&quot;,
+</span></td></tr><tr><td>18</td><td><span>        }
+</span></td></tr><tr><td>19</td><td><span>
+</span></td></tr><tr><td>20</td><td><span>        &lt;Button&gt; {
+</span></td></tr><tr><td>21</td><td><span>            height: Fit,
+</span></td></tr><tr><td>22</td><td><span>            width: Fit,
+</span></td></tr><tr><td>23</td><td><span>            padding: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>24</td><td><span>            text: &quot;</span><span style="color:#a3be8c;">Send</span><span>&quot;,
+</span></td></tr><tr><td>25</td><td><span>        }
+</span></td></tr><tr><td>26</td><td><span>    }
+</span></td></tr><tr><td>27</td><td><span>
+</span></td></tr><tr><td>28</td><td><span>    App = {{App}} {
+</span></td></tr><tr><td>29</td><td><span>        ui: &lt;Window&gt; {
+</span></td></tr><tr><td>32</td><td><span>
+</span></td></tr><tr><td>33</td><td><span>            body = {
+</span></td></tr><tr><td>45</td><td><span>
+</span></td></tr><tr><td>46</td><td><span>                messages = &lt;Messages&gt; {
+</span></td></tr><tr><td>47</td><td><span>                    height: Fill,
+</span></td></tr><tr><td>48</td><td><span>                    width: Fill,
+</span></td></tr><tr><td>49</td><td><span>                    margin: </span><span style="color:#d08770;">20</span><span>,
+</span></td></tr><tr><td>50</td><td><span>                }
+</span></td></tr><tr><td>51</td><td><span>                prompt = &lt;Prompt&gt; {
+</span></td></tr><tr><td>52</td><td><span>                    height: Fit,
+</span></td></tr><tr><td>53</td><td><span>                    width: Fill,
+</span></td></tr><tr><td>54</td><td><span>                    margin: </span><span style="color:#d08770;">20</span><span>,
+</span></td></tr><tr><td>55</td><td><span>                }
+</span></td></tr><tr><td>56</td><td><span>            }
+</span></td></tr><tr><td>57</td><td><span>        }
+</span></td></tr><tr><td>58</td><td><span>    }
+</span></td></tr><tr><td>59</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>This approach makes our <code>App</code> easier to read at first glance. These are specific parts of our user interface that have been assigned the aliases <code>Messages</code> (lines 6-8) and <code>Prompt</code>(10-26) and can be referred to from other points in the DSL. See into the <code>body</code> definitions and check how <code>Messages</code> (line 46) and <code>Prompt</code> (line 51) are instantiated.</p>
+<p>We've opted to extract almost everything into these named UI blocks. However, it's worth noting that we still define (or override) the <code>height</code>, <code>width</code>, and <code>margin</code> where we use <code>Messages</code> and <code>Prompt</code> (see lines 46-48 and 52-54). This is because these values form part of the layout rules we establish in conjunction with the parent view. But, Makepad is highly flexible, allowing you to override as much content as desired to accommodate your needs in various ways.</p>
+<h2 id="implementing-the-interaction">Implementing the interaction</h2>
+<p>Currently, our application is limited to displaying user interface elements. Interaction is restricted to the text input, with no response when you click the <code>Send</code> button. Let's enhance this interface.</p>
+<p>We need to make some changes to our UI code. We'll add some labels to the <code>Message</code> widget to display responses. We'll also add element identifiers, allowing us to reference them from Rust code later. Check the highlighted lines to spot the elements with identifiers.</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>2</td><td><span>live_design! {
+</span></td></tr><tr><td>5</td><td><span>
+</span></td></tr><tr><td>6</td><td><span>    Messages = &lt;View&gt; {
+</span></td></tr><tr><td>7</td><td><span>        height: Fill,
+</span></td></tr><tr><td>8</td><td><span>        width: Fill,
+</span></td></tr><tr><td>9</td><td><span>        padding: </span><span style="color:#d08770;">20</span><span>,
+</span></td></tr><tr><td>10</td><td><span>
+</span></td></tr><tr><td>11</td><td><span>        flow: Down,
+</span></td></tr><tr><td>12</td><td><span>        spacing: </span><span style="color:#d08770;">20</span><span>,
+</span></td></tr><tr><td>13</td><td><span>
+</span></td></tr><tr><td><mark style="background-color:#a7adba30;">14</mark></td><td><mark style="background-color:#a7adba30;"><span>        user_message_bubble = &lt;RoundedView&gt; {
+</span></mark></td></tr><tr><td>15</td><td><span>            visible: </span><span style="color:#d08770;">false</span><span>,
+</span></td></tr><tr><td>16</td><td><span>
+</span></td></tr><tr><td>17</td><td><span>            height: Fit,
+</span></td></tr><tr><td>18</td><td><span>            width: Fill,
+</span></td></tr><tr><td>19</td><td><span>            padding: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>20</td><td><span>            draw_bg: {
+</span></td></tr><tr><td>21</td><td><span>                color: #</span><span style="color:#d08770;">222
+</span></td></tr><tr><td>22</td><td><span>            }
+</span></td></tr><tr><td>23</td><td><span>            user_message = &lt;Label&gt; {
+</span></td></tr><tr><td>24</td><td><span>                height: Fit,
+</span></td></tr><tr><td>25</td><td><span>                width: Fill,
+</span></td></tr><tr><td>26</td><td><span>            }
+</span></td></tr><tr><td>27</td><td><span>        }
+</span></td></tr><tr><td>28</td><td><span>
+</span></td></tr><tr><td><mark style="background-color:#a7adba30;">29</mark></td><td><mark style="background-color:#a7adba30;"><span>        model_message_bubble = &lt;RoundedView&gt; {
+</span></mark></td></tr><tr><td>30</td><td><span>            visible: </span><span style="color:#d08770;">false</span><span>,
+</span></td></tr><tr><td>31</td><td><span>
+</span></td></tr><tr><td>32</td><td><span>            height: Fit,
+</span></td></tr><tr><td>33</td><td><span>            width: Fill,
+</span></td></tr><tr><td>34</td><td><span>            padding: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>35</td><td><span>            draw_bg: {
+</span></td></tr><tr><td>36</td><td><span>                color: #</span><span style="color:#d08770;">222
+</span></td></tr><tr><td>37</td><td><span>            }
+</span></td></tr><tr><td>38</td><td><span>            model_message = &lt;Label&gt; {
+</span></td></tr><tr><td>39</td><td><span>                height: Fit,
+</span></td></tr><tr><td>40</td><td><span>                width: Fill,
+</span></td></tr><tr><td>41</td><td><span>            }
+</span></td></tr><tr><td>42</td><td><span>        }
+</span></td></tr><tr><td>43</td><td><span>    }
+</span></td></tr><tr><td>44</td><td><span>
+</span></td></tr><tr><td>45</td><td><span>    Prompt = &lt;View&gt; {
+</span></td></tr><tr><td>46</td><td><span>        height: Fit,
+</span></td></tr><tr><td>47</td><td><span>        width: Fill,
+</span></td></tr><tr><td>48</td><td><span>        margin: </span><span style="color:#d08770;">20</span><span>,
+</span></td></tr><tr><td>49</td><td><span>        spacing: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>50</td><td><span>
+</span></td></tr><tr><td><mark style="background-color:#a7adba30;">51</mark></td><td><mark style="background-color:#a7adba30;"><span>        message_input = &lt;TextInput&gt; {
+</span></mark></td></tr><tr><td>52</td><td><span>            height: Fit,
+</span></td></tr><tr><td>53</td><td><span>            width: Fill,
+</span></td></tr><tr><td>54</td><td><span>            padding: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>55</td><td><span>            empty_message: &quot;</span><span style="color:#a3be8c;">Type a message...</span><span>&quot;,
+</span></td></tr><tr><td>56</td><td><span>        }
+</span></td></tr><tr><td>57</td><td><span>
+</span></td></tr><tr><td><mark style="background-color:#a7adba30;">58</mark></td><td><mark style="background-color:#a7adba30;"><span>        send_button = &lt;Button&gt; {
+</span></mark></td></tr><tr><td>59</td><td><span>            height: Fit,
+</span></td></tr><tr><td>60</td><td><span>            width: Fit,
+</span></td></tr><tr><td>61</td><td><span>            padding: </span><span style="color:#d08770;">10</span><span>,
+</span></td></tr><tr><td>62</td><td><span>            text: &quot;</span><span style="color:#a3be8c;">Send</span><span>&quot;,
+</span></td></tr><tr><td>63</td><td><span>        }
+</span></td></tr><tr><td>64</td><td><span>    }
+</span></td></tr><tr><td>96</td><td><span>
+</span></td></tr><tr><td>98</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>Note we are using <code>visible: false</code> in some views to hide the messages bubbles (lines 15 and 30). We plan to toggle the visibility once we have some messages to display.</p>
+<p>Now we can add the Rust logic to implement the “send button”.</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>114</td><td><span style="color:#b48ead;">impl </span><span>AppMain </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>115</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">handle_event</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx, </span><span style="color:#bf616a;">event</span><span>: &amp;Event) {
+</span></td></tr><tr><td>116</td><td><span>        </span><span style="color:#a7adba;">// Added this line
+</span></td></tr><tr><td>117</td><td><span>        </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#96b5b4;">match_event</span><span>(cx, event);
+</span></td></tr><tr><td>118</td><td><span>
+</span></td></tr><tr><td>119</td><td><span>        </span><span style="color:#b48ead;">let</span><span> scope = &amp;</span><span style="color:#b48ead;">mut </span><span>Scope::empty();
+</span></td></tr><tr><td>120</td><td><span>        </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">handle_event</span><span>(cx, event, scope);
+</span></td></tr><tr><td>121</td><td><span>    }
+</span></td></tr><tr><td>122</td><td><span>}
+</span></td></tr><tr><td>123</td><td><span>
+</span></td></tr><tr><td>124</td><td><span style="color:#b48ead;">impl </span><span>MatchEvent </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>125</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">handle_actions</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx, </span><span style="color:#bf616a;">actions</span><span>:&amp;Actions){
+</span></td></tr><tr><td>126</td><td><span>        </span><span style="color:#b48ead;">if </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">button</span><span>(id!(send_button)).</span><span style="color:#96b5b4;">clicked</span><span>(&amp;actions) {
+</span></td></tr><tr><td>127</td><td><span>            </span><span style="color:#a7adba;">// Capture the text input value
+</span></td></tr><tr><td>128</td><td><span>            </span><span style="color:#b48ead;">let</span><span> user_prompt = </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">text_input</span><span>(id!(message_input)).</span><span style="color:#96b5b4;">text</span><span>();
+</span></td></tr><tr><td>129</td><td><span>
+</span></td></tr><tr><td>130</td><td><span>            </span><span style="color:#a7adba;">// Set the text of the user message label
+</span></td></tr><tr><td>131</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">label</span><span>(id!(user_message)).</span><span style="color:#96b5b4;">set_text</span><span>(&amp;user_prompt);
+</span></td></tr><tr><td>132</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">view</span><span>(id!(user_message_bubble)).</span><span style="color:#96b5b4;">set_visible</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span></td></tr><tr><td>133</td><td><span>
+</span></td></tr><tr><td>134</td><td><span>            </span><span style="color:#a7adba;">// Simulate a model response
+</span></td></tr><tr><td>135</td><td><span>            </span><span style="color:#b48ead;">let</span><span> model_response = &quot;</span><span style="color:#a3be8c;">Hello, I am a model response!</span><span>&quot;;
+</span></td></tr><tr><td>136</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">label</span><span>(id!(model_message)).</span><span style="color:#96b5b4;">set_text</span><span>(model_response);
+</span></td></tr><tr><td>137</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">view</span><span>(id!(model_message_bubble)).</span><span style="color:#96b5b4;">set_visible</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span></td></tr><tr><td>138</td><td><span>
+</span></td></tr><tr><td>139</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">redraw</span><span>(cx);
+</span></td></tr><tr><td>140</td><td><span>        }
+</span></td></tr><tr><td>141</td><td><span>    }
+</span></td></tr><tr><td>142</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>Let's examine each of these code blocks in detail. First, we added a call to <code>self.match_event(cx, event)</code> in line 117, which allows us to use the simpler form of Event matching/handling. This requires us to implement the <code>MatchEvent</code> trait for the <code>App</code> struct, which we can then use to check for and handle events like a <code>Button</code> click.</p>
+<p>Next, we implement <code>handle_actions</code> to handle the <em>clicked action</em> emitted by the button when the user clicks it (see lines 125-141). The key idea in Makepad is that widgets consume <em>events</em> from other sources and then can emit <em>actions</em> as needed to communicate with other widgets. In this case, the button instance already received and handled a click event and has emitted a related <em>clicked action</em>.
+We rely on the <code>clicked(&amp;actions)</code> function (line 126) to check if the received actions were actually emited by this button instance.</p>
+<p>You may notice how we are relying on the identifiers we have in our <code>live_design</code> counterpart. Things like <code>self.ui.text_input(id!(message_input))</code>, <code>self.ui.label(id!(user_message))</code> and <code>self.ui.view(id!(model_message_bubble))</code>. This is the Makepad query system for UI elements from Rust code, which is very confortable to use. Just remember you need to use the appropriate function depending on the widget type you’re looking for. In other words, <code>self.ui.view(id!(message_input))</code> won’t return anything because the <code>message_input</code> id was used for a <code>TextInput</code> rather than a <code>View</code>.</p>
+<p>As a final note, Makepad has a drawing mode which is quite explicit. So, it is our call to indicate to the framework that there were changes in the labels and views instances that needs to be redraw. Hence, we have an invocation to do it: <code>self.ui.redraw(cx)</code>, in the line 139. This is a very simple way to “redraw everything” that is not the most efficient way if you have a much more elaborated UI where only a tiny portion has changed, but it is probably a good way to start for now. Nothing stops you to try later to invoke <code>redraw</code> in the individual instances of <code>Label</code>, <code>View</code> and <code>TextInput</code> as necessary.</p>
+<p>Since we have changed Rust code we are required to recompile our application and run it again to see the changes. Hopefully, you will notice how fast Makepad applications recompile! This is a luxury to have in the Rust ecosystem thanks to the amount of care the Makepad team puts on it.</p>
+<p><img src="/blog/makepad-chatgpt-first-interaction.png" alt="First chat interaction" /></p>
+<p>It is working! We need to have a model delivering smarter responses now 🙂</p>
+<h2 id="chatgpt-interaction">ChatGPT interaction</h2>
+<p>It’s time to bring real conversation content to our app. We’re going to use the ChatGPT public API, so you will need to generate a key by signing into <a href="http://platform.openai.com">platform.openai.com</a>. Note the number of allowed requests is based on your <a href="https://platform.openai.com/docs/guides/rate-limits/usage-tiers">current usage tier</a>. Using the free tier, you may have to wait a bit while testing because you only get 3 requests per minute. In any case, our implementation will catch error responses and display them so the user always knows what's going on.</p>
+<p>Once you have your API key, let’s implement the request to obtain a model response, by following the <a href="https://platform.openai.com/docs/api-reference/chat/create">official documentation</a>.</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>1</td><td><span style="color:#b48ead;">use </span><span>makepad_widgets::*;
+</span></td></tr><tr><td><mark style="background-color:#a7adba30;">2</mark></td><td><mark style="background-color:#a7adba30;"><span style="color:#b48ead;">use </span><span>makepad_micro_serde::*;
+</span></mark></td></tr><tr><td>3</td><td><span>
+</span></td></tr><tr><td>125</td><td><span style="color:#b48ead;">impl </span><span>MatchEvent </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>126</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">handle_actions</span><span>(&amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx, </span><span style="color:#bf616a;">actions</span><span>:&amp;Actions){
+</span></td></tr><tr><td>127</td><td><span>        </span><span style="color:#b48ead;">if </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">button</span><span>(id!(send_button)).</span><span style="color:#96b5b4;">clicked</span><span>(&amp;actions) {
+</span></td></tr><tr><td>128</td><td><span>            </span><span style="color:#a7adba;">// Capture the text input value
+</span></td></tr><tr><td>129</td><td><span>            </span><span style="color:#b48ead;">let</span><span> user_prompt = </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">text_input</span><span>(id!(message_input)).</span><span style="color:#96b5b4;">text</span><span>();
+</span></td></tr><tr><td>130</td><td><span>
+</span></td></tr><tr><td>131</td><td><span>            </span><span style="color:#a7adba;">// Set the text of the user message label
+</span></td></tr><tr><td>132</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">label</span><span>(id!(user_message)).</span><span style="color:#96b5b4;">set_text</span><span>(&amp;user_prompt);
+</span></td></tr><tr><td>133</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">view</span><span>(id!(user_message_bubble)).</span><span style="color:#96b5b4;">set_visible</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span></td></tr><tr><td>134</td><td><span>            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">redraw</span><span>(cx);
+</span></td></tr><tr><td>135</td><td><span>
+</span></td></tr><tr><td>136</td><td><span>            </span><span style="color:#a7adba;">// Replacing the hardcoded response with a real one
+</span></td></tr><tr><td>137</td><td><span>            </span><span style="color:#96b5b4;">send_message_to_chat_gpt</span><span>(cx, user_prompt);
+</span></td></tr><tr><td>138</td><td><span>        }
+</span></td></tr><tr><td>139</td><td><span>    }
+</span></td></tr><tr><td>140</td><td><span>}
+</span></td></tr><tr><td>141</td><td><span>
+</span></td></tr><tr><td>142</td><td><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">send_message_to_chat_gpt</span><span>(</span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx, </span><span style="color:#bf616a;">message</span><span>: String) {
+</span></td></tr><tr><td>143</td><td><span>    </span><span style="color:#b48ead;">let</span><span> completion_url = &quot;</span><span style="color:#a3be8c;">https://api.openai.com/v1/chat/completions</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>();
+</span></td></tr><tr><td>144</td><td><span>    </span><span style="color:#b48ead;">let</span><span> request_id = live_id!(SendChatMessage);
+</span></td></tr><tr><td>145</td><td><span>    </span><span style="color:#b48ead;">let mut</span><span> request = HttpRequest::new(completion_url, HttpMethod::</span><span style="color:#d08770;">POST</span><span>);
+</span></td></tr><tr><td>146</td><td><span>
+</span></td></tr><tr><td>147</td><td><span>    request.</span><span style="color:#96b5b4;">set_header</span><span>(
+</span></td></tr><tr><td>148</td><td><span>        &quot;</span><span style="color:#a3be8c;">Content-Type</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>(),
+</span></td></tr><tr><td>149</td><td><span>        &quot;</span><span style="color:#a3be8c;">application/json</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>()
+</span></td></tr><tr><td>150</td><td><span>    );
+</span></td></tr><tr><td>151</td><td><span>
+</span></td></tr><tr><td>152</td><td><span>    request.</span><span style="color:#96b5b4;">set_header</span><span>(
+</span></td></tr><tr><td>153</td><td><span>        &quot;</span><span style="color:#a3be8c;">Authorization</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>(),
+</span></td></tr><tr><td><mark style="background-color:#a7adba30;">154</mark></td><td><mark style="background-color:#a7adba30;"><span>        &quot;</span><span style="color:#a3be8c;">Bearer &lt;YOUR_ACCESS_KEY&gt;</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>()
+</span></mark></td></tr><tr><td>155</td><td><span>    );
+</span></td></tr><tr><td>156</td><td><span>
+</span></td></tr><tr><td>157</td><td><span>    request.</span><span style="color:#96b5b4;">set_json_body</span><span>(ChatPrompt {
+</span></td></tr><tr><td>158</td><td><span>        messages: vec![Message {content: message, role: &quot;</span><span style="color:#a3be8c;">user</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>()}],
+</span></td></tr><tr><td>159</td><td><span>        model: &quot;</span><span style="color:#a3be8c;">gpt-3.5-turbo</span><span>&quot;.</span><span style="color:#96b5b4;">to_string</span><span>(),
+</span></td></tr><tr><td>160</td><td><span>        max_tokens: </span><span style="color:#d08770;">100
+</span></td></tr><tr><td>161</td><td><span>    });
+</span></td></tr><tr><td>162</td><td><span>
+</span></td></tr><tr><td>163</td><td><span>    cx.</span><span style="color:#96b5b4;">http_request</span><span>(request_id, request);
+</span></td></tr><tr><td>164</td><td><span>}
+</span></td></tr><tr><td>165</td><td><span>
+</span></td></tr><tr><td>166</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(SerJson, DeJson)]
+</span></td></tr><tr><td>167</td><td><span style="color:#b48ead;">struct </span><span>ChatPrompt {
+</span></td></tr><tr><td>168</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">messages</span><span>: Vec&lt;Message&gt;,
+</span></td></tr><tr><td>169</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">model</span><span>: String,
+</span></td></tr><tr><td>170</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">max_tokens</span><span>: </span><span style="color:#b48ead;">i32
+</span></td></tr><tr><td>171</td><td><span>}
+</span></td></tr><tr><td>172</td><td><span>
+</span></td></tr><tr><td>173</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(SerJson, DeJson)]
+</span></td></tr><tr><td>174</td><td><span style="color:#b48ead;">struct </span><span>Message {
+</span></td></tr><tr><td>175</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">content</span><span>: String,
+</span></td></tr><tr><td>176</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">role</span><span>: String
+</span></td></tr><tr><td>177</td><td><span>}
+</span></td></tr><tr><td>178</td><td><span>
+</span></td></tr></tbody></table></code></pre>
+<blockquote>
+<p>Remember to use your own OpenAI access key in the line 154</p>
+</blockquote>
+<p>With the addition of <code>send_message_to_chat_gpt()</code> (lines 142-164), we can send a request to the ChatGPT API server. Note that we’re not yet handling the response so we can focus on the request part. The <code>cx.http_request</code> (line 163) is the mechanism in Makepad to issue regular HTTP requests in a non-blocking manner. This ensures that our application UI won’t be blocked while the response is still pending.</p>
+<p>The <code>HttpRequest::set_json_body()</code> function (line 157) receives a struct representing the JSON format expected by the server. Note that we define the <code>ChatPrompt</code> struct (line 167) for this purpose, and then derive <code>SerJson</code> and <code>DeJson</code> on them to automatically generate efficient JSON parsing logic for them. You can think of those traits as a simpler version of <code>Serde</code>, which we are importing in the line 2.</p>
+<p>Let’s now receive the responses and update the user interface:</p>
+<pre data-linenos data-lang="rust" style="background-color:#eff1f5;color:#4f5b66;" class="language-rust "><code class="language-rust" data-lang="rust"><table><tbody><tr><td>114</td><td><span style="color:#b48ead;">impl </span><span>MatchEvent </span><span style="color:#b48ead;">for </span><span>App {
+</span></td></tr><tr><td>129</td><td><span>
+</span></td></tr><tr><td>130</td><td><span>    </span><span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">handle_network_responses</span><span>(
+</span></td></tr><tr><td>131</td><td><span>        &amp;</span><span style="color:#b48ead;">mut </span><span style="color:#bf616a;">self</span><span>,
+</span></td></tr><tr><td>132</td><td><span>        </span><span style="color:#bf616a;">cx</span><span>: &amp;</span><span style="color:#b48ead;">mut</span><span> Cx,
+</span></td></tr><tr><td>133</td><td><span>        </span><span style="color:#bf616a;">responses</span><span>: &amp;NetworkResponsesEvent
+</span></td></tr><tr><td>134</td><td><span>    ) {
+</span></td></tr><tr><td>135</td><td><span>        </span><span style="color:#b48ead;">let</span><span> label = </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">label</span><span>(id!(model_message));
+</span></td></tr><tr><td>136</td><td><span>        </span><span style="color:#b48ead;">for</span><span> event in responses {
+</span></td></tr><tr><td>137</td><td><span>            </span><span style="color:#b48ead;">match </span><span>&amp;event.response {
+</span></td></tr><tr><td>138</td><td><span>                NetworkResponse::HttpResponse(response) =&gt; {
+</span></td></tr><tr><td>139</td><td><span>                    </span><span style="color:#b48ead;">match</span><span> event.request_id {
+</span></td></tr><tr><td>140</td><td><span>                        live_id!(SendChatMessage) =&gt; {
+</span></td></tr><tr><td>141</td><td><span>                            </span><span style="color:#b48ead;">if</span><span> response.status_code == </span><span style="color:#d08770;">200 </span><span>{
+</span></td></tr><tr><td>142</td><td><span>                                </span><span style="color:#b48ead;">let</span><span> chat_response =
+</span></td></tr><tr><td>143</td><td><span>                                    response.get_json_body::&lt;ChatResponse&gt;().</span><span style="color:#96b5b4;">unwrap</span><span>();
+</span></td></tr><tr><td>144</td><td><span>                                label.</span><span style="color:#96b5b4;">set_text</span><span>(
+</span></td></tr><tr><td>145</td><td><span>                                    &amp;chat_response.choices[</span><span style="color:#d08770;">0</span><span>].message.content
+</span></td></tr><tr><td>146</td><td><span>                                );
+</span></td></tr><tr><td>147</td><td><span>                            } </span><span style="color:#b48ead;">else </span><span>{
+</span></td></tr><tr><td>148</td><td><span>                                label.</span><span style="color:#96b5b4;">set_text</span><span>(&amp;format!(
+</span></td></tr><tr><td>149</td><td><span>                                    &quot;</span><span style="color:#a3be8c;">Failed to connect with OpenAI: </span><span style="color:#d08770;">{:?}</span><span>&quot;,
+</span></td></tr><tr><td>150</td><td><span>                                    response.</span><span style="color:#96b5b4;">get_string_body</span><span>()
+</span></td></tr><tr><td>151</td><td><span>                                ));
+</span></td></tr><tr><td>152</td><td><span>                            }
+</span></td></tr><tr><td>153</td><td><span>
+</span></td></tr><tr><td>154</td><td><span>                            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">view</span><span>(id!(model_message_bubble)).</span><span style="color:#96b5b4;">set_visible</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span></td></tr><tr><td>155</td><td><span>                            </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">redraw</span><span>(cx);
+</span></td></tr><tr><td>156</td><td><span>                        },
+</span></td></tr><tr><td>157</td><td><span>                        _ =&gt; (),
+</span></td></tr><tr><td>158</td><td><span>                    }
+</span></td></tr><tr><td>159</td><td><span>                }
+</span></td></tr><tr><td>160</td><td><span>                NetworkResponse::HttpRequestError(error) =&gt; {
+</span></td></tr><tr><td>161</td><td><span>                    label.</span><span style="color:#96b5b4;">set_text</span><span>(
+</span></td></tr><tr><td>162</td><td><span>                        &amp;format!(&quot;</span><span style="color:#a3be8c;">Failed to connect with OpenAI </span><span style="color:#d08770;">{:?}</span><span>&quot;, error)
+</span></td></tr><tr><td>163</td><td><span>                    );
+</span></td></tr><tr><td>164</td><td><span>                    </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">view</span><span>(id!(model_message_bubble)).</span><span style="color:#96b5b4;">set_visible</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span></td></tr><tr><td>165</td><td><span>                    </span><span style="color:#bf616a;">self</span><span>.ui.</span><span style="color:#96b5b4;">redraw</span><span>(cx);
+</span></td></tr><tr><td>166</td><td><span>                }
+</span></td></tr><tr><td>167</td><td><span>                _ =&gt; ()
+</span></td></tr><tr><td>168</td><td><span>            }
+</span></td></tr><tr><td>169</td><td><span>        }
+</span></td></tr><tr><td>170</td><td><span>    }
+</span></td></tr><tr><td>171</td><td><span>}
+</span></td></tr><tr><td>209</td><td><span>
+</span></td></tr><tr><td>210</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(SerJson, DeJson)]
+</span></td></tr><tr><td>211</td><td><span style="color:#b48ead;">struct </span><span>ChatResponse {
+</span></td></tr><tr><td>212</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">id</span><span>: String,
+</span></td></tr><tr><td>213</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">object</span><span>: String,
+</span></td></tr><tr><td>214</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">created</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
+</span></td></tr><tr><td>215</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">model</span><span>: String,
+</span></td></tr><tr><td>216</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">usage</span><span>: Usage,
+</span></td></tr><tr><td>217</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">choices</span><span>: Vec&lt;Choice&gt;,
+</span></td></tr><tr><td>218</td><td><span>    </span><span style="color:#b48ead;">pub </span><span style="color:#bf616a;">system_fingerprint</span><span>: Option&lt;String&gt;,
+</span></td></tr><tr><td>219</td><td><span>}
+</span></td></tr><tr><td>220</td><td><span>
+</span></td></tr><tr><td>221</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(SerJson, DeJson)]
+</span></td></tr><tr><td>222</td><td><span style="color:#b48ead;">pub struct </span><span>Usage {
+</span></td></tr><tr><td>223</td><td><span>    </span><span style="color:#bf616a;">prompt_tokens</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
+</span></td></tr><tr><td>224</td><td><span>    </span><span style="color:#bf616a;">completion_tokens</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
+</span></td></tr><tr><td>225</td><td><span>    </span><span style="color:#bf616a;">total_tokens</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
+</span></td></tr><tr><td>226</td><td><span>}
+</span></td></tr><tr><td>227</td><td><span>
+</span></td></tr><tr><td>228</td><td><span>#[</span><span style="color:#bf616a;">derive</span><span>(SerJson, DeJson)]
+</span></td></tr><tr><td>229</td><td><span style="color:#b48ead;">struct </span><span>Choice {
+</span></td></tr><tr><td>230</td><td><span>    </span><span style="color:#bf616a;">message</span><span>: Message,
+</span></td></tr><tr><td>231</td><td><span>    </span><span style="color:#bf616a;">finish_reason</span><span>: String,
+</span></td></tr><tr><td>232</td><td><span>    </span><span style="color:#bf616a;">index</span><span>: </span><span style="color:#b48ead;">i32</span><span>,
+</span></td></tr><tr><td>233</td><td><span>    </span><span style="color:#bf616a;">logprobs</span><span>: Option&lt;String&gt;,
+</span></td></tr><tr><td>234</td><td><span>}
+</span></td></tr></tbody></table></code></pre>
+<p>Makepad's <code>MatchEvent</code> trait has a <code>handle_network_responses()</code> function, and by implementing it (lines 130-171) we now have a way to network-related events. This function is quite straightforward once we define a <code>ChatResponse</code> struct (line 211) to represent the JSON response format coming from ChatGPT.</p>
+<p>Once we retrieve the chat message from the response, we set the corresponding <code>Label</code> instance's text (line 144). We also make sure that the parent view is visible (line 154) and everything gets redrawn (line 155). The parent visibility was hidden because we only want to display the messages bubbles once we have the messages</p>
+<p>If everything goes well with the ChatGPT API server, you should see an interaction like the following one:</p>
+<p><img src="/blog/makepad-chatgpt-final-result.png" alt="ChatGPT response displayed" />
+<em>This is what ChatGPT knows about Makepad...</em> 🙂</p>
+<h2 id="wrapping-up">Wrapping up</h2>
+<p>Let's take a look at what we have achieved in a few steps. We have a basic application with an easy-to-modify look and feel. In just a few dozen lines of code, we made a working chat client that shows real responses from ChatGPT models. Now, we invite you to try different platforms beyond the native desktop platform that we demonstrated in this post. Follow the instructions in the <a href="https://github.com/makepad/makepad/?tab=readme-ov-file#build--run-instructions">Makepad README</a> to see how to test this application in Android, iOS, and web.</p>
+<p>In a future post, we'll cover how to implement a list of messages to make this app really feel like a true interactive chat app.</p>
+<p><strong>Have fun hacking with Makepad and Rust!</strong></p>
+
+
+<class="trunk-blog-author">
+    
+    <p>By: Jorge Bejar </p>
+    
+    <br />
+    <a href="https://x.com/jmbejar"> https://x.com/jmbejar </a>
+    <br/>
+    <a href="https:&#x2F;&#x2F;mastodon.social&#x2F;@jmbejar"> https:&#x2F;&#x2F;mastodon.social&#x2F;@jmbejar </a>
+    <br />
+    <a href="https://github.com/jmbejar"> https://github.com/jmbejar </a>
+    
+    
+    <p>Published: 2024-06-12</p>
+    
+</div>
+
+
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>

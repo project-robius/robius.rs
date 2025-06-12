@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Benchmarking |  </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    
+    <style>
+    :root {
+        /* Primary theme color */
+        --primary-color: #FED43F;
+        /* Primary theme text color */
+        --primary-text-color: #543631;
+        --primary-text-color-over: #000;
+        /* Primary theme link color */
+        --primary-link-color: #FFA500;
+        /* Secondary color: the background body color */
+        --secondary-color: #fcfaf6;
+        --secondary-text-color: #303030;
+        /* Highlight text color of table of content */
+        --toc-highlight-text-color: #d46e13;
+        --toc-background-color: white;
+        --code-color: #4a4a4a;
+        --code-background-color: #eff1f5;
+
+        --shadow-color: #ddd;
+
+        /* Font used for headers (h1 & h2) */
+        --header-font-family: "Fira Sans", sans-serif;
+        /* Font used for text */
+        --text-font-family: "Fira Sans", sans-serif;
+    }
+
+    @media (prefers-color-scheme: white) {
+        :root {
+            --primary-color: #382929;
+            --primary-text-color: #d7d7d7;
+            --primary-text-color-over: #FFF;
+            --primary-link-color: #9b9b9b;
+            --secondary-color: #282828;
+            --secondary-text-color: #f2f2f2;
+            --toc-highlight-text-color: #f2f2f2;
+            --toc-background-color: #3a3a3a;
+            --code-color: white;
+            --code-background-color: #4a4a4a;
+
+            --shadow-color: #202020;
+            --header-font-family: "Fira Sans", sans-serif;
+            --text-font-family: "Fira Sans", sans-serif;
+        }
+    }
+</style>
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="https://robius.rs/juice.css">
+    
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robius.rs/">
+    <meta property="og:site_name" content="Project Robius">
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+        content="/robius-logo-text.png">
+    <meta name="description"
+        content="Robius is a fully open-source, decentralized, community-driven effort to enable multi-platform application development in Rust.">
+    
+<link rel="stylesheet" type="text/css" href="/blog-post.css">
+
+</head>
+
+<body>
+    
+<header class="box-shadow">
+    
+
+<a href="https://robius.rs/">
+    <div class="logo">
+        <img src="https://robius.rs/robius-logo-200.png" alt="logo">
+        <div class="heading-text" style="font-size: 50px; margin-top: 10px">
+            ROBIUS
+        </div>
+    </div>
+</a>
+
+<nav>
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        <a class="nav-item subtitle-text" href="https://wasm.robius.rs">Demo</a>
+        
+        <a class="nav-item subtitle-text" href="/blog/">Blog</a>
+        
+        <a class="nav-item subtitle-text" href="https://github.com/project-robius">GitHub</a>
+        
+    
+</nav>
+
+</header>
+
+
+    <main>
+        
+        
+        
+        
+        
+        <div class="toc">
+            <div class="toc-sticky">
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking/#test-methodology">Test Methodology</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking/#results">Results</a>
+                </div>
+                
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking/#cpu-processing"><small>- CPU Processing</small></a>
+                </div>
+                
+                <div class="toc-item-child">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking/#memory-usage"><small>- Memory Usage</small></a>
+                </div>
+                
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking/#conclusion">Conclusion</a>
+                </div>
+                
+                
+                <div class="toc-item">
+                    <a class="subtext" href="https://robius.rs/blog/performance-benchmarking/#references">References</a>
+                </div>
+                
+                
+            </div>
+        </div>
+        
+        
+
+        <div class="content text">
+            
+<h1>Performance Benchmarking</h1>
+
+
+<p class="subtext">Scrolling Tests with WeChat &amp; TaoBao Apps</p>
+
+
+<p>The last time we did a performance benchmark test, it was a few months ago. At that time we used only one simple application, an image manipulation program. During the GOSIM Workshop in September, I had mentioned that we would be doing more performance benchmarking tests and we have done just that.</p>
+<p>This time we used Makepad to write a sample WeChat application and a sample TaoBao application. The main test criteria is to stress the "scrolling" feature of the apps. We also had access to two sample applications of the same written in Android "native".</p>
+<h2 id="test-methodology">Test Methodology</h2>
+<p>Scrolling is one of the most important and common operations for mobile applications. For WeChat, a messaging application, and TaoBao, an e-commerce application, a smooth scrolling experience is often one of the key factors in user satisfaction with the application.</p>
+<p>We benchmarked similar performance metrics as last time using Google <a href="https://ui.perfetto.dev">Perfetto</a> tool. These include:</p>
+<ul>
+<li>CPU Cycles</li>
+<li>CPU Frequency (Average &amp; Max)</li>
+<li>CPU Memory (Average &amp; Max)</li>
+<li>GPU Memory (Average &amp; Max)</li>
+</ul>
+<p>To test, we use the applications' main message or product list page. We exercise the scrolling by quickly swiping up and down on this scrollable page. We first quickly swipe for 6 to 10 times up (to make the list go down) and then 6 to 10 times down and repeat, until we reach the 10 seconds sample time.</p>
+<p><em>(Note that in real applications the scrolling list might have network dependencies such as loading of images, etc. But for the sample applications, the images are cached locally to the mobile app so there’s no network latency or variance.)</em></p>
+<p>In order to have some more data points, we also benchmarked the official TaoBao app from the Google Play Store.</p>
+<h2 id="results">Results</h2>
+<p><img src="/blog/scrolling-test-table.png" alt="" /></p>
+<p>As can be seen from the results, they seem similar and consistent with our previous results from the image manipulation benchmarks.</p>
+<h3 id="cpu-processing">CPU Processing</h3>
+<p><img src="/blog/cpu-cycles.png" alt="" /></p>
+<p>On the CPU cycle, the sample Makepad WeChat app shows very little cycles used, having less than half of the Android native sample app.</p>
+<p><img src="/blog/cpu-frequency.png" alt="" /></p>
+<p>The CPU frequencies also reflect that Makepad uses much less than the Android native counterparts.</p>
+<h3 id="memory-usage">Memory Usage</h3>
+<p>The CPU memory usage is more similar among the Android native and Makepad sample applications, with Makepad apps using slightly less CPU memory. This is consistent with less usage of the CPU cycles as well.</p>
+<p><img src="/blog/cpu-memory.png" alt="" /></p>
+<p>The GPU memory shows that Makepad apps use more memory than the Android native apps. This is currently the only area where Makepad is not as efficient. However, the Makepad team is currently working on an improvement that will decrease this usage in the near future.</p>
+<p><img src="/blog/gpu-memory.png" alt="" /></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Being a fully functioning application, the official TaoBao app had a much higher CPU cycle and CPU memory than the rest.</p>
+<p>Also, there seems to be multiple processes related to the TaoBao application. We only counted the main TaoBao process. If we were to add the data from the TaoBao GPU process, then it will increase the amount of GPU memory usage by about 70 MB.</p>
+<p>Overall, the results are consistent to what we found in our early benchmarking test. As Makepad framework continues to improve and evolve, the numbers will undoubtably change. We will periodically run more of these performance benchmarking and post our updates.</p>
+<h2 id="references">References</h2>
+<p>Makepad WeChat sample:
+<a href="https://github.com/project-robius/makepad_wechat"><code>https://github.com/project-robius/makepad_wechat</code></a></p>
+<p>Makepad TaoBao sample:
+<a href="https://github.com/project-robius/makepad_taobao"><code>https://github.com/project-robius/makepad_taobao</code></a></p>
+
+
+<class="trunk-blog-author">
+    
+    <p>By: Edward Tan </p>
+    
+    <a href="https:&#x2F;&#x2F;edwardtan.com"> https:&#x2F;&#x2F;edwardtan.com </a>
+    
+    <br />
+    <a href="https://x.com/guofoo"> https://x.com/guofoo </a>
+    <br/>
+    <a href="https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo"> https:&#x2F;&#x2F;mastodon.social&#x2F;@guofoo </a>
+    <br />
+    <a href="https://github.com/guofoo"> https://github.com/guofoo </a>
+    
+    
+    <p>Published: 2023-11-13</p>
+    
+</div>
+
+
+        </div>
+
+        
+        
+    </main>
+
+    
+    <footer>
+        <small class="subtext">
+            <a href="https://robius.rs">robius.rs</a> © 2024-2025
+        </small>
+        <br>
+        <small class="subtext">
+            Notice a problem? Please <a href="https://github.com/project-robius/robius.rs/issues/new">file an issue here</a>!
+        </small>
+    </footer>
+    
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        // let url = new URL(`#${entry.target.id}`);
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>
