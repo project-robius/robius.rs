@@ -22,8 +22,9 @@ highlight_theme = "base16-ocean-light"
 juice_logo_name = "ROBIUS"
 juice_logo_path = "robius-logo-200.png"
 juice_extra_menu = [
+    { title = "Demo", link = "https://wasm.robius.rs"},
     { title = "Blog", link = "/blog/"},
-    { title = "Github", link = "https://github.com/project-robius"}
+    { title = "GitHub", link = "https://github.com/project-robius"}
 ]
 juice_exclude_menu = [
     "exclude_from_nav",
